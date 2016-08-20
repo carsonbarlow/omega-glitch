@@ -1,0 +1,31 @@
+{
+  "name": "omega-glitch",
+  "version": "0.0.1",
+  "description": "js13k games 2016 entry",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carsonbarlow/omega-glitch.git"
+  },
+  "keywords": [
+    "js16kgames",
+    "glitch"
+  ],
+  "author": "Carson Barlow, Nate Berry",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/carsonbarlow/omega-glitch/issues"
+  },
+  "homepage": "https://github.com/carsonbarlow/omega-glitch#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "jasmine-core": "^2.4.1",
+    "karma": "^1.2.0",
+    "karma-jasmine": "^1.0.2",
+    "karma-phantomjs-launcher": "^1.0.1",
+    "karma-requirejs": "^1.0.0"
+  }
+}
