@@ -1,5 +1,4 @@
-// console.log('hello world');
-
+// bootstraps the game
 var game;
 
 window.onload = function(e){
@@ -11,9 +10,11 @@ var Game = function(){
 
   var paused = false
   var game_master = new GameMaster();
-  graphics = new Graphics();
+  graphics = new Graphics(),
+  input = new Input();
 
   game_master.inject_graphics(graphics);
+  game_master.inject_input(input);
 
 
   function update(delta){
@@ -36,7 +37,7 @@ var Game = function(){
 
       graphics.draw();
 
-      fps = (num_frames / (current_tick - start_tick)) * 1000;
+      // fps = (num_frames / (current_tick - start_tick)) * 1000;
       // Game.graphics.fps_counter.textContent = Math.round(fps);
       num_frames++;
     }

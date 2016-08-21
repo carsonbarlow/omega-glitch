@@ -1,3 +1,5 @@
+// globally accessible functions
+
 // Game.utils = {};
 // Game.utils.add_default = function(_var, val){ if (typeof _var == 'undefined'){_var = val;}};
 // (function(){

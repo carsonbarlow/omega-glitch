@@ -1,6 +1,4 @@
-
-
-
+// renders game objects onto canvas
 
 var Graphics = function(){
 
@@ -13,20 +11,57 @@ var Graphics = function(){
 
   function draw(){
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    for (var i = 0; i < draw_list.length; i ++){
+      for (var j = 0; j < draw_list[i].length; j++){
+        draw_spot(draw_list[i][j]);
+      }
+    }
     ctx.fillStyle = 'rgba(95,232,232,0.7)';
     ctx.beginPath();
-    ctx.arc(avatar.pos_x, 200, 15, 0, Math.PI*2, true);
+    ctx.arc(avatar.pos_x, avatar.pos_y, 10, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  this.add_avatar = function(a){
+    avatar = a;
+  }
+
+  function draw_spot(spot){
+    ctx.fillStyle = 'rgba(204, 0, 153,0.7)';
+    ctx.beginPath();
+    ctx.arc(spot.x * CONFIG.grid_size, spot.y * CONFIG.grid_size, 15, 0, Math.PI*2, true);
     ctx.closePath();
     ctx.fill();
   }
 
 
-  this.draw = draw;
-  this.add_avatar = function(a){
-    avatar = a;
+  function add_to_draw_list(item, layer){
+    if (draw_list[layer].indexOf(item) == -1){
+      draw_list[layer].push(item);
+    }
   }
 
+  function remove_from_draw_list(item){
+    for (var i = 0; i < draw_list.length; i++){
+      if (draw_list[i].indexOf(item) > -1){
+        draw_list[i].splice(draw_list[i].indexOf(item),1);
+      }
+    }
+  }
+
+
+
+  this.draw = draw;
+  this.add_to_draw_list = add_to_draw_list;
+  this.remove_from_draw_list = remove_from_draw_list;
+
 };
+
+
+
+
+
 
 
 
