@@ -10,15 +10,14 @@ window.onload = function(e){
 var Game = function(){
 
   var paused = false
-  avatar_manager = new AvatarManager(),
+  var game_master = new GameMaster();
   graphics = new Graphics();
 
-
-  graphics.add_avatar(avatar_manager.get_avatar());
+  game_master.inject_graphics(graphics);
 
 
   function update(delta){
-    avatar_manager.update(delta);
+    game_master.update(delta);
   }
 
   var run = (function() {
@@ -60,6 +59,7 @@ var Game = function(){
     }
   }
   window.each_frame(run);
+  game_master.start_game();
 
 };
 
