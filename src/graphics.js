@@ -4,6 +4,8 @@ var Graphics = function(){
 
   var canvas = document.getElementById(CONFIG.canvas_id),
   ctx = canvas.getContext('2d'),
+  paths = [],
+  spots = [],
   draw_list = [[],[]],
   CANVAS_WIDTH = canvas.width,
   CANVAS_HEIGHT = canvas.height,
@@ -11,11 +13,13 @@ var Graphics = function(){
 
   function draw(){
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    for (var i = 0; i < draw_list.length; i ++){
-      for (var j = 0; j < draw_list[i].length; j++){
-        draw_spot(draw_list[i][j]);
-      }
-    }
+    // for (var i = 0; i < draw_list.length; i ++){
+    //   for (var j = 0; j < draw_list[i].length; j++){
+    //     draw_spot(draw_list[i][j]);
+    //   }
+    // }
+    draw_paths();
+    draw_spots();
     ctx.fillStyle = 'rgba(95,232,232,0.7)';
     ctx.beginPath();
     ctx.arc(avatar.pos_x, avatar.pos_y, 10, 0, Math.PI*2, true);
@@ -27,14 +31,69 @@ var Graphics = function(){
     avatar = a;
   }
 
+
+  function clear_level(){
+    paths = [];
+    spots = [];
+  }
+
+  function add_spot(spot){
+    if (spots.indexOf(spot) === -1){
+      spots.push(spot);
+    }
+  }
+
+  // not yet needed.
+  // function remove_spot(spot){
+  //   if (paths.indexOf(spot) === -1){
+  //     return;
+  //   }
+  //   paths.splice(paths.indexOf(spot),1);
+  // }
+
+  function draw_spots(){
+    for (var i = 0; i < spots.length; i++){
+      draw_spot(spots[i]);
+    }
+  }
+
   function draw_spot(spot){
     ctx.fillStyle = 'rgba(204, 0, 153,0.7)';
     ctx.beginPath();
-    ctx.arc(spot.x * CONFIG.grid_size, spot.y * CONFIG.grid_size, 15, 0, Math.PI*2, true);
+    ctx.arc(spot.x * CONFIG.grid_size, spot.y * CONFIG.grid_size, CONFIG.grid_size, 0, Math.PI*2, true);
     ctx.closePath();
     ctx.fill();
   }
 
+  function add_path(path){
+    if (paths.indexOf(path) === -1){
+      paths.push(path);
+    }
+  }
+
+  // not yet needed.
+  // function remove_path(path){
+  //   if (paths.indexOf(path) === -1){
+  //     return;
+  //   }
+  //   paths.splice(paths.indexOf(path),1);
+  // }
+
+  function draw_paths(){
+    ctx.lineWidth = 7;
+    ctx.strokeStyle = '#33cc33';
+    for (var i = 0; i < paths.length; i++){
+      draw_path(paths[i]);
+    }
+  }
+
+  function draw_path(path){
+    ctx.moveTo(path[0].x, path[0].y);
+    for (var i = 1; i < path.length; i++){
+      ctx.lineTo(path[i].x, path[i].y);
+    }
+    ctx.stroke();
+  }
 
   function add_to_draw_list(item, layer){
     if (draw_list[layer].indexOf(item) == -1){
@@ -53,8 +112,11 @@ var Graphics = function(){
 
 
   this.draw = draw;
-  this.add_to_draw_list = add_to_draw_list;
-  this.remove_from_draw_list = remove_from_draw_list;
+  this.add_spot = add_spot;
+  this.add_path = add_path;
+  this.clear_level = clear_level;
+  // this.add_to_draw_list = add_to_draw_list;
+  // this.remove_from_draw_list = remove_from_draw_list;
 
 };
 

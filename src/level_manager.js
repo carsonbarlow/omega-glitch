@@ -4,17 +4,24 @@ var LevelManager = function(){
 
   var level, graphics, avatar_manager;
   var spots = [];
+  var paths = [];
   this.starting_spot;
 
   function setup_level(num){
     spots = [];
     level = CONTENT.levels[String(num)];
+    graphics.clear_level();
     for (var i = 0; i < level.spots.length; i++){
       var spot = new Spot(level.spots[i]);
       spots.push(spot);
-      graphics.add_to_draw_list(spot, CONFIG.BACKGROUND);
+      graphics.add_spot(spot);
     }
     this.starting_spot = spots[level.start];
+    for (i = 0; i < level.paths.length; i++){
+      var path = new Path(level.paths[i]);
+      path.inject_graphics(graphics);
+      path.set_starting_spot(spots[level.paths[i][0]]); // value at index 0 matches the index of the starting path.
+    }
   };
 
   function move_leads_to(spot, direction){
