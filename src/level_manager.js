@@ -21,6 +21,7 @@ var LevelManager = function(){
       var path = new Path(level.paths[i]);
       path.inject_graphics(graphics);
       path.set_starting_spot(spots[level.paths[i][0]]); // value at index 0 matches the index of the starting path.
+      paths.push(path);
     }
   };
 
@@ -28,7 +29,7 @@ var LevelManager = function(){
     if (!spot[direction]){
       return false;
     }
-    return spots[spot[direction][0]]; // spot[direction][0] gets the index of the spot it is connected to.
+    return {spot: spots[spot[direction][0]], path: paths[spot[direction][1]]}; // spot[direction][0] gets the index of the spot it is connected to.
   }
 
   function inject_graphics(_graphics_){
@@ -38,6 +39,8 @@ var LevelManager = function(){
   function inject_avatar_manager(_avatar_manager_){
     avatar_manager = _avatar_manager_;
   }
+
+  // TODO: request_direction_path
 
   this.setup_level = setup_level;
   this.inject_graphics = inject_graphics;

@@ -11,20 +11,61 @@ var AvatarManager = function(){
   var avatar = {
     pos_x: 0,
     pos_y: 0,
+    vol_x: 0,
+    vol_y: 0,
+    speed: 500,
     charges: 0
   };
 
   var input,
-  level_manager;
+  level_manager,
+  path,
+  checkpoint;
   var moving = false,
-  speed = 3,
   current_spot;
 
 
+  function start_path(p){
+    path = p.checkpoints;
+  }
+
+  function set_avatar_volocity(){
+    var vol = utils.normalize(avatar.pos_x, avatar.pos_y, path[checkpoint].x, path[checkpoint].y);
+    avatar.vol_x = vol[0] * avatar.speed;
+    avatar.vol_y = vol[1] * avatar.speed;
+  }
+
   function move_avatar(delta){
     if (!moving){return;}
-    avatar.pos_x += speed;
+    avatar.pos_x += (avatar.vol_x*delta);
+    avatar.pos_y += (avatar.vol_y*delta);
+    if (avatar.vol_x > 0 && avatar.pos_x > path[checkpoint].x){
+      go_to_checkpoint();
+    }else if (avatar.vol_x < 0 && avatar.pos_x < path[checkpoint].x){
+      go_to_checkpoint();
+    }
+    if (avatar.vol_y > 0 && avatar.pos_y > path[checkpoint].y){
+      go_to_checkpoint();
+    }else if (avatar.vol_y < 0 && avatar.pos_y < path[checkpoint].y){
+      go_to_checkpoint();
+    }
+
+
+    function go_to_checkpoint(){
+      avatar.pos_x = path[checkpoint].x;
+      avatar.pos_y = path[checkpoint].y;
+      checkpoint++
+      if (checkpoint >= path.length){
+        current_spot = next_spot;
+        moving = false;
+      }else{
+        set_avatar_volocity();
+      }
+    }
+
   }
+
+
 
   function jump_to_spot(spot){
     current_spot = spot;
@@ -51,11 +92,18 @@ var AvatarManager = function(){
   }
 
   function key_pressed(key){
-    // console.log('AvatarManager: ' + key);
     if (!moving){
       var move_leads_to = level_manager.move_leads_to(current_spot, DIRECTION[key]);
       if (move_leads_to){
-        jump_to_spot(move_leads_to);
+        // jump_to_spot(move_leads_to.spot);
+        path = move_leads_to.path.checkpoints.slice(0);
+        if (path[0].x !== avatar.pos_x || path[0].y !== avatar.pos_y){
+          path.reverse();
+        }
+        checkpoint = 1;
+        next_spot = move_leads_to.spot;
+        set_avatar_volocity();
+        moving = true;
       }
     }
   }

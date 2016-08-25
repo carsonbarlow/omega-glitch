@@ -1,5 +1,24 @@
 // globally accessible functions
 
+
+var Utils = function(){
+  this.normalize = function(from_x, from_y, to_x, to_y){
+    x_dif = to_x - from_x;
+    y_dif = to_y - from_y;
+    var hyp = (x_dif*x_dif)+(y_dif*y_dif);
+    hyp = Math.sqrt(hyp);
+    return [(x_dif/hyp),(y_dif/hyp)];
+  };
+};
+
+utils = new Utils();
+
+
+
+// var Utils = {
+//   sloped_speed_modifier: function(num){ return (num * Math.sqrt(2));}
+// };
+
 // Game.utils = {};
 // Game.utils.add_default = function(_var, val){ if (typeof _var == 'undefined'){_var = val;}};
 // (function(){

@@ -20,6 +20,7 @@ var Graphics = function(){
     // }
     draw_paths();
     draw_spots();
+    ctx.lineWidth = 0;
     ctx.fillStyle = 'rgba(95,232,232,0.7)';
     ctx.beginPath();
     ctx.arc(avatar.pos_x, avatar.pos_y, 10, 0, Math.PI*2, true);
