@@ -2,19 +2,17 @@
 
 var LevelManager = function(){
 
-  var level, graphics, avatar_manager;
-  var spots = [];
-  var paths = [];
+  var level, graphics, avatar_manager, game_master;
+  var spots, paths, objectives, patrols;
   this.starting_spot;
 
   function setup_level(num){
-    spots = [];
     level = CONTENT.levels[String(num)];
-    graphics.clear_level();
-    for (var i = 0; i < level.spots.length; i++){
-      var spot = new Spot(level.spots[i]);
-      spots.push(spot);
-      graphics.add_spot(spot);
+    avatar_manager.set_avatar_charges(level.charges);
+    for (var spot in level.spots){
+      var new_spot = new Spot(level.spots[spot]);
+      spots[spot] = new_spot;
+      graphics.add_spot(new_spot);
     }
     this.starting_spot = spots[level.start];
     for (i = 0; i < level.paths.length; i++){
@@ -22,6 +20,15 @@ var LevelManager = function(){
       path.inject_graphics(graphics);
       path.set_starting_spot(spots[level.paths[i][0]]); // value at index 0 matches the index of the starting path.
       paths.push(path);
+    }
+    for (i = 0; i < level.objectives.length; i++){
+      var objective = new Objective(spots[level.objectives[i]]);
+      graphics.add_objective(objective);
+      objectives.push(objective);
+    }
+    for (i = 0; i < level.patrols.length; i++){
+      var patrol = new Patrol(level.patrols[i]);
+      patrols.push(patrol);
     }
   };
 
@@ -40,11 +47,38 @@ var LevelManager = function(){
     avatar_manager = _avatar_manager_;
   }
 
-  // TODO: request_direction_path
+  function inject_game_master(_game_master_){
+    game_master = _game_master_;
+  }
+
+  function detonate_charge(spot){
+    for (var i = 0; i < objectives.length; i++){
+      if (objectives[i].spot == spot){
+        objectives[i].blow_up();
+        graphics.remove_objective(objectives[i]);
+        objectives.splice(i,1);
+        if (!objectives.length){
+          game_master.level_complete();
+        }
+      }
+    }
+  }
+
+  function clear_level(){
+    graphics.clear_level();
+    spots = {};
+    paths = [];
+    objectives = [];
+    patrols = [];
+  }
+
 
   this.setup_level = setup_level;
   this.inject_graphics = inject_graphics;
   this.inject_avatar_manager = inject_avatar_manager;
+  this.inject_game_master = inject_game_master;
   this.move_leads_to = move_leads_to;
+  this.detonate_charge = detonate_charge;
+  this.clear_level = clear_level;
 
 };

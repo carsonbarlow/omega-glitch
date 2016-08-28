@@ -25,6 +25,17 @@ var AvatarManager = function(){
   current_spot;
 
 
+
+  function do_charge(){
+    if (avatar.charges){
+      avatar.charges--;
+      // graphic explosion
+      level_manager.detonate_charge(current_spot);
+    }
+  }
+
+
+
   function start_path(p){
     path = p.checkpoints;
   }
@@ -56,8 +67,7 @@ var AvatarManager = function(){
       avatar.pos_y = path[checkpoint].y;
       checkpoint++
       if (checkpoint >= path.length){
-        current_spot = next_spot;
-        moving = false;
+        jump_to_spot(next_spot);
       }else{
         set_avatar_volocity();
       }
@@ -65,16 +75,18 @@ var AvatarManager = function(){
 
   }
 
-
-
   function jump_to_spot(spot){
     current_spot = spot;
+    moving = false;
     avatar.pos_x = spot.x * CONFIG.grid_size;
     avatar.pos_y = spot.y * CONFIG.grid_size;
+    if (spot.charge){
+      avatar.charges++;
+      spot.charge = false;
+    }
   }
 
   function start_level(){
-    moving = false;
     jump_to_spot(level_manager.starting_spot);
   }
 
@@ -93,6 +105,10 @@ var AvatarManager = function(){
 
   function key_pressed(key){
     if (!moving){
+      if (key === ' '){
+        do_charge();
+        return;
+      }
       var move_leads_to = level_manager.move_leads_to(current_spot, DIRECTION[key]);
       if (move_leads_to){
         // jump_to_spot(move_leads_to.spot);
@@ -112,11 +128,16 @@ var AvatarManager = function(){
     level_manager = _level_manager_;
   }
 
+  function set_avatar_charges(num){
+    avatar.charges = num;
+  }
+
   this.update = update;
   this.get_avatar = get_avatar;
   this.start_level = start_level;
   this.inject_input = inject_input;
   this.key_pressed = key_pressed;
   this.inject_level_manager = inject_level_manager;
+  this.set_avatar_charges = set_avatar_charges;
 
 };

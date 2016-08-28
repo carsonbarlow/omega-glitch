@@ -7,4 +7,5 @@ var Spot = function(config){
   this.east = config.e;
   this.south = config.s;
   this.west = config.w;
+  this.charge = config.charge || false;
 }

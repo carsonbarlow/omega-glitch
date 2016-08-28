@@ -32,16 +32,9 @@ var Path = function(config){
     return checkpoints;
   }
 
-  
-
-
-
 
   this.set_starting_spot = set_starting_spot;
   this.inject_graphics = inject_graphics;
   this.checkpoints = checkpoints;
 };
 
-
-
-// [0,3,12]

@@ -64,15 +64,3 @@ var Game = function(){
 
 };
 
-
-//   Game.reset_game = function (){
-//     if (Game.player.isDead){
-//       Game.enemies = [];
-//       Game.projectiles = [];
-//       Game.graphics.draw_list = [[],[],[]];
-//       Game.bm._reset();
-//       Game.player._reset();
-//       Game.graphics.camera = {x:0,y:0};
-//     }
-//   }
-// };

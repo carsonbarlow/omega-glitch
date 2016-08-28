@@ -1,10 +1,10 @@
 describe('foo', function(){
-
+var foo = true;
 
   it('should be true', function(){
 
-
-    foo.should.equal(true);
+    expect(foo).toEqual(true);
+    // foo.should.equal(true);
   });
 
 
