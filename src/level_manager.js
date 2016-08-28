@@ -28,6 +28,8 @@ var LevelManager = function(){
     }
     for (i = 0; i < level.patrols.length; i++){
       var patrol = new Patrol(level.patrols[i]);
+      patrol.make_path_list(paths, spots);
+      patrol.inject_graphics(graphics);
       patrols.push(patrol);
     }
   };
@@ -72,6 +74,15 @@ var LevelManager = function(){
     patrols = [];
   }
 
+  function update(delta){
+    for (var i = 0; i < patrols.length; i++){
+      patrols[i].update(delta);
+      if (utils.check_collision(patrols[i].get_unit(), avatar_manager.get_avatar())){
+        game_master.reset_level();
+      }
+    }
+  }
+
 
   this.setup_level = setup_level;
   this.inject_graphics = inject_graphics;
@@ -80,5 +91,6 @@ var LevelManager = function(){
   this.move_leads_to = move_leads_to;
   this.detonate_charge = detonate_charge;
   this.clear_level = clear_level;
+  this.update = update;
 
 };

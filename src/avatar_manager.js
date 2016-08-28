@@ -14,7 +14,8 @@ var AvatarManager = function(){
     vol_x: 0,
     vol_y: 0,
     speed: 500,
-    charges: 0
+    charges: 0,
+    collision: 10
   };
 
   var input,
@@ -29,16 +30,11 @@ var AvatarManager = function(){
   function do_charge(){
     if (avatar.charges){
       avatar.charges--;
-      // graphic explosion
+      // TODO: graphic explosion
       level_manager.detonate_charge(current_spot);
     }
   }
 
-
-
-  function start_path(p){
-    path = p.checkpoints;
-  }
 
   function set_avatar_volocity(){
     var vol = utils.normalize(avatar.pos_x, avatar.pos_y, path[checkpoint].x, path[checkpoint].y);
@@ -111,7 +107,6 @@ var AvatarManager = function(){
       }
       var move_leads_to = level_manager.move_leads_to(current_spot, DIRECTION[key]);
       if (move_leads_to){
-        // jump_to_spot(move_leads_to.spot);
         path = move_leads_to.path.checkpoints.slice(0);
         if (path[0].x !== avatar.pos_x || path[0].y !== avatar.pos_y){
           path.reverse();

@@ -7,6 +7,7 @@ var Graphics = function(){
   paths = [],
   spots = [],
   objectives = [],
+  patrols = [],
   CANVAS_WIDTH = canvas.width,
   CANVAS_HEIGHT = canvas.height,
   avatar;
@@ -16,6 +17,7 @@ var Graphics = function(){
     draw_paths();
     draw_spots();
     draw_objectives();
+    draw_patrols();
 
     ctx.save();
     ctx.lineWidth = 0;
@@ -36,6 +38,7 @@ var Graphics = function(){
     paths = [];
     spots = [];
     objectives = [];
+    patrols = [];
   }
 
   function add_spot(spot){
@@ -43,14 +46,6 @@ var Graphics = function(){
       spots.push(spot);
     }
   }
-
-  // not yet needed.
-  // function remove_spot(spot){
-  //   if (paths.indexOf(spot) === -1){
-  //     return;
-  //   }
-  //   paths.splice(paths.indexOf(spot),1);
-  // }
 
   function draw_spots(){
     ctx.save();
@@ -88,14 +83,6 @@ var Graphics = function(){
       paths.push(path);
     }
   }
-
-  // not yet needed.
-  // function remove_path(path){
-  //   if (paths.indexOf(path) === -1){
-  //     return;
-  //   }
-  //   paths.splice(paths.indexOf(path),1);
-  // }
 
   function draw_paths(){
     ctx.save();
@@ -157,22 +144,35 @@ var Graphics = function(){
     
   }
 
-
-
-  function add_to_draw_list(item, layer){
-    if (draw_list[layer].indexOf(item) == -1){
-      draw_list[layer].push(item);
+  function add_patrol(patrol){
+    if (patrols.indexOf(patrol) === -1){
+      patrols.push(patrol);
     }
   }
 
-  function remove_from_draw_list(item){
-    for (var i = 0; i < draw_list.length; i++){
-      if (draw_list[i].indexOf(item) > -1){
-        draw_list[i].splice(draw_list[i].indexOf(item),1);
-      }
+  function remove_patrol(patrol){
+    if (patrols.indexOf(patrol) === -1){
+      return;
+    }
+    patrols.splice(patrols.indexOf(patrol),1);
+  }
+
+  function draw_patrols(){
+    for (var i = 0; i < patrols.length; i++){
+      draw_patrol(patrols[i]);
     }
   }
 
+  function draw_patrol(patrol){
+    ctx.save();
+    ctx.lineWidth = 0;
+    ctx.fillStyle = 'rgba(232,92,92,0.7)';
+    ctx.beginPath();
+    ctx.arc(patrol.pos_x, patrol.pos_y, 10, 0, Math.PI*2, true);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
 
 
   this.draw = draw;
@@ -182,8 +182,8 @@ var Graphics = function(){
   this.add_objective = add_objective;
   this.remove_objective = remove_objective;
   this.inject_avatar = inject_avatar;
-  // this.add_to_draw_list = add_to_draw_list;
-  // this.remove_from_draw_list = remove_from_draw_list;
+  this.add_patrol = add_patrol;
+  this.remove_patrol = remove_patrol;
 
 };
 

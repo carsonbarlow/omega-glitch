@@ -1,4 +1,6 @@
 // mediates game flow
+var level_ready = false;
+
 var GameMaster = function(){
 
   var graphics,
@@ -13,6 +15,7 @@ var GameMaster = function(){
 
   function update(delta){
     avatar_manager.update(delta);
+    level_manager.update(delta);
   }
 
   function inject_graphics(_graphics_){
@@ -27,7 +30,7 @@ var GameMaster = function(){
   }
 
   function start_game(){
-    current_level = 3;
+    current_level = 1;
     start_level();
   };
 
@@ -35,10 +38,17 @@ var GameMaster = function(){
     level_manager.clear_level();
     level_manager.setup_level(current_level);
     avatar_manager.start_level();
+    level_ready = true;
   }
 
   function level_complete(){
+    level_ready = false;
     current_level++
+    start_level();
+  }
+
+  function reset_level(){
+    level_ready = false;
     start_level();
   }
 
@@ -47,6 +57,7 @@ var GameMaster = function(){
   this.inject_input = inject_input;
   this.start_game = start_game;
   this.level_complete = level_complete;
+  this.reset_level = reset_level;
 
 };
 

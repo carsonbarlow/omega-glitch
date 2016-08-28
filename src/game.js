@@ -18,6 +18,7 @@ var Game = function(){
 
 
   function update(delta){
+    if (!level_ready){return;} // level_ready is found in game_master.js
     game_master.update(delta);
   }
 
