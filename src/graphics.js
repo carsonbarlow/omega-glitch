@@ -27,7 +27,7 @@ var Graphics = function () {
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
     ctx.beginPath();
-    ctx.arc(avatar.pos_x, avatar.pos_y, 10, 0, Math.PI * 2, true);
+    ctx.arc(avatar.pos_x, avatar.pos_y, avatar.collision, 0, Math.PI * 2, true);
     ctx.closePath();
     ctx.fill();
     ctx.restore();
@@ -69,7 +69,7 @@ var Graphics = function () {
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
     ctx.beginPath();
-    ctx.arc(spot.x * CONFIG.grid_size, spot.y * CONFIG.grid_size, CONFIG.grid_size, 0, Math.PI * 2, true);
+    ctx.arc(spot.x * CONFIG.grid_size, spot.y * CONFIG.grid_size, CONFIG.grid_size/2, 0, Math.PI * 2, true);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
@@ -150,7 +150,7 @@ var Graphics = function () {
     var y = objective.spot.y * CONFIG.grid_size;
 
 
-    var size = 20;
+    var size = 15;
 
     ctx.moveTo(x - size, y - size);
     ctx.lineTo(x + size, y - size);

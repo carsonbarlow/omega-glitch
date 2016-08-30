@@ -80,6 +80,7 @@ var AvatarManager = function(){
       avatar.charges++;
       spot.charge = false;
     }
+    avatar.collision = 8;
   }
 
   function start_level(){
@@ -115,6 +116,7 @@ var AvatarManager = function(){
         next_spot = move_leads_to.spot;
         set_avatar_volocity();
         moving = true;
+        avatar.collision = 2;
       }
     }
   }

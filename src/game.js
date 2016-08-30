@@ -44,7 +44,7 @@ var Game = function(){
     }
   })();
 
-  document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
+  // document.oncontextmenu = document.body.oncontextmenu = function() {return false;}
   if( window.requestAnimationFrame) {
     window.each_frame = function(cb) {
       var _cb = function() { cb(); requestAnimationFrame(_cb); }
