@@ -90,6 +90,7 @@ var LevelManager = function(){
           gates[gate_generators[i].gates[gate]].blow_up();
           graphics.remove_gate(gates[gate_generators[i].gates[gate]]);
           paths[gates[gate_generators[i].gates[gate]].path].blocked = false;
+          graphics.remove_gate_generator(gate_generators[i]);
         }
       }
     }

@@ -257,6 +257,13 @@ var Graphics = function () {
     }
   }
 
+  function remove_gate_generator(gate_generator){
+    if (gate_generators.indexOf(gate_generator) === -1) {
+      return;
+    }
+    gate_generators.splice(gate_generators.indexOf(gate_generator), 1);
+  }
+
   function draw_gate_generators(){
     ctx.save();
     ctx.lineWidth = 1;
@@ -301,6 +308,7 @@ var Graphics = function () {
   this.add_gate = add_gate;
   this.remove_gate = remove_gate;
   this.add_gate_generator = add_gate_generator;
+  this.remove_gate_generator = remove_gate_generator;
 
 };
 
