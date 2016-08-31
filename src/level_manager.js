@@ -3,7 +3,7 @@
 var LevelManager = function(){
 
   var level, graphics, avatar_manager, game_master;
-  var spots, paths, objectives, patrols;
+  var spots, paths, objectives, patrols, gates, gate_generators;
   this.starting_spot;
 
   function setup_level(num){
@@ -32,13 +32,30 @@ var LevelManager = function(){
       patrol.inject_graphics(graphics);
       patrols.push(patrol);
     }
+    for (i = 0; i < level.gates.length; i++){
+      var gate = new Gate(level.gates[i]);
+      paths[gate.path].blocked = true;
+      graphics.add_gate(gate);
+      gates.push(gate);
+    }
+    for (i = 0; i < level.gate_generators.length; i++){
+      var gate_generator = new GateGenerator(level.gate_generators[i]);
+      // for (var gate = 0; gate < gate_generator.gates.length; gate++){
+      //   gate_generator.gates[gate] = gates[gate];
+      // }
+      gate_generator.spot = spots[gate_generator.spot];
+      graphics.add_gate_generator(gate_generator);
+      // console.log(gate_generator);
+      gate_generators.push(gate_generator);
+    }
   };
 
   function move_leads_to(spot, direction){
     if (!spot[direction]){
       return false;
     }
-    return {spot: spots[spot[direction][0]], path: paths[spot[direction][1]]}; // spot[direction][0] gets the index of the spot it is connected to.
+    var response = {spot: spots[spot[direction][0]], path: paths[spot[direction][1]]}; // spot[direction][0] gets the index of the spot it is connected to.
+    return (response.path.blocked)? false : response;
   }
 
   function inject_graphics(_graphics_){
@@ -64,6 +81,18 @@ var LevelManager = function(){
         }
       }
     }
+    for (i = 0; i < gate_generators.length; i++){
+      if (gate_generators[i].spot == spot){
+        gate_generators[i].blow_up();
+        for (var gate = 0; gate < gate_generators[i].gates.length; gate++){
+          // START HERE
+          // unblock the gate's path
+          gates[gate_generators[i].gates[gate]].blow_up();
+          graphics.remove_gate(gates[gate_generators[i].gates[gate]]);
+          paths[gates[gate_generators[i].gates[gate]].path].blocked = false;
+        }
+      }
+    }
   }
 
   function clear_level(){
@@ -72,6 +101,8 @@ var LevelManager = function(){
     paths = [];
     objectives = [];
     patrols = [];
+    gates = [];
+    gate_generators= [];
   }
 
   function update(delta){

@@ -12,7 +12,7 @@
 var CONTENT = CONTENT || {levels:{}};
 
 CONTENT.levels['4'] = {
-  charges: 1,
+  charges: 2,
   spots: {
     s1: {
       x: 9,
@@ -68,6 +68,22 @@ CONTENT.levels['4'] = {
   objectives: ['s5'],
   patrols: [
     ['s6','s4','s3','s4']
+  ],
+  gates: [
+    {
+      x: 20,
+      y: 14,
+      p: 2
+    }
+  ],
+  gate_generators: [
+    {
+      s: 's7',
+      g: [0],
+      gp: [
+        [5,6]
+      ]
+    }
   ]
 };
 

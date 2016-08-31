@@ -8,6 +8,8 @@ var Graphics = function () {
     spots = [],
     objectives = [],
     patrols = [],
+    gates = [],
+    gate_generators = [],
     CANVAS_WIDTH = canvas.width,
     CANVAS_HEIGHT = canvas.height,
     avatar;
@@ -18,6 +20,8 @@ var Graphics = function () {
     draw_spots();
     draw_objectives();
     draw_patrols();
+    draw_gates();
+    draw_gate_generators();
 
     ctx.save();
     ctx.lineWidth = 0;
@@ -31,6 +35,9 @@ var Graphics = function () {
     ctx.closePath();
     ctx.fill();
     ctx.restore();
+    ctx.font = "bold 20px sans-serif";
+    ctx.fillStyle = 'rgba(210,210,210,0.5)';
+    ctx.fillText('Charges:'+ avatar.charges, 33, 27);
 
   }
 
@@ -43,6 +50,8 @@ var Graphics = function () {
     spots = [];
     objectives = [];
     patrols = [];
+    gates = [];
+    gate_generators = [];
   }
 
   function add_spot(spot) {
@@ -84,9 +93,11 @@ var Graphics = function () {
     ctx.shadowBlur = 10;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
+    ctx.beginPath();
     ctx.arc(spot.x * CONFIG.grid_size, spot.y * CONFIG.grid_size, 4, 0, Math.PI * 2, true);
-    ctx.closePath();
+    // ctx.closePath();
     ctx.fill();
+    // ctx.stroke();
   }
 
   function add_path(path) {
@@ -151,13 +162,15 @@ var Graphics = function () {
 
 
     var size = 15;
-
+    ctx.beginPath();
     ctx.moveTo(x - size, y - size);
     ctx.lineTo(x + size, y - size);
     ctx.lineTo(x + size, y + size);
     ctx.lineTo(x - size, y + size);
     ctx.lineTo(x - size, y - size);
+    // ctx.closePath();
     ctx.fill();
+    ctx.stroke();
 
   }
 
@@ -190,9 +203,89 @@ var Graphics = function () {
     ctx.shadowOffsetY = 0;
     ctx.beginPath();
     ctx.arc(patrol.pos_x, patrol.pos_y, 10, 0, Math.PI * 2, true);
-    ctx.closePath();
+    // ctx.closePath();
     ctx.fill();
+    ctx.stroke();
     ctx.restore();
+  }
+
+  function add_gate(gate){
+    if (gates.indexOf(gate) === -1) {
+      gates.push(gate);
+    }
+  }
+  function remove_gate(gate){
+    if (gates.indexOf(gate) === -1) {
+      return;
+    }
+    gates.splice(gates.indexOf(gate), 1);
+  }
+
+  function draw_gates(){
+    ctx.save();
+    ctx.lineWidth = 1;
+    ctx.fillStyle = 'rgba(204, 51, 51, 0.6)'
+    ctx.shadowColor = '#6FC3DF';
+    ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    for (var i = 0; i < gates.length; i++){
+      draw_gate(gates[i]);
+    }
+    ctx.restore();
+  }
+
+  function draw_gate(gate){
+    var x = gate.pos_x * CONFIG.grid_size;
+    var y = gate.pos_y * CONFIG.grid_size;
+
+
+    var size = 10;
+    ctx.beginPath();
+    ctx.moveTo(x - size, y - size);
+    ctx.lineTo(x + size, y - size);
+    ctx.lineTo(x + size, y + size);
+    ctx.lineTo(x - size, y + size);
+    ctx.lineTo(x - size, y - size);
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  function add_gate_generator(gate_generator){
+    if (gate_generators.indexOf(gate_generator) === -1) {
+      gate_generators.push(gate_generator);
+    }
+  }
+
+  function draw_gate_generators(){
+    ctx.save();
+    ctx.lineWidth = 1;
+    ctx.fillStyle = 'rgba(204, 104, 51, 0.6)'
+    ctx.shadowColor = '#6FC3DF';
+    ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    for (var i = 0; i < gate_generators.length; i++){
+      draw_gate_generator(gate_generators[i]);
+    }
+    ctx.restore();
+  }
+
+  function draw_gate_generator(gate_generator){
+    var x = gate_generator.spot.x * CONFIG.grid_size;
+    var y = gate_generator.spot.y * CONFIG.grid_size;
+
+
+    var size = 10;
+    ctx.beginPath();
+    ctx.moveTo(x - size, y - size);
+    ctx.lineTo(x + size, y - size);
+    ctx.lineTo(x + size, y + size);
+    ctx.lineTo(x - size, y + size);
+    ctx.lineTo(x - size, y - size);
+    // ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
   }
 
 
@@ -205,6 +298,9 @@ var Graphics = function () {
   this.inject_avatar = inject_avatar;
   this.add_patrol = add_patrol;
   this.remove_patrol = remove_patrol;
+  this.add_gate = add_gate;
+  this.remove_gate = remove_gate;
+  this.add_gate_generator = add_gate_generator;
 
 };
 
