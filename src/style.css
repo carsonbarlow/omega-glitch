@@ -3,6 +3,11 @@
   padding: 0;
 }
 
+body {
+  overflow: hidden;
+  background: rgb(10,10,10);
+}
+
 #background {
   background: rgb(10,10,10);
   position: absolute;
