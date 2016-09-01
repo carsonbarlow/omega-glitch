@@ -44,6 +44,7 @@ CONTENT.levels['2'] = {
     ['s2',1,5]
   ],
   patrols: [],
+  patrol_generators: [],
   start: 's1',
   objectives: ['s4'],
   gates: [],
