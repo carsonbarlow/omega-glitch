@@ -102,10 +102,15 @@ var Patrol = function(config_route){
     return unit;
   }
 
+  function blow_up(){
+    // console.log('patrol: boom mother FUCKA!!');
+  };
+
+
   this.make_path_list = make_path_list;
   this.update = update;
   this.inject_graphics = inject_graphics;
   this.get_unit = get_unit;
-
+  this.blow_up = blow_up;
 
 }

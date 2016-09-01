@@ -82,9 +82,31 @@ CONTENT.levels['5'] = {
     ['s7',3,2,2,2,1,3],
     ['s8',7,2,6,1,7,1]
   ],
-  patrols: [],
   start: 's1',
   objectives: ['s8'],
-  gates: [],
-  gate_generators: []
+  patrols: [
+    ['s5','s4','s7','s6']
+  ],
+  patrol_generators: [
+    {
+      s: 's5',
+      p: [0]
+    }
+  ],
+  gates: [
+    {
+      x: 18,
+      y: 15,
+      p: 6
+    }
+  ],
+  gate_generators: [
+    {
+      s: 's9',
+      g: [0],
+      gp: [
+        [5,6]
+      ]
+    }
+  ]
 };

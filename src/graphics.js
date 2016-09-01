@@ -8,6 +8,7 @@ var Graphics = function () {
     spots = [],
     objectives = [],
     patrols = [],
+    patrol_generators = [],
     gates = [],
     gate_generators = [],
     CANVAS_WIDTH = canvas.width,
@@ -20,6 +21,7 @@ var Graphics = function () {
     draw_spots();
     draw_objectives();
     draw_patrols();
+    draw_patrol_generators();
     draw_gates();
     draw_gate_generators();
 
@@ -50,6 +52,7 @@ var Graphics = function () {
     spots = [];
     objectives = [];
     patrols = [];
+    patrol_generators = [],
     gates = [];
     gate_generators = [];
   }
@@ -168,7 +171,6 @@ var Graphics = function () {
     ctx.lineTo(x + size, y + size);
     ctx.lineTo(x - size, y + size);
     ctx.lineTo(x - size, y - size);
-    // ctx.closePath();
     ctx.fill();
     ctx.stroke();
 
@@ -203,7 +205,6 @@ var Graphics = function () {
     ctx.shadowOffsetY = 0;
     ctx.beginPath();
     ctx.arc(patrol.pos_x, patrol.pos_y, 10, 0, Math.PI * 2, true);
-    // ctx.closePath();
     ctx.fill();
     ctx.stroke();
     ctx.restore();
@@ -290,7 +291,49 @@ var Graphics = function () {
     ctx.lineTo(x + size, y + size);
     ctx.lineTo(x - size, y + size);
     ctx.lineTo(x - size, y - size);
-    // ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+  }
+
+  function add_patrol_generator(patrol_generator){
+    if (patrol_generators.indexOf(patrol_generator) === -1) {
+      patrol_generators.push(patrol_generator);
+    }
+  }
+
+  function remove_patrol_generator(patrol_generator){
+    if (patrol_generators.indexOf(patrol_generator) === -1) {
+      return;
+    }
+    patrol_generators.splice(patrol_generators.indexOf(patrol_generator), 1);
+  }
+
+  function draw_patrol_generators(){
+    ctx.save();
+    ctx.lineWidth = 1;
+    ctx.fillStyle = 'rgba(84, 84, 51, 0.6)'
+    ctx.shadowColor = '#6FC3DF';
+    ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    for (var i = 0; i < patrol_generators.length; i++){
+      draw_patrol_generator(patrol_generators[i]);
+    }
+    ctx.restore();
+  }
+
+  function draw_patrol_generator(patrol_generator){
+    var x = patrol_generator.spot.x * CONFIG.grid_size;
+    var y = patrol_generator.spot.y * CONFIG.grid_size;
+
+
+    var size = 10;
+    ctx.beginPath();
+    ctx.moveTo(x - size, y - size);
+    ctx.lineTo(x + size, y - size);
+    ctx.lineTo(x + size, y + size);
+    ctx.lineTo(x - size, y + size);
+    ctx.lineTo(x - size, y - size);
     ctx.fill();
     ctx.stroke();
   }
@@ -309,6 +352,8 @@ var Graphics = function () {
   this.remove_gate = remove_gate;
   this.add_gate_generator = add_gate_generator;
   this.remove_gate_generator = remove_gate_generator;
+  this.add_patrol_generator = add_patrol_generator;
+  this.remove_patrol_generator = remove_patrol_generator;
 
 };
 

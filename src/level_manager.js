@@ -3,7 +3,7 @@
 var LevelManager = function(){
 
   var level, graphics, avatar_manager, game_master;
-  var spots, paths, objectives, patrols, gates, gate_generators;
+  var spots, paths, objectives, patrols, patrol_generators, gates, gate_generators;
   this.starting_spot;
 
   function setup_level(num){
@@ -32,6 +32,12 @@ var LevelManager = function(){
       patrol.inject_graphics(graphics);
       patrols.push(patrol);
     }
+    for (i = 0; i < level.patrol_generators.length; i++){
+      var patrol_generator = new PatrolGenerator(level.patrol_generators[i]);
+      patrol_generator.spot = spots[patrol_generator.spot];
+      graphics.add_patrol_generator(patrol_generator);
+      patrol_generators.push(patrol_generator);
+    }
     for (i = 0; i < level.gates.length; i++){
       var gate = new Gate(level.gates[i]);
       paths[gate.path].blocked = true;
@@ -40,12 +46,8 @@ var LevelManager = function(){
     }
     for (i = 0; i < level.gate_generators.length; i++){
       var gate_generator = new GateGenerator(level.gate_generators[i]);
-      // for (var gate = 0; gate < gate_generator.gates.length; gate++){
-      //   gate_generator.gates[gate] = gates[gate];
-      // }
       gate_generator.spot = spots[gate_generator.spot];
       graphics.add_gate_generator(gate_generator);
-      // console.log(gate_generator);
       gate_generators.push(gate_generator);
     }
   };
@@ -81,12 +83,22 @@ var LevelManager = function(){
         }
       }
     }
+    for (i = 0; i < patrol_generators.length; i++){
+      if (patrol_generators[i].spot == spot){
+        patrol_generators[i].blow_up();
+        for (var patrol = 0; patrol < patrol_generators[i].patrols.length; patrol++){
+          patrols[patrol_generators[i].patrols[patrol]].blow_up();
+          graphics.remove_patrol(patrols[patrol_generators[i].patrols[patrol]].get_unit());
+          patrols.splice(patrols.indexOf(patrols[patrol_generators[i].patrols[patrol]]),1);
+          // paths[patrols[patrol_generators[i].patrols[patrol]].path].blocked = false;
+          graphics.remove_patrol_generator(patrol_generators[i]);
+        }
+      }
+    }
     for (i = 0; i < gate_generators.length; i++){
       if (gate_generators[i].spot == spot){
         gate_generators[i].blow_up();
         for (var gate = 0; gate < gate_generators[i].gates.length; gate++){
-          // START HERE
-          // unblock the gate's path
           gates[gate_generators[i].gates[gate]].blow_up();
           graphics.remove_gate(gates[gate_generators[i].gates[gate]]);
           paths[gates[gate_generators[i].gates[gate]].path].blocked = false;
@@ -102,6 +114,7 @@ var LevelManager = function(){
     paths = [];
     objectives = [];
     patrols = [];
+    patrol_generators = [];
     gates = [];
     gate_generators= [];
   }
