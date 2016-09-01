@@ -39,7 +39,7 @@ var Graphics = function () {
     ctx.restore();
     ctx.font = "bold 20px sans-serif";
     ctx.fillStyle = 'rgba(210,210,210,0.5)';
-    ctx.fillText('Charges:'+ avatar.charges, 33, 27);
+    ctx.fillText('Charges:' + avatar.charges, 33, 27);
 
   }
 
@@ -81,7 +81,7 @@ var Graphics = function () {
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
     ctx.beginPath();
-    ctx.arc(spot.x * CONFIG.grid_size, spot.y * CONFIG.grid_size, CONFIG.grid_size/2, 0, Math.PI * 2, true);
+    ctx.arc(spot.x * CONFIG.grid_size, spot.y * CONFIG.grid_size, CONFIG.grid_size / 2, 0, Math.PI * 2, true);
     ctx.closePath();
     ctx.fill();
     ctx.stroke();
@@ -147,7 +147,7 @@ var Graphics = function () {
   function draw_objectives() {
     ctx.save();
     ctx.lineWidth = 1;
-    ctx.fillStyle = 'rgba(51, 204, 204, 0.2)'
+    ctx.fillStyle = 'rgba(250,247,91,0.2)'
     ctx.shadowColor = '#6FC3DF';
     ctx.shadowBlur = 5;
     ctx.shadowOffsetX = 0;
@@ -172,7 +172,6 @@ var Graphics = function () {
     ctx.lineTo(x - size, y + size);
     ctx.lineTo(x - size, y - size);
     ctx.fill();
-    ctx.stroke();
 
   }
 
@@ -198,7 +197,7 @@ var Graphics = function () {
   function draw_patrol(patrol) {
     ctx.save();
     ctx.lineWidth = 0;
-    ctx.fillStyle = '#cf131c';
+    ctx.fillStyle = 'rgba(207, 19, 28, 0.8)';
     ctx.shadowColor = '#6FC3DF';
     ctx.shadowBlur = 20;
     ctx.shadowOffsetX = 0;
@@ -206,23 +205,22 @@ var Graphics = function () {
     ctx.beginPath();
     ctx.arc(patrol.pos_x, patrol.pos_y, 10, 0, Math.PI * 2, true);
     ctx.fill();
-    ctx.stroke();
     ctx.restore();
   }
 
-  function add_gate(gate){
+  function add_gate(gate) {
     if (gates.indexOf(gate) === -1) {
       gates.push(gate);
     }
   }
-  function remove_gate(gate){
+  function remove_gate(gate) {
     if (gates.indexOf(gate) === -1) {
       return;
     }
     gates.splice(gates.indexOf(gate), 1);
   }
 
-  function draw_gates(){
+  function draw_gates() {
     ctx.save();
     ctx.lineWidth = 1;
     ctx.fillStyle = 'rgba(204, 51, 51, 0.6)'
@@ -230,13 +228,13 @@ var Graphics = function () {
     ctx.shadowBlur = 5;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
-    for (var i = 0; i < gates.length; i++){
+    for (var i = 0; i < gates.length; i++) {
       draw_gate(gates[i]);
     }
     ctx.restore();
   }
 
-  function draw_gate(gate){
+  function draw_gate(gate) {
     var x = gate.pos_x * CONFIG.grid_size;
     var y = gate.pos_y * CONFIG.grid_size;
 
@@ -252,20 +250,20 @@ var Graphics = function () {
     ctx.stroke();
   }
 
-  function add_gate_generator(gate_generator){
+  function add_gate_generator(gate_generator) {
     if (gate_generators.indexOf(gate_generator) === -1) {
       gate_generators.push(gate_generator);
     }
   }
 
-  function remove_gate_generator(gate_generator){
+  function remove_gate_generator(gate_generator) {
     if (gate_generators.indexOf(gate_generator) === -1) {
       return;
     }
     gate_generators.splice(gate_generators.indexOf(gate_generator), 1);
   }
 
-  function draw_gate_generators(){
+  function draw_gate_generators() {
     ctx.save();
     ctx.lineWidth = 1;
     ctx.fillStyle = 'rgba(204, 104, 51, 0.6)'
@@ -273,13 +271,13 @@ var Graphics = function () {
     ctx.shadowBlur = 5;
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 0;
-    for (var i = 0; i < gate_generators.length; i++){
+    for (var i = 0; i < gate_generators.length; i++) {
       draw_gate_generator(gate_generators[i]);
     }
     ctx.restore();
   }
 
-  function draw_gate_generator(gate_generator){
+  function draw_gate_generator(gate_generator) {
     var x = gate_generator.spot.x * CONFIG.grid_size;
     var y = gate_generator.spot.y * CONFIG.grid_size;
 
@@ -357,3 +355,143 @@ var Graphics = function () {
 
 };
 
+// setup	
+var canvas = document.getElementById("text");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+var ctx = canvas.getContext('2d');
+ctx.translate(0.5, 0.5);
+
+var center = { x: 0, y: 0 };
+var size = 12;
+var colBg = 'rgba(240,240,240)';
+var colGrid = 'rgba(0,20,40,0.9)';
+var colSnake = 'rgba(0,255,255,0.1)';
+var colSnake2 = 'rgba(0,100,100,0.1)';
+
+
+/* /////
+GRID
+///// */
+
+var bgcanv = document.createElement("canvas");
+bgcanv.width = window.innerWidth;
+bgcanv.height = window.innerHeight;
+var bgcont = bgcanv.getContext('2d');
+bgcont.translate(0.5, 0.5);
+bgcont.fillStyle = colBg;
+bgcont.fillRect(0, 0, bgcanv.width, bgcanv.height);
+
+var nx = Math.ceil(bgcanv.height / size);
+var ny = Math.ceil(bgcanv.width / size);
+bgcont.strokeStyle = colGrid;
+
+function line(x1, y1, x2, y2) {
+  bgcont.beginPath();
+  bgcont.moveTo(x1, y1);
+  bgcont.lineTo(x2, y2);
+  bgcont.closePath();
+  bgcont.stroke();
+}
+
+for (var q = 1; q <= ny; q++) {
+  line(q * size, 0, q * size, bgcanv.height);
+}
+for (var i = 0; i <= nx; i++) {
+  line(0, i * size, bgcanv.width, i * size);
+}
+for (var i = 0; i <= (nx + ny); i++) {
+  line(0, (i * size) - bgcanv.width, bgcanv.width, i * size);
+  line(0, (i * size), bgcanv.width, (i * size) - bgcanv.width);
+}
+
+/* /////
+SNAKE
+///// */
+
+var dirs = [
+  { name: 'up', x: 0, y: -1 },
+  { name: 'upright', x: 1, y: -1 },
+  { name: 'right', x: 1, y: 0 },
+  { name: 'downright', x: 1, y: 1 },
+  { name: 'down', x: 0, y: 1 },
+  { name: 'downleft', x: -1, y: 1 },
+  { name: 'left', x: -1, y: 0 },
+  { name: 'upleft', x: -1, y: -1 }
+];
+
+// init
+function snake() {
+  this.points = [{
+    y: Math.floor((Math.random() * nx) + 1) * size,
+    x: Math.floor((Math.random() * ny) + 1) * size
+  }];
+  this.draw = snakeDraw;
+  this.move = snakeMove;
+  this.dir = (Math.floor((Math.random() * 8) + 1));
+}
+
+// movement
+function snakeMove() {
+  var rand = (Math.floor((Math.random() * 3) - 1));
+  var dir = this.dir + rand;
+  if (dir < 0) { dir = 7; }
+  if (7 < dir) { dir = 0; }
+  var lpoint = this.points[this.points.length - 1];
+  if (lpoint.x < 10) { dir = 2; }
+  if (lpoint.y < 10) { dir = 4; }
+  if (canvas.width - 10 < lpoint.x) { dir = 6; }
+  if (canvas.height - 10 < lpoint.y) { dir = 0; }
+  this.dir = dir;
+  var npoint = { x: lpoint.x + (dirs[dir].x * size), y: lpoint.y + (dirs[dir].y * size) };
+  this.points.push(npoint);
+  if (10 < this.points.length) {
+    this.points.shift();
+  }
+}
+
+// draw
+function snakeDraw() {
+  var p = this.points;
+  for (m = 1; m < p.length; m++) {
+    ctx.beginPath();
+    ctx.moveTo(p[m - 1].x, p[m - 1].y);
+    ctx.lineTo(p[m].x, p[m].y);
+    ctx.closePath();
+    ctx.lineWidth = 1;
+    ctx.strokeStyle = colSnake;
+    ctx.stroke();
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = colSnake2;
+    ctx.stroke();
+  }
+}
+
+// group of snakes
+function snakes(n) {
+  this.snakeys = [];
+  for (var p = 0; p < n; p++) {
+    this.snakeys.push(new snake());
+  }
+  this.go = snakesGo;
+}
+function snakesGo() {
+  for (var r = 0; r < this.snakeys.length; r++) {
+    this.snakeys[r].move();
+    this.snakeys[r].draw();
+  }
+}
+
+
+/* /////
+FRAME
+///// */
+
+var sn = new snakes(10);
+ctx.drawImage(bgcanv, 0, 0);
+setInterval(function () {
+  ctx.globalAlpha = 0.2;
+  ctx.drawImage(bgcanv, 0, 0);
+  ctx.globalAlpha = 1;
+  sn.go();
+}, 1000 / 30);
