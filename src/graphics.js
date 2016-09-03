@@ -109,6 +109,13 @@ var Graphics = function () {
     }
   }
 
+  function remove_path(path) {
+    if (paths.indexOf(path) === -1) {
+      return;
+    }
+    paths.splice(paths.indexOf(path), 1);
+  }
+
   function draw_paths() {
     ctx.save();
     ctx.lineWidth = 2;
@@ -160,6 +167,7 @@ var Graphics = function () {
 
 
   function draw_objective(objective) {
+    // console.log(objective);
     var x = objective.spot.x * CONFIG.grid_size;
     var y = objective.spot.y * CONFIG.grid_size;
 
@@ -340,6 +348,7 @@ var Graphics = function () {
   this.draw = draw;
   this.add_spot = add_spot;
   this.add_path = add_path;
+  this.remove_path = remove_path;
   this.clear_level = clear_level;
   this.add_objective = add_objective;
   this.remove_objective = remove_objective;

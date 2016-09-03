@@ -65,7 +65,7 @@ CONTENT.levels['4'] = {
     ['s3',1,2,2,2,3,4]
   ],
   start: 's1',
-  objectives: ['s5'],
+  objectives: [['s5',[0,1,2,3,4,5]]],
   patrols: [
     ['s6','s4','s3','s4']
   ],

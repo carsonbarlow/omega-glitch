@@ -12,12 +12,12 @@ var Patrol = function(config_route){
   };
 
   var graphics,
+    active = true,
     path_list,
     path,
     current_path_index,
     patrol_direction,
-    checkpoint,
-    moving = true;
+    checkpoint
 
   function inject_graphics(_graphics_){
     graphics = _graphics_;
@@ -46,11 +46,11 @@ var Patrol = function(config_route){
   }
 
   function update(delta){
+    if (!active){return;}
     move(delta);
   }
 
   function move(delta){
-    if (!moving){return;}
     unit.pos_x += (unit.vol_x*delta);
     unit.pos_y += (unit.vol_y*delta);
     if (unit.vol_x > 0 && unit.pos_x > path[checkpoint].x){
@@ -81,15 +81,19 @@ var Patrol = function(config_route){
 
   function jump_to_next_path(){
     current_path_index = (current_path_index + patrol_direction + route.length)% route.length;
-    // console.log(current_path_index);
-    path = path_list[current_path_index].checkpoints.slice(0);
-    // console.log(path);
+    path = path_list[current_path_index];
+    if (path.blown_up){
+      patrol_direction = -patrol_direction;
+      current_path_index = (current_path_index + (patrol_direction * 2) + route.length)% route.length;
+      path = path_list[current_path_index];
+    }
+
+    path = path.checkpoints.slice(0);
     if (path[0].x !== unit.pos_x || path[0].y !== unit.pos_y){
       path.reverse();
     }
     checkpoint = 1;
     set_unit_volocity();
-    // console.log(unit);
   }
 
   function set_unit_volocity(){
@@ -102,15 +106,25 @@ var Patrol = function(config_route){
     return unit;
   }
 
+  function is_active(){
+    return active;
+  }
+
   function blow_up(){
+    active = false;
     // console.log('patrol: boom mother FUCKA!!');
   };
 
+  function get_current_path(){
+    return path_list[current_path_index];
+  }
 
   this.make_path_list = make_path_list;
   this.update = update;
   this.inject_graphics = inject_graphics;
   this.get_unit = get_unit;
+  this.get_current_path = get_current_path;
   this.blow_up = blow_up;
+  this.is_active = is_active;
 
 }

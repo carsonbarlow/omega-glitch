@@ -22,7 +22,8 @@ var LevelManager = function(){
       paths.push(path);
     }
     for (i = 0; i < level.objectives.length; i++){
-      var objective = new Objective(spots[level.objectives[i]]);
+      var objective = new Objective(level.objectives[i]);
+      objective.spot = spots[objective.spot];
       graphics.add_objective(objective);
       objectives.push(objective);
     }
@@ -77,6 +78,14 @@ var LevelManager = function(){
       if (objectives[i].spot == spot){
         objectives[i].blow_up();
         graphics.remove_objective(objectives[i]);
+        for (var path = objectives[i].paths.length -1; path > -1; path--){
+          paths[objectives[i].paths[path]].blow_up();
+          for (var patrol = 0; patrol < patrols.length; patrol++){
+            if (patrols[patrol].get_current_path() === paths[objectives[i].paths[path]]){
+              patrols[patrol].blow_up();
+            }
+          }
+        }
         objectives.splice(i,1);
         if (!objectives.length){
           game_master.level_complete();
@@ -86,19 +95,18 @@ var LevelManager = function(){
     for (i = 0; i < patrol_generators.length; i++){
       if (patrol_generators[i].spot == spot){
         patrol_generators[i].blow_up();
-        for (var patrol = 0; patrol < patrol_generators[i].patrols.length; patrol++){
+        for (var patrol = patrol_generators[i].patrols.length -1; patrol > -1 ; patrol--){
           patrols[patrol_generators[i].patrols[patrol]].blow_up();
           graphics.remove_patrol(patrols[patrol_generators[i].patrols[patrol]].get_unit());
-          patrols.splice(patrols.indexOf(patrols[patrol_generators[i].patrols[patrol]]),1);
-          // paths[patrols[patrol_generators[i].patrols[patrol]].path].blocked = false;
-          graphics.remove_patrol_generator(patrol_generators[i]);
+          // patrols.splice(patrols.indexOf(patrols[patrol_generators[i].patrols[patrol]]),1);
         }
+        graphics.remove_patrol_generator(patrol_generators[i]);
       }
     }
     for (i = 0; i < gate_generators.length; i++){
       if (gate_generators[i].spot == spot){
         gate_generators[i].blow_up();
-        for (var gate = 0; gate < gate_generators[i].gates.length; gate++){
+        for (var gate = gate_generators[i].gates.length - 1; gate > -1 ; gate--){
           gates[gate_generators[i].gates[gate]].blow_up();
           graphics.remove_gate(gates[gate_generators[i].gates[gate]]);
           paths[gates[gate_generators[i].gates[gate]].path].blocked = false;
@@ -122,7 +130,7 @@ var LevelManager = function(){
   function update(delta){
     for (var i = 0; i < patrols.length; i++){
       patrols[i].update(delta);
-      if (utils.check_collision(patrols[i].get_unit(), avatar_manager.get_avatar())){
+      if (patrols[i].is_active() && utils.check_collision(patrols[i].get_unit(), avatar_manager.get_avatar())){
         game_master.reset_level();
       }
     }

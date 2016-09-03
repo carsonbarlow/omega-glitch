@@ -27,14 +27,22 @@ var Path = function(config){
         x: (CONFIG.direction_to_grid_difference[direction].x * CONFIG.grid_size * magnatude) + checkpoints[checkpoints.length-1].x,
         y: (CONFIG.direction_to_grid_difference[direction].y * CONFIG.grid_size * magnatude) + checkpoints[checkpoints.length-1].y
       });
-      // console.log(checkpoints);
     }
     return checkpoints;
   }
+
+  function blow_up(){
+    console.log('path '+starting_spot+': boom mother FUCKA!!');
+    graphics.remove_path(checkpoints);
+    this.blocked = true;
+    this.blown_up = true;
+  };
 
 
   this.set_starting_spot = set_starting_spot;
   this.inject_graphics = inject_graphics;
   this.checkpoints = checkpoints;
+  this.blow_up = blow_up;
+
 };
 

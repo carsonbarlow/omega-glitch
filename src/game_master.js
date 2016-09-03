@@ -42,9 +42,12 @@ var GameMaster = function(){
   }
 
   function level_complete(){
-    level_ready = false;
-    current_level++
-    start_level();
+    setTimeout(function(){
+      level_ready = false;
+      current_level++
+      start_level();
+    },1000);
+    
   }
 
   function reset_level(){
