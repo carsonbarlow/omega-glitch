@@ -12,7 +12,7 @@ var LevelManager = function(){
     for (var spot in level.spots){
       var new_spot = new Spot(level.spots[spot]);
       spots[spot] = new_spot;
-      graphics.add_spot(new_spot);
+      graphics.add_to_manifest(new_spot, 'spots')
     }
     this.starting_spot = spots[level.start];
     for (i = 0; i < level.paths.length; i++){
@@ -22,9 +22,8 @@ var LevelManager = function(){
       paths.push(path);
     }
     for (i = 0; i < level.objectives.length; i++){
-      var objective = new Objective(level.objectives[i]);
-      objective.spot = spots[objective.spot];
-      graphics.add_objective(objective);
+      var objective = new Objective(level.objectives[i],spots);
+      graphics.add_to_manifest(objective, 'objectives');
       objectives.push(objective);
     }
     for (i = 0; i < level.patrols.length; i++){
@@ -34,21 +33,19 @@ var LevelManager = function(){
       patrols.push(patrol);
     }
     for (i = 0; i < level.patrol_generators.length; i++){
-      var patrol_generator = new PatrolGenerator(level.patrol_generators[i]);
-      patrol_generator.spot = spots[patrol_generator.spot];
-      graphics.add_patrol_generator(patrol_generator);
+      var patrol_generator = new PatrolGenerator(level.patrol_generators[i],spots);
+      graphics.add_to_manifest(patrol_generator, 'patrol_generators');
       patrol_generators.push(patrol_generator);
     }
     for (i = 0; i < level.gates.length; i++){
       var gate = new Gate(level.gates[i]);
       paths[gate.path].blocked = true;
-      graphics.add_gate(gate);
+      graphics.add_to_manifest(gate, 'gates');
       gates.push(gate);
     }
     for (i = 0; i < level.gate_generators.length; i++){
-      var gate_generator = new GateGenerator(level.gate_generators[i]);
-      gate_generator.spot = spots[gate_generator.spot];
-      graphics.add_gate_generator(gate_generator);
+      var gate_generator = new GateGenerator(level.gate_generators[i],spots);
+      graphics.add_to_manifest(gate_generator, 'gate_generators');
       gate_generators.push(gate_generator);
     }
   };
@@ -77,7 +74,7 @@ var LevelManager = function(){
     for (var i = 0; i < objectives.length; i++){
       if (objectives[i].spot == spot){
         objectives[i].blow_up();
-        graphics.remove_objective(objectives[i]);
+        graphics.remove_from_manifest(objectives[i], 'objectives');
         for (var path = objectives[i].paths.length -1; path > -1; path--){
           paths[objectives[i].paths[path]].blow_up();
           for (var patrol = 0; patrol < patrols.length; patrol++){
@@ -97,10 +94,9 @@ var LevelManager = function(){
         patrol_generators[i].blow_up();
         for (var patrol = patrol_generators[i].patrols.length -1; patrol > -1 ; patrol--){
           patrols[patrol_generators[i].patrols[patrol]].blow_up();
-          graphics.remove_patrol(patrols[patrol_generators[i].patrols[patrol]].get_unit());
-          // patrols.splice(patrols.indexOf(patrols[patrol_generators[i].patrols[patrol]]),1);
+          graphics.remove_from_manifest(patrols[patrol_generators[i].patrols[patrol]].get_unit(), 'patrols');
         }
-        graphics.remove_patrol_generator(patrol_generators[i]);
+        graphics.remove_from_manifest(patrol_generators[i], 'patrol_generators');
       }
     }
     for (i = 0; i < gate_generators.length; i++){
@@ -108,9 +104,9 @@ var LevelManager = function(){
         gate_generators[i].blow_up();
         for (var gate = gate_generators[i].gates.length - 1; gate > -1 ; gate--){
           gates[gate_generators[i].gates[gate]].blow_up();
-          graphics.remove_gate(gates[gate_generators[i].gates[gate]]);
+          graphics.remove_from_manifest(gates[gate_generators[i].gates[gate]], 'gates');
           paths[gates[gate_generators[i].gates[gate]].path].blocked = false;
-          graphics.remove_gate_generator(gate_generators[i]);
+          graphics.remove_from_manifest(gate_generators[i], 'gate_generators');
         }
       }
     }

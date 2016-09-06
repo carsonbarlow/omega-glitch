@@ -15,7 +15,18 @@ var AvatarManager = function(){
     vol_y: 0,
     speed: 500,
     charges: 0,
-    collision: 10
+    collision: 10,
+    radius: 10,
+
+    graphic: {
+      lineWidth: 0,
+      fillStyle: 'rgba(250,247,91,0.7)',
+      strokeStyle: '#29c8df',
+      shadowColor: '#39b5a6',
+      shadowBlur: 5,
+      shadowOffsetX: 0,
+      shadowOffsetY: 0
+    }
   };
 
   var input,
@@ -74,8 +85,8 @@ var AvatarManager = function(){
   function jump_to_spot(spot){
     current_spot = spot;
     moving = false;
-    avatar.pos_x = spot.x * CONFIG.grid_size;
-    avatar.pos_y = spot.y * CONFIG.grid_size;
+    avatar.pos_x = spot.pos_x;
+    avatar.pos_y = spot.pos_y;
     if (spot.charge){
       avatar.charges++;
       spot.charge = false;

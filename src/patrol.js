@@ -8,8 +8,19 @@ var Patrol = function(config_route){
     vol_x: 0,
     vol_y: 0,
     speed: 75,
-    collision: 10
+    collision: 10,
+
+    graphic: {
+      lineWidth: 0,
+      fillStyle: 'rgba(207, 19, 28, 0.8)',
+      shadowColor: '#6FC3DF',
+      shadowBlur: 20,
+      shadowOffsetX: 0,
+      shadowOffsetY: 0
+    }
   };
+
+
 
   var graphics,
     active = true,
@@ -21,7 +32,7 @@ var Patrol = function(config_route){
 
   function inject_graphics(_graphics_){
     graphics = _graphics_;
-    graphics.add_patrol(unit);
+    graphics.add_to_manifest(unit, 'patrols')
   }
 
   function make_path_list(paths, spots){
@@ -29,8 +40,8 @@ var Patrol = function(config_route){
     for (var i = 0; i < route.length; i++){
       path_list.push(paths[get_path_to_spot(spots[route[i]], route[((i+1)%route.length)])]); // ((i+1)%route.length) <-- wraps around the array.
     }
-    unit.pos_x = spots[route[0]].x * CONFIG.grid_size;
-    unit.pos_y = spots[route[0]].y * CONFIG.grid_size;
+    unit.pos_x = spots[route[0]].pos_x;
+    unit.pos_y = spots[route[0]].pos_y;
     current_path_index = -1;
     patrol_direction = 1;
     jump_to_next_path();

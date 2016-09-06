@@ -9,7 +9,7 @@ var Path = function(config){
   function set_starting_spot(spot){
     starting_spot = spot;
     this.checkpoints = construct_checkpoints();
-    graphics.add_path(checkpoints); // must come after inject_graphics
+    graphics.add_to_manifest(checkpoints, 'paths');
   }
 
   function inject_graphics(_graphics_){
@@ -18,7 +18,7 @@ var Path = function(config){
 
   function construct_checkpoints(){
     checkpoints = [];
-    checkpoints.push({x:starting_spot.x * CONFIG.grid_size, y:starting_spot.y * CONFIG.grid_size});
+    checkpoints.push({x:starting_spot.pos_x, y:starting_spot.pos_y});
     var direction, magnatude;
     for (var i = 1; i < config.length; i+=2){
       direction = config[i];
@@ -32,8 +32,9 @@ var Path = function(config){
   }
 
   function blow_up(){
-    console.log('path '+starting_spot+': boom mother FUCKA!!');
-    graphics.remove_path(checkpoints);
+    // console.log('path '+starting_spot+': boom mother FUCKA!!');
+    // graphics.remove_path(checkpoints);
+    graphics.remove_from_manifest(checkpoints, 'paths');
     this.blocked = true;
     this.blown_up = true;
   };
