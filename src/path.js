@@ -9,7 +9,7 @@ var Path = function(config){
   function set_starting_spot(spot){
     starting_spot = spot;
     this.checkpoints = construct_checkpoints();
-    graphics.add_to_manifest(checkpoints, 'paths');
+    graphics.add_to_manifest(this, 'paths');
   }
 
   function inject_graphics(_graphics_){
@@ -34,9 +34,18 @@ var Path = function(config){
   function blow_up(){
     // console.log('path '+starting_spot+': boom mother FUCKA!!');
     // graphics.remove_path(checkpoints);
-    graphics.remove_from_manifest(checkpoints, 'paths');
+    graphics.remove_from_manifest(this, 'paths');
     this.blocked = true;
     this.blown_up = true;
+  };
+
+  this.graphic = {
+    lineWidth: 2,
+    strokeStyle: '#d1f3f8',
+    shadowColor: '#6FC3DF',
+    shadowBlur: 5,
+    shadowOffsetX: 0,
+    shadowOffsetY: 0
   };
 
 

@@ -10,6 +10,7 @@ var Graphics = function () {
     patrol_generators: [],
     gates: [],
     gate_generators: [],
+    gate_generator_paths: [],
     avatar: []
   }
 
@@ -19,23 +20,24 @@ var Graphics = function () {
     CANVAS_HEIGHT = canvas.height,
     avatar;
 
-  // var draw_order = ['paths','spots','objectives','patrols','patrol_generators','gates','gate_generators','avatar'];
-  var draw_order = ['spots','objectives','patrols','patrol_generators','gates','gate_generators','avatar'];
+  var draw_order = ['paths','spots','objectives','patrols','patrol_generators','gates','gate_generators','gate_generator_paths','avatar'];
+  // var draw_order = ['spots','objectives','patrols','patrol_generators','gates','gate_generators','avatar'];
   // var draw_order = ['spots','patrols','patrol_generators'];
   var draw_key = {
-    // paths: draw_line,
+    paths: draw_line,
     spots: draw_circle,
     objectives: draw_square,
     patrols: draw_circle,
     patrol_generators: draw_square,
     gates: draw_square,
     gate_generators: draw_square,
+    gate_generator_paths: draw_line,
     avatar: draw_circle
   }
 
   function draw() {
     ctx.clearRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-    draw_paths();
+    // draw_paths();
     for (var list = 0; list < draw_order.length; list++){
       draw_manifest_list(draw_order[list]);
     }
@@ -76,6 +78,10 @@ var Graphics = function () {
       ctx.save();
       var graphic = list[i].graphic;
       for (var attribute in graphic){
+        if (attribute == 'setLineDash'){
+          ctx.setLineDash(graphic[attribute]);
+          continue;
+        }
         ctx[attribute] = graphic[attribute];
       }
       draw_key[name](list[i]);
@@ -108,6 +114,16 @@ var Graphics = function () {
     ctx.stroke();
   }
 
+  function draw_line(cords){
+    ctx.beginPath();
+    var path = cords.checkpoints;
+    ctx.moveTo(path[0].x, path[0].y);
+    for (var i = 1; i < path.length; i++) {
+      ctx.lineTo(path[i].x, path[i].y);
+    }
+    ctx.stroke();
+  }
+
   function draw_charge(spot) {
     ctx.fillStyle = "rgba(212, 17, 27, 0.6)";
     ctx.shadowColor = '#d0161e';
@@ -121,27 +137,6 @@ var Graphics = function () {
     // ctx.stroke();
   }
 
-  function draw_paths() {
-    ctx.save();
-    ctx.lineWidth = 2;
-    ctx.strokeStyle = '#d1f3f8';
-    ctx.shadowColor = '#6FC3DF';
-    ctx.shadowBlur = 5;
-    ctx.shadowOffsetX = 0;
-    ctx.shadowOffsetY = 0;
-    for (var i = 0; i < draw_manifest.paths.length; i++) {
-      draw_path(draw_manifest.paths[i]);
-    }
-    ctx.restore();
-  }
-
-  function draw_path(path) {
-    ctx.moveTo(path[0].x, path[0].y);
-    for (var i = 1; i < path.length; i++) {
-      ctx.lineTo(path[i].x, path[i].y);
-    }
-    ctx.stroke();
-  }
 
   this.draw = draw;
   this.clear_level = clear_level;

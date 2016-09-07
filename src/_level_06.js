@@ -12,7 +12,7 @@
 var CONTENT = CONTENT || {levels:{}};
 
 CONTENT.levels['6'] = {
-  charges: 3,
+  charges: 4,
   spots: {
     s1: {
       x: 28,
@@ -112,7 +112,10 @@ CONTENT.levels['6'] = {
   gate_generators: [
     {
       s: 's9',
-      g: [0]
+      g: [0],
+      gp: [
+        [6,1,7,1,8,1]
+      ]
     }
   ]
 };

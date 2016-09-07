@@ -30,7 +30,7 @@ var GameMaster = function(){
   }
 
   function start_game(){
-    current_level = 1;
+    current_level = 6;
     start_level();
   };
 

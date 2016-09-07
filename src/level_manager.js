@@ -45,7 +45,7 @@ var LevelManager = function(){
     }
     for (i = 0; i < level.gate_generators.length; i++){
       var gate_generator = new GateGenerator(level.gate_generators[i],spots);
-      graphics.add_to_manifest(gate_generator, 'gate_generators');
+      gate_generator.inject_graphics(graphics);
       gate_generators.push(gate_generator);
     }
   };
