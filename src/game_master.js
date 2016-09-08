@@ -7,7 +7,7 @@ var GameMaster = function(){
   input,
   dom_manager,
   current_level,
-  highest_level = 1,
+  highest_level = read_in_cookie() || 1,
   avatar_manager = new AvatarManager();
   level_manager = new LevelManager();
 
@@ -56,6 +56,7 @@ var GameMaster = function(){
       if (current_level > highest_level){
         highest_level = current_level;
         dom_manager.unlock_levels(highest_level);
+        document.cookie = 'omega_glitch_level='+highest_level;
       }
       start_level();
     },1000);
@@ -88,6 +89,17 @@ var GameMaster = function(){
     }else if(button == 'back_to_start'){
       dom_manager.close_screen('game_complete');
       dom_manager.open_screen('start_screen');
+    }
+  }
+
+  function read_in_cookie(){
+    var cookies = document.cookie;
+    cookies = cookies.split(';');
+    for (var i = 0; i < cookies.length; i++){
+      console.log(cookies[i].trim().substring(0,19));
+      if (cookies[i].trim().substring(0,19) == 'omega_glitch_level='){
+        return parseInt(cookies[i].substring(20));
+      }
     }
   }
 
