@@ -21,8 +21,6 @@ var Graphics = function () {
     avatar;
 
   var draw_order = ['paths','spots','objectives','patrols','patrol_generators','gates','gate_generators','gate_generator_paths','avatar'];
-  // var draw_order = ['spots','objectives','patrols','patrol_generators','gates','gate_generators','avatar'];
-  // var draw_order = ['spots','patrols','patrol_generators'];
   var draw_key = {
     paths: draw_line,
     spots: draw_circle,

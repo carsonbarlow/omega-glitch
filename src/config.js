@@ -4,8 +4,6 @@ var CONFIG = {
   canvas_id: 'game_canvas',
   fps: 60,
   grid_size: 15,
-  FOREGROUND: 1,
-  BACKGROUND: 0,
   direction_to_grid_difference: {
     '1': {x: 0, y: -1},  // north
     '2': {x: 1, y: -1},  // north_east
@@ -15,6 +13,7 @@ var CONFIG = {
     '6': {x:-1 , y:1},  // south_west
     '7': {x:-1 , y:0},  // west
     '8': {x:-1 , y:-1},  // north_west
-  }
+  },
+  level_button_width: 5
 
 }

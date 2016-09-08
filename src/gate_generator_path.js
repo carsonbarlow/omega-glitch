@@ -3,7 +3,7 @@ var GateGeneratorPath = function(_config_){
 
   var config = _config_,
     starting_spot,
-    checkpoints;;
+    checkpoints;
   this.checkpoints = [];
   
 

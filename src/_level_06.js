@@ -89,7 +89,7 @@ CONTENT.levels['6'] = {
   ],
   start: 's1',
   objectives: [
-    ['s4',[1,2,3,4,8,7,6]],
+    ['s4',[0,1,2,3,4,8,7,6]],
     ['s7',[5,4,9,3]]
     ],
   patrols: [
@@ -117,5 +117,6 @@ CONTENT.levels['6'] = {
         [6,1,7,1,8,1]
       ]
     }
-  ]
+  ],
+  end_of_game: true
 };

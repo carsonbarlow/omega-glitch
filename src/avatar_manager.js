@@ -34,6 +34,7 @@ var AvatarManager = function(){
   path,
   checkpoint;
   var moving = false,
+    gate_hit = false,
   current_spot;
 
 
@@ -92,6 +93,7 @@ var AvatarManager = function(){
       spot.charge = false;
     }
     avatar.collision = 8;
+    gate_hit = false;
   }
 
   function start_level(){
@@ -105,6 +107,10 @@ var AvatarManager = function(){
   function get_avatar(){
     return avatar;
   };
+
+  function get_gate_hit(){
+    return gate_hit;
+  }
 
   function inject_input(_input_){
     input = _input_;
@@ -127,6 +133,7 @@ var AvatarManager = function(){
         next_spot = move_leads_to.spot;
         set_avatar_volocity();
         moving = true;
+        gate_hit = false;
         avatar.collision = 2;
       }
     }
@@ -140,12 +147,24 @@ var AvatarManager = function(){
     avatar.charges = num;
   }
 
+  function hit_gate(){
+    gate_hit = true;
+    avatar.vol_x = avatar.vol_x * -1;
+    avatar.vol_y = avatar.vol_y * -1;
+    path.reverse();
+    checkpoint = path.length - 1 - checkpoint;
+    next_spot = current_spot;
+  }
+
   this.update = update;
   this.get_avatar = get_avatar;
   this.start_level = start_level;
   this.inject_input = inject_input;
   this.key_pressed = key_pressed;
+  this.button_pressed = function(){};
   this.inject_level_manager = inject_level_manager;
   this.set_avatar_charges = set_avatar_charges;
+  this.get_gate_hit = get_gate_hit;
+  this.hit_gate = hit_gate;
 
 };

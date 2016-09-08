@@ -6,12 +6,11 @@ var GateGenerator = function(config,spots){
 
   this.spot = spots[config.s];
   this.gates = config.g;
-  var gate_paths = config.gp;
+  var gate_paths = config.gp.slice(0);
   this.pos_x = this.spot.pos_x;
   this.pos_y = this.spot.pos_y;
   this.size = 10;
 
-  // var paths = [];
   for (var i = 0; i < gate_paths.length; i++){
     gate_paths[i] = new GateGeneratorPath(gate_paths[i]);
   }

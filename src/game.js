@@ -8,13 +8,18 @@ window.onload = function(e){
 
 var Game = function(){
 
-  var paused = false
+
+
+  var paused = false;
   var game_master = new GameMaster();
   graphics = new Graphics(),
-  input = new Input();
+  input = new Input(),
+  dom_manager = new DomManager();
+  input.set_up_button_events();
 
   game_master.inject_graphics(graphics);
   game_master.inject_input(input);
+  game_master.inject_dom_manager(dom_manager);
 
 
   function update(delta){
@@ -61,7 +66,7 @@ var Game = function(){
     }
   }
   window.each_frame(run);
-  game_master.start_game();
+  // game_master.start_game();
 
 };
 

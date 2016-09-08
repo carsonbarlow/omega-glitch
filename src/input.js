@@ -2,12 +2,38 @@
 var Input = function(){
 
   var subscribers = [];
+  var buttons = [//];
+  'campaign',
+  'custom',
+  'build',
+  'restart_level',
+  'quit_level',
+  'back_to_start'
+  ];
+
+  function add_button(id){
+    buttons.push(id);
+  }
+
+  function set_up_button_events(){
+    for (var i = 0; i < buttons.length; i++){
+      var button = document.getElementById(buttons[i]);
+      (function(_i_){
+        button.addEventListener('mouseup', function(){
+          for (var s = 0; s < subscribers.length; s++){
+            subscribers[s].button_pressed(buttons[_i_]);
+          }
+        });
+      })(i);
+    }
+  }
 
   window.addEventListener('keydown',function(event){
     for (var i = 0; i < subscribers.length; i++){
       subscribers[i].key_pressed(event.key);
     }
   });
+
 
   function add_subscriber(subscriber){
     if (subscribers.indexOf(subscriber) === -1){
@@ -23,6 +49,8 @@ var Input = function(){
 
   this.add_subscriber = add_subscriber;
   this.remove_subscriber = remove_subscriber;
+  this.set_up_button_events = set_up_button_events;
+  this.add_button = add_button;
 
 };
 

@@ -39,7 +39,7 @@ var LevelManager = function(){
     }
     for (i = 0; i < level.gates.length; i++){
       var gate = new Gate(level.gates[i]);
-      paths[gate.path].blocked = true;
+      // paths[gate.path].blocked = true;
       graphics.add_to_manifest(gate, 'gates');
       gates.push(gate);
     }
@@ -85,7 +85,11 @@ var LevelManager = function(){
         }
         objectives.splice(i,1);
         if (!objectives.length){
-          game_master.level_complete();
+          if (level.end_of_game){
+            game_master.game_complete();
+          }else{
+            game_master.level_complete();
+          }
         }
       }
     }
@@ -113,7 +117,6 @@ var LevelManager = function(){
   }
 
   function clear_level(){
-    graphics.clear_level();
     spots = {};
     paths = [];
     objectives = [];
@@ -128,6 +131,11 @@ var LevelManager = function(){
       patrols[i].update(delta);
       if (patrols[i].is_active() && utils.check_collision(patrols[i].get_unit(), avatar_manager.get_avatar())){
         game_master.reset_level();
+      }
+    }
+    for (i = 0; i < gates.length; i++){
+      if (gates[i].is_active() && !avatar_manager.get_gate_hit() && utils.check_collision(gates[i], avatar_manager.get_avatar())){
+        avatar_manager.hit_gate();
       }
     }
   }
