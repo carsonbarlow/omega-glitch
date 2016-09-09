@@ -7,7 +7,7 @@ var GameMaster = function(){
   input,
   dom_manager,
   current_level,
-  highest_level = read_in_cookie() || 1,
+  highest_level = read_in_cookie() || 6,
   avatar_manager = new AvatarManager();
   level_manager = new LevelManager();
 
@@ -45,6 +45,7 @@ var GameMaster = function(){
     level_manager.clear_level();
     graphics.clear_level();
     level_manager.setup_level(current_level);
+    dom_manager.place_game_tips(level_manager.get_play_tips());
     avatar_manager.start_level();
     level_ready = true;
   }
@@ -96,7 +97,6 @@ var GameMaster = function(){
     var cookies = document.cookie;
     cookies = cookies.split(';');
     for (var i = 0; i < cookies.length; i++){
-      console.log(cookies[i].trim().substring(0,19));
       if (cookies[i].trim().substring(0,19) == 'omega_glitch_level='){
         return parseInt(cookies[i].substring(20));
       }

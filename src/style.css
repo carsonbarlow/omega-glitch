@@ -27,6 +27,34 @@ left: 35%;
 top: 30%;
 }
 
+#play_tips {
+  position: absolute;
+  left: 35%;
+  top: 30%;
+  width: 640px;
+  height: 480px;
+  cursor: default;
+}
+
+.play_tip {
+  position: absolute;
+  font-family: monospace;
+  color: burlywood;
+  font-weight: bold;
+  width: 200px;
+  text-align: center;
+  border: 1px solid;
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgba(0,0,0,0.45);
+}
+
+#tip_lv1a {
+  top: 140px;
+  left: 20px;
+
+}
+
 #start_screen, #select_level, #game_complete {
   position: absolute;
   left: 0;

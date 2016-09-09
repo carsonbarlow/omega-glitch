@@ -33,21 +33,33 @@ CONTENT.levels['2'] = {
       charge: true
     },
     s4: {
-      x: 20,
-      y: 10,
-      s: ['s2',2]
+      x: 18,
+      y: 10
+      // s: ['s2',2]
     }
   },
   paths: [
     ['s1',3,12],
     ['s2',3,15],
-    ['s2',1,5]
+    ['s2',1,3,8,2]
   ],
   patrols: [],
   patrol_generators: [],
   start: 's1',
   objectives: [['s4',[0,1,2]]],
   gates: [],
-  gate_generators: []
+  gate_generators: [],
+  tips: [
+    {
+      x: 140,
+      y: 60,
+      t: 'lv2a'
+    },
+    {
+      x: 420,
+      y: 120,
+      t: 'lv2b'
+    }
+  ]
 };
 

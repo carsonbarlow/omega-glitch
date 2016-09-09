@@ -41,5 +41,17 @@ CONTENT.levels['1'] = {
   start: 's1',
   objectives: [['s3',[0,1]]],
   gates: [],
-  gate_generators: []
+  gate_generators: [],
+  tips: [
+    {
+      x: 20,
+      y: 140,
+      t: 'lv1a'
+    },
+    {
+      x: 420,
+      y: 110,
+      t: 'lv1b'
+    }
+  ]
 };

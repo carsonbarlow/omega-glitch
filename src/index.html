@@ -4,19 +4,9 @@
   <meta charset="UTF-8">
   <title>Omega Glitch</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script type="text/javascript">
-    Game = {
-      config: {
-        canvas_id: 'game_canvas',
-        fps_counter_id: 'fps_counter',
-        fps: 60
-      }
-    }
-  </script>
 </head>
 </body>
 <div id="background">
-  <h1 id="fps_counter">0</h1>
 
   
 
@@ -24,6 +14,9 @@
 
   <canvas id="text"></canvas>
   <canvas id="game_canvas" width="640" height="480"></canvas>
+  <div id="play_tips">
+    <div id="tip_lv1a" class="play_tip">This is you: a malicious little Glitch.  Use "A", "S", "W", and "D" to move.</div>
+  </div>
 
   <button id="restart_level">Restart Level</button>
   <button id="quit_level">Quit Level</button>
@@ -62,6 +55,8 @@
   <script type="text/javascript" src="gate_generator_path.js"></script>
   <script type="text/javascript" src="objective.js"></script>
   <script type="text/javascript" src="input.js"></script>
+  <script type="text/javascript" src="game_text.js"></script>
+  <script type="text/javascript" src="play_tip.js"></script>
   <script type="text/javascript" src="_level_01.js"></script>
   <script type="text/javascript" src="_level_02.js"></script>
   <script type="text/javascript" src="_level_03.js"></script>

@@ -34,14 +34,16 @@ var Path = function(config){
   function blow_up(){
     // console.log('path '+starting_spot+': boom mother FUCKA!!');
     // graphics.remove_path(checkpoints);
-    graphics.remove_from_manifest(this, 'paths');
+    // graphics.remove_from_manifest(this, 'paths');
     this.blocked = true;
     this.blown_up = true;
+    this.graphic.strokeStyle = 'rgba(209, 243, 248, 0.25)';
+    this.graphic.shadowBlur = 0;
   };
 
   this.graphic = {
     lineWidth: 2,
-    strokeStyle: '#d1f3f8',
+    strokeStyle: 'rgba(209, 243, 248, 1)',
     shadowColor: '#6FC3DF',
     shadowBlur: 5,
     shadowOffsetX: 0,

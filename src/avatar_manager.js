@@ -60,10 +60,12 @@ var AvatarManager = function(){
     avatar.pos_y += (avatar.vol_y*delta);
     if (avatar.vol_x > 0 && avatar.pos_x > path[checkpoint].x){
       go_to_checkpoint();
+      return;
     }else if (avatar.vol_x < 0 && avatar.pos_x < path[checkpoint].x){
       go_to_checkpoint();
+      return;
     }
-    if (avatar.vol_y > 0 && avatar.pos_y > path[checkpoint].y){
+    if (path[checkpoint] && avatar.vol_y > 0 && avatar.pos_y > path[checkpoint].y){
       go_to_checkpoint();
     }else if (avatar.vol_y < 0 && avatar.pos_y < path[checkpoint].y){
       go_to_checkpoint();

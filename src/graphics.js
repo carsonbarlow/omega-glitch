@@ -145,6 +145,7 @@ var Graphics = function () {
 
 };
 
+(function(){
 // setup	
 var canvas = document.getElementById("text");
 canvas.width = window.innerWidth;
@@ -285,3 +286,5 @@ setInterval(function () {
   ctx.globalAlpha = 1;
   sn.go();
 }, 1000 / 30);
+
+})();

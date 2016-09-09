@@ -82,6 +82,13 @@ CONTENT.levels['3'] = {
     }
   ],
   gates: [],
-  gate_generators: []
+  gate_generators: [],
+  tips: [
+    {
+      x: 130,
+      y: 260,
+      t: 'lv3a'
+    }
+  ]
 };
 

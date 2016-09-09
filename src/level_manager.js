@@ -3,7 +3,7 @@
 var LevelManager = function(){
 
   var level, graphics, avatar_manager, game_master;
-  var spots, paths, objectives, patrols, patrol_generators, gates, gate_generators;
+  var spots, paths, objectives, patrols, patrol_generators, gates, gate_generators, play_tips;
   this.starting_spot;
 
   function setup_level(num){
@@ -47,6 +47,11 @@ var LevelManager = function(){
       var gate_generator = new GateGenerator(level.gate_generators[i],spots);
       gate_generator.inject_graphics(graphics);
       gate_generators.push(gate_generator);
+    }
+    if (level.tips){
+      for (i = 0; i < level.tips.length; i++){
+        play_tips.push(new PlayTip(level.tips[i]));
+      }
     }
   };
 
@@ -116,6 +121,10 @@ var LevelManager = function(){
     }
   }
 
+  function get_play_tips(){
+    return play_tips;
+  }
+
   function clear_level(){
     spots = {};
     paths = [];
@@ -124,6 +133,7 @@ var LevelManager = function(){
     patrol_generators = [];
     gates = [];
     gate_generators= [];
+    play_tips = [];
   }
 
   function update(delta){
@@ -145,6 +155,7 @@ var LevelManager = function(){
   this.inject_graphics = inject_graphics;
   this.inject_avatar_manager = inject_avatar_manager;
   this.inject_game_master = inject_game_master;
+  this.get_play_tips = get_play_tips;
   this.move_leads_to = move_leads_to;
   this.detonate_charge = detonate_charge;
   this.clear_level = clear_level;
