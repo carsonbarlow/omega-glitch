@@ -14,16 +14,13 @@
 
   <canvas id="text"></canvas>
   <canvas id="game_canvas" width="640" height="480"></canvas>
-  <div id="play_tips">
-    <div id="tip_lv1a" class="play_tip">This is you: a malicious little Glitch.  Use "A", "S", "W", and "D" to move.</div>
-  </div>
 
   <button id="restart_level">Restart Level</button>
   <button id="quit_level">Quit Level</button>
 
-  <div id="select_level">
+  <div id="select_level" class="hidden">
     <h1>Select Level</h1>
-    <button id="select_level_back"></button>
+    <button id="select_level_back">Back</button>
   </div>
 
   <div id="game_complete" class="hidden">
@@ -38,6 +35,34 @@
     <button id="build">Build Cutom Level</button>
   </div>
 
+  <div id="custom_level" class="hidden">
+    <h1>Custom Level</h1>
+    <p>Place level code snippet here:</p>
+    <textarea id="custom_level_textarea">
+({charges: 2,spots:{s1:{x:9,y:7,s:['s2',0]},s2:{x:10,y:12,n:['s1',0],e:['s3',1]},s3:{x:14,y:12,w:['s2',1],e:['s4',2],n:['s7',5]},s4:{x:22,y:14,w:['s3',2],e:['s5',3],s:['s6',4]},s5:{x: 25,y:11,s:['s4',3]},s6:{x:20,y:17,e:['s4',4]},s7:{x:20,y:8,w:['s3',5]}},paths:[['s1',5,2,4,1,5,2],['s2',3,4],['s3',3,2,4,2,3,4],['s4',3,2,2,1,1,2],['s4',5,2,6,1,7,1],['s3',1,2,2,2,3,4]],start:'s1',objectives: [['s5',[0,1,2,3,4,5]]],patrols:[['s6','s4','s3','s4']],patrol_generators:[{s:'s6',p:[0]}],gates:[{x:20,y:14,p:2}],gate_generators:[{s: 's7',g: [0],gp: [[5,6]]}]});
+
+    </textarea>
+    <button id="play_custom">Play</button>
+  </div>
+
+  <div id="level_editor" class="hidden">
+    <h1>Level Editor</h1>
+    <div id="grid_bg"></div>
+    <div id="grid">
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
   <script type="text/javascript" src="game.js"></script>
   <script type="text/javascript" src="game_master.js"></script>
   <script type="text/javascript" src="graphics.js"></script>
@@ -48,6 +73,7 @@
   <script type="text/javascript" src="patrol.js"></script>
   <script type="text/javascript" src="patrol_generator.js"></script>
   <script type="text/javascript" src="level_manager.js"></script>
+  <script type="text/javascript" src="level_editor.js"></script>
   <script type="text/javascript" src="spot.js"></script>
   <script type="text/javascript" src="path.js"></script>
   <script type="text/javascript" src="gate.js"></script>

@@ -120,7 +120,7 @@ var AvatarManager = function(){
   }
 
   function key_pressed(key){
-    if (!moving){
+    if (!moving && level_ready){
       if (key === ' '){
         do_charge();
         return;

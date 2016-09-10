@@ -1,6 +1,7 @@
 // bootstraps the game
 var game;
 
+
 window.onload = function(e){
   game = new Game();
 };
@@ -8,10 +9,8 @@ window.onload = function(e){
 
 var Game = function(){
 
-
-
-  var paused = false;
   var game_master = new GameMaster();
+  level_editor = new LevelEditor();
   graphics = new Graphics(),
   input = new Input(),
   dom_manager = new DomManager();
@@ -20,6 +19,10 @@ var Game = function(){
   game_master.inject_graphics(graphics);
   game_master.inject_input(input);
   game_master.inject_dom_manager(dom_manager);
+  game_master.inject_level_editor(level_editor);
+  level_editor.inject_game_master(game_master);
+  level_editor.inject_input(input);
+  level_editor.inject_dom_manager(dom_manager);
 
 
   function update(delta){

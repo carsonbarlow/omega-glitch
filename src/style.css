@@ -16,7 +16,7 @@ body {
   height: 100%;
 }
 
-#game_canvas {
+#game_canvas, #grid, #grid_bg {
 
 background-color: rgba(0,0,0,0);
 text-align: center;
@@ -55,7 +55,7 @@ top: 30%;
 
 }
 
-#start_screen, #select_level, #game_complete {
+#start_screen, #select_level, #game_complete, #custom_level, #level_editor {
   position: absolute;
   left: 0;
   top: 0;
@@ -112,3 +112,14 @@ top: 30%;
   left: 200px;
 }
 
+.grid_square {
+  position: absolute;
+  border: #0d2d33 1px dotted;
+}
+.grid_button {
+  position: absolute;
+  
+}
+.grid_button.selected {
+  border: #3bbdd6 1px solid;
+}

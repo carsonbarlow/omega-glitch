@@ -1,14 +1,18 @@
 // interfaces with the dom
 
 var DomManager = function(){
-
-
   var screens = {
     start_screen: document.getElementById('start_screen'),
     select_level: document.getElementById('select_level'),
-    game_complete: document.getElementById('game_complete')
+    game_complete: document.getElementById('game_complete'),
+    custom_level: document.getElementById('custom_level'),
+    level_editor: document.getElementById('level_editor')
   };
   var play_tip_display = document.getElementById('play_tips');
+  var custom_level_textarea = document.getElementById('custom_level_textarea');
+  var grid_bg = document.getElementById('grid_bg');
+  var grid = document.getElementById('grid');
+  var current_grid;
 
   var button_array_width = 0;
   var button_array_height = 0;
@@ -29,7 +33,7 @@ var DomManager = function(){
     input.add_button('level_'+i);
   }
 
-
+  setup_grid();
 
   function close_screen(screen){
     // console.log(screen);
@@ -59,10 +63,51 @@ var DomManager = function(){
     }
   }
 
+  function get_custom_level_input(){
+    return custom_level_textarea.value;
+  }
+
+  function setup_grid(){
+    for (var w = 0; w <= CONFIG.grid_width; w++){
+      for (var h = 0; h <= CONFIG.grid_height; h++){
+        var grid_square = document.createElement('div');
+        grid_square.classList.add('grid_square');
+        grid_square.style.top = (h * CONFIG.grid_size) + 'px';
+        grid_square.style.left = (w * CONFIG.grid_size) + 'px';
+        grid_square.style.width = CONFIG.grid_size + 'px';
+        grid_square.style.height = CONFIG.grid_size + 'px';
+        grid_bg.appendChild(grid_square);
+
+        if (w < CONFIG.grid_width && h < CONFIG.grid_height){
+          var grid_button = document.createElement('div');
+          grid_button.id = 'grid_'+w+'_'+h;
+          grid_button.classList.add('grid_button');
+          grid_button.style.top = ((h * CONFIG.grid_size)+ (CONFIG.grid_size/2)) + 'px' ;
+          grid_button.style.left = ((w * CONFIG.grid_size)+ (CONFIG.grid_size/2)) + 'px';
+          grid_button.style.width = CONFIG.grid_size + 'px';
+          grid_button.style.height = CONFIG.grid_size + 'px';
+          grid.appendChild(grid_button);
+          input.add_button('grid_'+w+'_'+h);
+        }
+        
+      }
+    }
+  }
+
+  function select_grid_square(x,y){
+    if (current_grid){
+      current_grid.classList.remove('selected');
+    }
+    current_grid = document.getElementById('grid_'+x+'_'+y);
+    current_grid.classList.add('selected');
+  }
+
   this.close_screen = close_screen;
   this.open_screen = open_screen;
   this.unlock_levels = unlock_levels;
   this.place_game_tips = place_game_tips;
+  this.get_custom_level_input = get_custom_level_input;
+  this.select_grid_square = select_grid_square;
 
 
 };

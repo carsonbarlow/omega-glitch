@@ -6,10 +6,12 @@ var GameMaster = function(){
   var graphics,
   input,
   dom_manager,
+  level_editor,
   current_level,
   highest_level = read_in_cookie() || 6,
   avatar_manager = new AvatarManager();
   level_manager = new LevelManager();
+
 
   avatar_manager.inject_level_manager(level_manager);
   level_manager.inject_avatar_manager(avatar_manager);
@@ -34,6 +36,10 @@ var GameMaster = function(){
 
   function inject_dom_manager(_dom_manager_){
     dom_manager = _dom_manager_;
+  }
+
+  function inject_level_editor(_level_editor_){
+    level_editor = _level_editor_;
   }
 
   function start_game(){
@@ -78,6 +84,9 @@ var GameMaster = function(){
       dom_manager.close_screen('start_screen');
       dom_manager.open_screen('select_level');
       dom_manager.unlock_levels(highest_level);
+    }else if (button == 'select_level_back'){
+      dom_manager.close_screen('select_level');
+      dom_manager.open_screen('start_screen');
     }else if (button.substring(0,6) == 'level_'){
       current_level = parseInt(button.substring(6));
       start_level();
@@ -90,6 +99,17 @@ var GameMaster = function(){
     }else if(button == 'back_to_start'){
       dom_manager.close_screen('game_complete');
       dom_manager.open_screen('start_screen');
+    }else if(button == 'custom'){
+      dom_manager.close_screen('start_screen');
+      dom_manager.open_screen('custom_level');
+    }else if(button == 'play_custom'){
+      set_up_custom_level(dom_manager.get_custom_level_input());
+      dom_manager.close_screen('custom_level');
+    }else if(button == 'build'){
+      dom_manager.close_screen('start_screen');
+      dom_manager.open_screen('level_editor');
+    }else{
+      // console.log(button);
     }
   }
 
@@ -103,10 +123,19 @@ var GameMaster = function(){
     }
   }
 
+  function set_up_custom_level(input){
+    var level = eval(input);
+    console.log(level);
+    CONTENT.levels['0'] = level;
+    current_level = 0;
+    start_level();
+  }
+
   this.update = update;
   this.inject_graphics = inject_graphics;
   this.inject_input = inject_input;
   this.inject_dom_manager = inject_dom_manager;
+  this.inject_level_editor = inject_level_editor;
   this.key_pressed = function(){};
   this.button_pressed = button_pressed;
   this.start_game = start_game;
