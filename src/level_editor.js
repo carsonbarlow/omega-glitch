@@ -49,6 +49,7 @@ var LevelEditor = function(){
 
   function inject_dom_manager(_dom_manager_){
     dom_manager = _dom_manager_;
+    dom_manager.enable_paths([]);
   }
 
   function button_pressed(button){
@@ -57,17 +58,20 @@ var LevelEditor = function(){
       x = parseInt(button.split('_')[1]);
       y = parseInt(button.split('_')[2]);
       dom_manager.select_grid_square(x,y);
+      refresh_level();
     }else if(button == 'add_spot'){
       add_spot();
+    }else if(button == 'add_objective'){
+      add_objective();
     }else if(button.substring(0,5) == 'path_'){
       make_path(direction_map[button.split('_')[1]]);
     }else{
       return;
     }
-    update_ui();
   }
 
-  function update_ui(){
+  function refresh_level(){
+    load_level();
     space_stats = survay_space();
     toggle_buttons();
   }
@@ -80,6 +84,12 @@ var LevelEditor = function(){
         response.spot_name = s;
         join_path_to_spot(level.spots[s]);
         current_path = [];
+        for (var o = 0; o < level.objectives.length; o++){
+          if (level.objectives[o][0] == s){
+            response.objective = level.objectives[o];
+            dom_manager.build_objective_config(response.objective, level.paths);
+          }
+        }
       }
     }
     // console.log(response);
@@ -87,7 +97,7 @@ var LevelEditor = function(){
   }
 
   function toggle_buttons(){
-    if (space_stats.spot){
+    if (!!space_stats.spot){
       var path_directions = ['n','e','s','w'];
       for (var i = path_directions.length -1; i >= 0; i--){
         if (typeof space_stats.spot[path_directions[i]] != 'undefined'){
@@ -95,14 +105,21 @@ var LevelEditor = function(){
         }
       }
       dom_manager.enable_paths(path_directions);
+      if (!!space_stats.objective){
+        dom_manager.enable_buttons([]);
+      }else{
+        dom_manager.enable_buttons(['objective']);
+      }
     }else if (path_incomlete){
       var path_directions = ['n','ne','e','se','s','sw','w','nw'];
       var current_direction = current_path[current_path.length - 2] - 1;
       current_direction = (current_direction + 4)%8;
       path_directions.splice(current_direction,1);
       dom_manager.enable_paths(path_directions);
+      dom_manager.enable_buttons(['spot']);
     }else{
       dom_manager.enable_paths([]);
+      dom_manager.enable_buttons(['spot']);
     }
   }
 
@@ -116,10 +133,16 @@ var LevelEditor = function(){
     if(current_path.length){
       join_path_to_spot(spot);
     }
+    path_incomlete = false;
+    refresh_level();
     
-    load_level();
-    update_ui();
+  }
 
+  function add_objective(){
+    var objective = [space_stats.spot_name,[]];
+    level.objectives.push(objective);
+    // dom_manager.build_objective_config(objective, level.paths);
+    refresh_level();
   }
 
   function make_path(direction){
@@ -137,13 +160,8 @@ var LevelEditor = function(){
     x += CONFIG.direction_to_grid_difference[direction].x;
     y += CONFIG.direction_to_grid_difference[direction].y;
     dom_manager.select_grid_square(x,y);
-    load_level();
-    update_ui();
-    path_incomlete = false;
-    if (!space_stats.spot){
-      path_incomlete = true;
-    }
-    
+    path_incomlete = true;
+    refresh_level();
   }
 
   function join_path_to_spot(spot){
@@ -156,7 +174,18 @@ var LevelEditor = function(){
     path_incomlete = false;
   }
 
+  function path_checkbox_changed(checkbox){
+    var path_index = parseInt(checkbox.value);
+    var list = space_stats.objective[1];
+    if (checkbox.checked){
+      list.push(path_index);
+    }else{
+      list.splice(list.indexOf(path_index),1);
+    }
+  }
+
   function load_level(){
+    if (!Object.keys(level.spots).length){return;}
     level.charges = parseInt(dom_manager.get_charge_count()) || 0;
     game_master.set_up_custom_level(level);
   }
@@ -166,6 +195,7 @@ var LevelEditor = function(){
   this.inject_dom_manager = inject_dom_manager;
   this.key_pressed = function(){};
   this.button_pressed = button_pressed;
+  this.path_checkbox_changed = path_checkbox_changed;
 
 
   this.get_level = function(){

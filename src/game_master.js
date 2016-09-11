@@ -95,12 +95,14 @@ var GameMaster = function(){
       start_level();
       dom_manager.close_screen('select_level');
       dom_manager.open_screen('game_background');
+      dom_manager.open_screen('play_game');
     }else if(button == 'restart_level'){
       level_ready = false;
       start_level();
     }else if(button == 'quit_level'){
       dom_manager.open_screen('select_level');
       dom_manager.close_screen('game_background');
+      dom_manager.close_screen('play_game');
     }else if(button == 'back_to_start'){
       dom_manager.close_screen('game_complete');
       dom_manager.open_screen('start_screen');

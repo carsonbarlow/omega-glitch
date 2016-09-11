@@ -4,6 +4,7 @@ var DomManager = function(){
   var screens = {
     start_screen: document.getElementById('start_screen'),
     select_level: document.getElementById('select_level'),
+    play_game: document.getElementById('play_game'),
     game_complete: document.getElementById('game_complete'),
     custom_level: document.getElementById('custom_level'),
     level_editor: document.getElementById('level_editor'),
@@ -15,6 +16,9 @@ var DomManager = function(){
   var grid = document.getElementById('grid');
   var current_grid;
   var path_directions = ['n','ne','e','se','s','sw','w','nw'];
+  var level_editor_buttons = ['spot', 'objective'];
+  // var add_spot = document.getElementById('add_spot');
+  // var add_objective = document.getElementById('add_objective');
 
   var button_array_width = 0;
   var button_array_height = 0;
@@ -115,6 +119,33 @@ var DomManager = function(){
     }
   }
 
+  function enable_buttons(buttons){
+    // console.log(buttons);
+    for (var i = 0; i < level_editor_buttons.length; i++){
+      document.getElementById('add_'+level_editor_buttons[i]).disabled = (buttons.indexOf(level_editor_buttons[i])== -1);
+    }
+  }
+
+  function build_objective_config(objective, paths){
+    var editor_context = document.getElementById('level_editor_context_config');
+    editor_context.getElementsByTagName('p')[0].innerHTML = "Processor";
+    list = editor_context.getElementsByTagName('ul')[0];
+    list.innerHTML = '';
+    for (var i = 0; i < paths.length; i++){
+      var checkbox = document.createElement('input');
+      checkbox.type = "checkbox";
+      checkbox.checked = (objective[1].indexOf(i) != -1);
+      checkbox.value = i;
+      checkbox.addEventListener('change', function(){
+        level_editor.path_checkbox_changed(this);
+      });
+      var li = document.createElement('li');
+      li.appendChild(checkbox);
+      li.appendChild(document.createTextNode('path_'+i));
+      list.appendChild(li);
+    }
+  }
+
   this.close_screen = close_screen;
   this.open_screen = open_screen;
   this.unlock_levels = unlock_levels;
@@ -123,6 +154,8 @@ var DomManager = function(){
   this.select_grid_square = select_grid_square;
   this.get_charge_count = get_charge_count;
   this.enable_paths = enable_paths;
+  this.enable_buttons = enable_buttons;
+  this.build_objective_config = build_objective_config;
 
 
 };

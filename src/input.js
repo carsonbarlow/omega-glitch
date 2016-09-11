@@ -13,6 +13,7 @@ var Input = function(){
   'back_to_start',
   'play_custom',
   'add_spot',
+  'add_objective',
   'path_n',
   'path_ne',
   'path_e',

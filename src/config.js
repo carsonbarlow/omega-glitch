@@ -3,8 +3,8 @@
 var CONFIG = {
   canvas_id: 'game_canvas',
   fps: 60,
-  grid_width: 30,
-  grid_height: 20,
+  grid_width: 40,
+  grid_height: 30,
   grid_size: 15,
   direction_to_grid_difference: {
     '1': {x: 0, y: -1},  // north
