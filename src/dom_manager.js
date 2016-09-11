@@ -8,6 +8,7 @@ var DomManager = function(){
     game_complete: document.getElementById('game_complete'),
     custom_level: document.getElementById('custom_level'),
     level_editor: document.getElementById('level_editor'),
+    export_text: document.getElementById('export_text'),
     game_background: document.getElementById('game_background')
   };
   var play_tip_display = document.getElementById('play_tips');
@@ -16,7 +17,7 @@ var DomManager = function(){
   var grid = document.getElementById('grid');
   var current_grid;
   var path_directions = ['n','ne','e','se','s','sw','w','nw'];
-  var level_editor_buttons = ['spot', 'objective'];
+  var level_editor_buttons = ['spot', 'objective','charge'];
   // var add_spot = document.getElementById('add_spot');
   // var add_objective = document.getElementById('add_objective');
 
@@ -146,6 +147,10 @@ var DomManager = function(){
     }
   }
 
+  function export_level(level){
+    export_text.innerHTML = utils.stringify_level(level);
+  }
+
   this.close_screen = close_screen;
   this.open_screen = open_screen;
   this.unlock_levels = unlock_levels;
@@ -156,6 +161,7 @@ var DomManager = function(){
   this.enable_paths = enable_paths;
   this.enable_buttons = enable_buttons;
   this.build_objective_config = build_objective_config;
+  this.export_level = export_level;
 
 
 };

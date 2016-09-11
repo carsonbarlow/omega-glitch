@@ -15,7 +15,8 @@ var LevelEditor = function(){
     sw: 6,
     w: 7,
     nw: 8
-  };
+  },
+  path_directions = ['n','ne','e','se','s','sw','w','nw'];
 
 
   var level = {
@@ -35,8 +36,7 @@ var LevelEditor = function(){
     space_stats,
     current_path = [],
     path_incomlete = false,
-    spot_id_tracker = 0
-    path_directions = ['n','ne','e','se','s','sw','w','nw'];
+    spot_id_tracker = 0;
 
   function inject_game_master(_game_master_){
     game_master = _game_master_;
@@ -63,8 +63,17 @@ var LevelEditor = function(){
       add_spot();
     }else if(button == 'add_objective'){
       add_objective();
+    }else if(button == 'add_charge'){
+      add_charge();
     }else if(button.substring(0,5) == 'path_'){
       make_path(direction_map[button.split('_')[1]]);
+    }else if (button == 'export'){
+      dom_manager.export_level(level);
+    }else if (button == 'test_level'){
+      dom_manager.close_screen('level_editor');
+      dom_manager.open_screen('game_background');
+      dom_manager.open_screen('play_game');
+      game_master.set_up_custom_level(level, true);
     }else{
       return;
     }
@@ -82,7 +91,7 @@ var LevelEditor = function(){
       if (level.spots[s].x == x && level.spots[s].y == y){
         response.spot = level.spots[s];
         response.spot_name = s;
-        join_path_to_spot(level.spots[s]);
+        // join_path_to_spot(level.spots[s]);
         current_path = [];
         for (var o = 0; o < level.objectives.length; o++){
           if (level.objectives[o][0] == s){
@@ -105,10 +114,10 @@ var LevelEditor = function(){
         }
       }
       dom_manager.enable_paths(path_directions);
-      if (!!space_stats.objective){
+      if (!!space_stats.objective || !!space_stats.spot.charge){
         dom_manager.enable_buttons([]);
       }else{
-        dom_manager.enable_buttons(['objective']);
+        dom_manager.enable_buttons(['objective','charge']);
       }
     }else if (path_incomlete){
       var path_directions = ['n','ne','e','se','s','sw','w','nw'];
@@ -145,6 +154,11 @@ var LevelEditor = function(){
     refresh_level();
   }
 
+  function add_charge(){
+    space_stats.spot.charge = true;
+    refresh_level();
+  }
+
   function make_path(direction){
     if (!current_path.length){
       current_path.push(space_stats.spot_name, direction, 1);
@@ -167,9 +181,12 @@ var LevelEditor = function(){
   function join_path_to_spot(spot){
     var path_direction_numbers = [1,3,5,7];
     var index = path_direction_numbers.indexOf(current_path[current_path.length-2]);
+    var origin_spot = level.spots[current_path[0]];
+    var direction = path_directions[current_path[1]-1];
+    origin_spot[direction] = ['s'+spot_id_tracker, level.paths.length -1];
     if (index > -1){
       index = ((index + 2)%4);
-      spot[path_directions[path_direction_numbers[index]-1]] = level.paths.length -1;
+      spot[path_directions[path_direction_numbers[index]-1]] = [current_path[0],level.paths.length -1];
     }
     path_incomlete = false;
   }
