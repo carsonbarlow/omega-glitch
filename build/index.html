@@ -4,33 +4,19 @@
   <meta charset="UTF-8">
   <title>Omega Glitch</title>
   <link rel="stylesheet" type="text/css" href="style.css">
-  <script type="text/javascript">
-    Game = {
-      config: {
-        canvas_id: 'game_canvas',
-        fps_counter_id: 'fps_counter',
-        fps: 60
-      }
-    }
-  </script>
 </head>
 </body>
 <div id="background">
-  <h1 id="fps_counter">0</h1>
-
-  
-
-
-
-  <canvas id="text"></canvas>
+  <canvas id="game_background"></canvas>
   <canvas id="game_canvas" width="640" height="480"></canvas>
+  <div id="play_tips"></div>
 
   <button id="restart_level">Restart Level</button>
   <button id="quit_level">Quit Level</button>
 
-  <div id="select_level">
+  <div id="select_level" class="hidden">
     <h1>Select Level</h1>
-    <button id="select_level_back"></button>
+    <button id="select_level_back">Back</button>
   </div>
 
   <div id="game_complete" class="hidden">
@@ -38,19 +24,38 @@
     <button id="back_to_start">I'm Awesome!</button>
   </div>
 
-  <div id="start_screen">
+  <div id="start_screen" class="hidden">
     <h1>Omega Glitch</h1>
     <button id="campaign">Play Campaign</button>
     <button id="custom">Play Custom Level</button>
     <button id="build">Build Cutom Level</button>
   </div>
 
-  <div id="custom_level">
+  <div id="custom_level" class="hidden">
     <h1>Custom Level</h1>
     <p>Place level code snippet here:</p>
-    <input type="textfield">
+    <textarea id="custom_level_textarea">
+    </textarea>
+    <button id="play_custom">Play</button>
   </div>
 
+  <div id="level_editor">
+    <h1>Level Editor</h1>
+    <div id="grid_bg"></div>
+    <div id="grid">
+    </div>
+    <button  id="level_editor_back">Back</button>
+    <p>Starting charges</p><input id="charge_setter" type="text">
+    <button id="add_spot">Spot</button>
+    <button id="path_n">N</button>
+    <button id="path_ne">NE</button>
+    <button id="path_e">E</button>
+    <button id="path_se">SE</button>
+    <button id="path_s">S</button>
+    <button id="path_sw">SW</button>
+    <button id="path_w">W</button>
+    <button id="path_nw">NW</button>
+  </div>
   <script type="text/javascript" src="script.js"></script>
 </div>
 </body>

@@ -5,12 +5,22 @@ var Input = function(){
   var buttons = [
   'campaign',
   'select_level_back',
+  'level_editor_back',
   'custom',
   'build',
   'restart_level',
   'quit_level',
   'back_to_start',
-  'play_custom'
+  'play_custom',
+  'add_spot',
+  'path_n',
+  'path_ne',
+  'path_e',
+  'path_se',
+  'path_s',
+  'path_sw',
+  'path_w',
+  'path_nw'
   ];
 
   function add_button(id){

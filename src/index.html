@@ -12,8 +12,9 @@
 
 
 
-  <canvas id="text"></canvas>
+  <canvas id="game_background"></canvas>
   <canvas id="game_canvas" width="640" height="480"></canvas>
+  <div id="play_tips"></div>
 
   <button id="restart_level">Restart Level</button>
   <button id="quit_level">Quit Level</button>
@@ -28,7 +29,7 @@
     <button id="back_to_start">I'm Awesome!</button>
   </div>
 
-  <div id="start_screen">
+  <div id="start_screen" class="hidden">
     <h1>Omega Glitch</h1>
     <button id="campaign">Play Campaign</button>
     <button id="custom">Play Custom Level</button>
@@ -45,13 +46,22 @@
     <button id="play_custom">Play</button>
   </div>
 
-  <div id="level_editor" class="hidden">
+  <div id="level_editor">
     <h1>Level Editor</h1>
     <div id="grid_bg"></div>
     <div id="grid">
     </div>
-
-
+    <button  id="level_editor_back">Back</button>
+    <p>Starting charges</p><input id="charge_setter" type="text">
+    <button id="add_spot">Spot</button>
+    <button id="path_n">N</button>
+    <button id="path_ne">NE</button>
+    <button id="path_e">E</button>
+    <button id="path_se">SE</button>
+    <button id="path_s">S</button>
+    <button id="path_sw">SW</button>
+    <button id="path_w">W</button>
+    <button id="path_nw">NW</button>
 
 
 
@@ -89,6 +99,7 @@
   <script type="text/javascript" src="_level_04.js"></script>
   <script type="text/javascript" src="_level_05.js"></script>
   <script type="text/javascript" src="_level_06.js"></script>
+  <!-- // <script type="text/javascript" src="_level_07.js"></script> -->
 </div>
 </body>
 </html>

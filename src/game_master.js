@@ -84,6 +84,9 @@ var GameMaster = function(){
       dom_manager.close_screen('start_screen');
       dom_manager.open_screen('select_level');
       dom_manager.unlock_levels(highest_level);
+    }else if (button == 'level_editor_back'){
+      dom_manager.close_screen('level_editor');
+      dom_manager.open_screen('start_screen');
     }else if (button == 'select_level_back'){
       dom_manager.close_screen('select_level');
       dom_manager.open_screen('start_screen');
@@ -91,11 +94,13 @@ var GameMaster = function(){
       current_level = parseInt(button.substring(6));
       start_level();
       dom_manager.close_screen('select_level');
+      dom_manager.open_screen('game_background');
     }else if(button == 'restart_level'){
       level_ready = false;
       start_level();
     }else if(button == 'quit_level'){
       dom_manager.open_screen('select_level');
+      dom_manager.close_screen('game_background');
     }else if(button == 'back_to_start'){
       dom_manager.close_screen('game_complete');
       dom_manager.open_screen('start_screen');
@@ -103,7 +108,7 @@ var GameMaster = function(){
       dom_manager.close_screen('start_screen');
       dom_manager.open_screen('custom_level');
     }else if(button == 'play_custom'){
-      set_up_custom_level(dom_manager.get_custom_level_input());
+      set_up_custom_level(eval(dom_manager.get_custom_level_input()));
       dom_manager.close_screen('custom_level');
     }else if(button == 'build'){
       dom_manager.close_screen('start_screen');
@@ -123,9 +128,7 @@ var GameMaster = function(){
     }
   }
 
-  function set_up_custom_level(input){
-    var level = eval(input);
-    console.log(level);
+  function set_up_custom_level(level){
     CONTENT.levels['0'] = level;
     current_level = 0;
     start_level();
@@ -142,6 +145,7 @@ var GameMaster = function(){
   this.level_complete = level_complete;
   this.reset_level = reset_level;
   this.game_complete = game_complete;
+  this.set_up_custom_level = set_up_custom_level;
 
 };
 

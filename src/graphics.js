@@ -147,7 +147,7 @@ var Graphics = function () {
 
 (function(){
 // setup	
-var canvas = document.getElementById("text");
+var canvas = document.getElementById("game_background");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 var ctx = canvas.getContext('2d');

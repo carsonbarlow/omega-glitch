@@ -6,13 +6,15 @@ var DomManager = function(){
     select_level: document.getElementById('select_level'),
     game_complete: document.getElementById('game_complete'),
     custom_level: document.getElementById('custom_level'),
-    level_editor: document.getElementById('level_editor')
+    level_editor: document.getElementById('level_editor'),
+    game_background: document.getElementById('game_background')
   };
   var play_tip_display = document.getElementById('play_tips');
   var custom_level_textarea = document.getElementById('custom_level_textarea');
   var grid_bg = document.getElementById('grid_bg');
   var grid = document.getElementById('grid');
   var current_grid;
+  var path_directions = ['n','ne','e','se','s','sw','w','nw'];
 
   var button_array_width = 0;
   var button_array_height = 0;
@@ -80,14 +82,15 @@ var DomManager = function(){
 
         if (w < CONFIG.grid_width && h < CONFIG.grid_height){
           var grid_button = document.createElement('div');
-          grid_button.id = 'grid_'+w+'_'+h;
+          var id = 'grid_'+(w+1)+'_'+(h+1);
+          grid_button.id = id
           grid_button.classList.add('grid_button');
           grid_button.style.top = ((h * CONFIG.grid_size)+ (CONFIG.grid_size/2)) + 'px' ;
           grid_button.style.left = ((w * CONFIG.grid_size)+ (CONFIG.grid_size/2)) + 'px';
           grid_button.style.width = CONFIG.grid_size + 'px';
           grid_button.style.height = CONFIG.grid_size + 'px';
           grid.appendChild(grid_button);
-          input.add_button('grid_'+w+'_'+h);
+          input.add_button(id);
         }
         
       }
@@ -102,12 +105,24 @@ var DomManager = function(){
     current_grid.classList.add('selected');
   }
 
+  function get_charge_count(){
+    return document.getElementById('charge_setter').value;
+  }
+
+  function enable_paths(paths){
+    for (var i = 0; i < path_directions.length; i++){
+      document.getElementById('path_'+path_directions[i]).disabled = (paths.indexOf(path_directions[i]) == -1);
+    }
+  }
+
   this.close_screen = close_screen;
   this.open_screen = open_screen;
   this.unlock_levels = unlock_levels;
   this.place_game_tips = place_game_tips;
   this.get_custom_level_input = get_custom_level_input;
   this.select_grid_square = select_grid_square;
+  this.get_charge_count = get_charge_count;
+  this.enable_paths = enable_paths;
 
 
 };
