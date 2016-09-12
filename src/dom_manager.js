@@ -17,7 +17,7 @@ var DomManager = function(){
   var grid = document.getElementById('grid');
   var current_grid;
   var path_directions = ['n','ne','e','se','s','sw','w','nw'];
-  var level_editor_buttons = ['spot', 'objective','charge','gate_generator','gate'];
+  var level_editor_buttons = ['spot', 'objective','charge','gate_generator','gate','patrol_generator'];
   // var add_spot = document.getElementById('add_spot');
   // var add_objective = document.getElementById('add_objective');
 

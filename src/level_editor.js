@@ -37,6 +37,7 @@ var LevelEditor = function(){
     current_path = [],
     current_gpath = [],
     current_gate_generator,
+    current_patrol_generator,
     path_incomplete = false,
     gpath_incomplete = false,
     spot_id_tracker = 0;
@@ -74,6 +75,8 @@ var LevelEditor = function(){
       add_gate_generator();
     }else if(button == 'add_gate'){
       add_gate();
+    }else if(button == 'add_patrol_generator'){
+      add_patrol_generator();
     }else if(button.substring(0,5) == 'path_'){
       make_path(direction_map[button.split('_')[1]]);
     }else if(button.substring(0,6) == 'gpath_'){
@@ -119,6 +122,12 @@ var LevelEditor = function(){
             current_gate_generator = level.gate_generators[gg];
           }
         }
+        for (var pg = 0; pg < level.patrol_generators.length; pg++){
+          if (level.patrol_generators[pg].s == s){
+            response.patrol_generator = level.patrol_generators[pg];
+            current_patrol_generator = level.patrol_generators[pg];
+          }
+        }
       }
     }
     for (var g = 0; g < level.gates.length; g++){
@@ -138,13 +147,13 @@ var LevelEditor = function(){
         }
       }
       dom_manager.enable_paths(path_directions);
-      if (!!space_stats.objective || !!space_stats.spot.charge || !!space_stats.gate_generator){
+      if (!!space_stats.objective || !!space_stats.spot.charge || !!space_stats.gate_generator || !!space_stats.patrol_generator){
         dom_manager.enable_buttons([]);
         if (!!space_stats.gate_generator){
           dom_manager.enable_gpaths(['n','ne','e','se','s','sw','w','nw']);
         }
       }else{
-        dom_manager.enable_buttons(['objective','charge','gate_generator']);
+        dom_manager.enable_buttons(['objective','charge','gate_generator', 'patrol_generator']);
       }
     }else if (path_incomplete){
       var path_directions = ['n','ne','e','se','s','sw','w','nw'];
@@ -216,6 +225,12 @@ var LevelEditor = function(){
     current_gate_generator.g.push(level.gates.length-1);
     current_gpath = [];
     gpath_incomplete = false;
+    refresh_level();
+  }
+
+  function add_patrol_generator(){
+    var patrol_generator = {s:space_stats.spot_name,p:[]};
+    level.patrol_generators.push(patrol_generator);
     refresh_level();
   }
 

@@ -17,6 +17,7 @@ var Input = function(){
   'add_charge',
   'add_gate_generator',
   'add_gate',
+  'add_patrol_generator',
   'export',
   'test_level',
   'path_n',

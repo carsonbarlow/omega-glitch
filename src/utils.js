@@ -48,6 +48,21 @@ var Utils = function(){
     response += '],patrols:[';
     // patrol_generators: [],
     response += '],patrol_generators:[';
+
+    for (var pg = 0; pg < level.patrol_generators.length; pg++){
+      response += '{s:\''+level.patrol_generators[pg].s+'\',p:['+level.patrol_generators[pg].p.slice(0).toString()+']},'
+    }
+    if (response[response.length-1] == ','){
+      response = response.substr(0,response.length-1);
+    }
+// {
+//       s: 's10',
+//       p: [0,1]
+//     }
+
+
+
+
     // start: 's1',
     response += '],start:\''+level.start+'\',';
     // objectives: [['s3',[0,1]]],
