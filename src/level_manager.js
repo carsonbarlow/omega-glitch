@@ -114,7 +114,7 @@ var LevelManager = function(){
         for (var gate = gate_generators[i].gates.length - 1; gate > -1 ; gate--){
           gates[gate_generators[i].gates[gate]].blow_up();
           graphics.remove_from_manifest(gates[gate_generators[i].gates[gate]], 'gates');
-          paths[gates[gate_generators[i].gates[gate]].path].blocked = false;
+          // paths[gates[gate_generators[i].gates[gate]].path].blocked = false;
           graphics.remove_from_manifest(gate_generators[i], 'gate_generators');
         }
       }

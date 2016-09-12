@@ -41,7 +41,7 @@ var Utils = function(){
     // paths
     response += '},paths:[';
     for (var p = 0; p < level.paths.length; p++){
-      response += '[\''+level.paths[p][0]+'\','+level.paths[p].splice(1).toString()+'],'
+      response += '[\''+level.paths[p][0]+'\','+level.paths[p].slice(0).splice(1).toString()+'],'
     }
     response = response.substr(0,response.length-1);
     // patrols: [],
@@ -55,11 +55,32 @@ var Utils = function(){
     for (var o = 0; o < level.objectives.length; o++){
       response += '[\''+level.objectives[o][0]+'\',['+level.objectives[o][1].toString()+']],'
     }
-    response = response.substr(0,response.length-1);
+    if (response[response.length-1] == ','){
+      response = response.substr(0,response.length-1);
+    }
     // gates: [],
     response += '],gates:[';
+    for (var g = 0; g < level.gates.length; g++){
+      response += '{x:'+level.gates[g].x+',y:'+level.gates[g].y+'},';
+    }
+    if (response[response.length-1] == ','){
+      response = response.substr(0,response.length-1);
+    }
     // gate_generators: [],
     response += '],gate_generators:[';
+    for (var gg = 0; gg < level.gate_generators.length; gg++){
+      response += '{s:\''+level.gate_generators[gg].s+'\',g:['+level.gate_generators[gg].g.toString()+'],gp:[';
+      for (var gp = 0; gp < level.gate_generators[gg].gp.length; gp++){
+        response += '['+level.gate_generators[gg].gp[gp].toString()+'],';
+      }
+      if (response[response.length-1] == ','){
+        response = response.substr(0,response.length-1);
+      }
+      response += ']},';
+    }
+    if (response[response.length-1] == ','){
+      response = response.substr(0,response.length-1);
+    }
     response += ']});'
     return response;
   }
@@ -71,84 +92,3 @@ var Utils = function(){
 };
 
 utils = new Utils();
-
-
-
-// ({
-//   charges:0,
-//   spots:{
-//     s1:{
-//       x:7,
-//       y:15,
-//       e:['s2',0]
-//     },
-//     s2:{
-//       x:11,
-//       y:15,
-//       e:['s3',1],
-//       w:['s1',0]
-//     },
-//     s3:{
-//       x:15,
-//       y:15,
-//       w:['s2',1]
-//     }
-//   },
-//   paths:[
-//     ['s1',3,4],
-//     ['s2',3,4]
-//   ],
-//   patrols:[],
-//   patrol_generators:[],
-//   start:'s1',
-//   objectives:[
-//     ['s1',[0],
-//     ['s3',[1]
-//   ],
-//   gates:[],
-//   gate_generators[]
-// })
-
-// charges: 1,
-//   spots: {
-//     s1: {
-//       x: 8,
-//       y: 15,
-//       e: ['s2',0]
-//     },
-//     s2: {
-//       x: 20,
-//       y: 15,
-//       w: ['s1',0],
-//       e: ['s3',1]
-//     },
-//     s3: {
-//       x: 35,
-//       y: 15,
-//       w: ['s2',1]
-//     }
-//   },
-//   paths: [
-//     ['s1',3,12],
-//     ['s2',3,15]
-//     // ['s2',3,3,4,2,5,3,7,2,5,2,3,1,2,3,5,2,3,2,2,1,1,2,8,1,7,2,8,1,1,2,2,2,3,4,4,1,5,1,4,1,3,1]
-//   ],
-//   patrols: [],
-//   patrol_generators: [],
-//   start: 's1',
-//   objectives: [['s3',[0,1]]],
-//   gates: [],
-//   gate_generators: [],
-//   tips: [
-//     {
-//       x: 20,
-//       y: 140,
-//       t: 'lv1a'
-//     },
-//     {
-//       x: 420,
-//       y: 110,
-//       t: 'lv1b'
-//     }
-//   ]
-// };

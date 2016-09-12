@@ -15,6 +15,8 @@ var Input = function(){
   'add_spot',
   'add_objective',
   'add_charge',
+  'add_gate_generator',
+  'add_gate',
   'export',
   'test_level',
   'path_n',
@@ -24,7 +26,15 @@ var Input = function(){
   'path_s',
   'path_sw',
   'path_w',
-  'path_nw'
+  'path_nw',
+  'gpath_n',
+  'gpath_ne',
+  'gpath_e',
+  'gpath_se',
+  'gpath_s',
+  'gpath_sw',
+  'gpath_w',
+  'gpath_nw'
   ];
 
   function add_button(id){

@@ -3,7 +3,7 @@
 var Gate = function(config){
   this.pos_x = config.x * CONFIG.grid_size;
   this.pos_y = config.y * CONFIG.grid_size;
-  this.path = config.p;
+  // this.path = config.p;
   this.size = 10;
   this.collision = 8;
   active = true;

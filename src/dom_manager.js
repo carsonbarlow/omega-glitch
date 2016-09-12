@@ -17,7 +17,7 @@ var DomManager = function(){
   var grid = document.getElementById('grid');
   var current_grid;
   var path_directions = ['n','ne','e','se','s','sw','w','nw'];
-  var level_editor_buttons = ['spot', 'objective','charge'];
+  var level_editor_buttons = ['spot', 'objective','charge','gate_generator','gate'];
   // var add_spot = document.getElementById('add_spot');
   // var add_objective = document.getElementById('add_objective');
 
@@ -120,6 +120,12 @@ var DomManager = function(){
     }
   }
 
+  function enable_gpaths(gpath){
+    for (var i = 0; i < path_directions.length; i++){
+      document.getElementById('gpath_'+path_directions[i]).disabled = (gpath.indexOf(path_directions[i]) == -1);
+    }
+  }
+
   function enable_buttons(buttons){
     // console.log(buttons);
     for (var i = 0; i < level_editor_buttons.length; i++){
@@ -159,6 +165,7 @@ var DomManager = function(){
   this.select_grid_square = select_grid_square;
   this.get_charge_count = get_charge_count;
   this.enable_paths = enable_paths;
+  this.enable_gpaths = enable_gpaths;
   this.enable_buttons = enable_buttons;
   this.build_objective_config = build_objective_config;
   this.export_level = export_level;

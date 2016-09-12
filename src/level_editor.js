@@ -35,7 +35,10 @@ var LevelEditor = function(){
     y = 0,
     space_stats,
     current_path = [],
-    path_incomlete = false,
+    current_gpath = [],
+    current_gate_generator,
+    path_incomplete = false,
+    gpath_incomplete = false,
     spot_id_tracker = 0;
 
   function inject_game_master(_game_master_){
@@ -50,11 +53,13 @@ var LevelEditor = function(){
   function inject_dom_manager(_dom_manager_){
     dom_manager = _dom_manager_;
     dom_manager.enable_paths([]);
+    dom_manager.enable_gpaths([]);
+    dom_manager.enable_buttons(['spot']);
   }
 
   function button_pressed(button){
     if (button.substring(0,5) == 'grid_'){
-      if (path_incomlete){return;}
+      if (path_incomplete || gpath_incomplete){return;}
       x = parseInt(button.split('_')[1]);
       y = parseInt(button.split('_')[2]);
       dom_manager.select_grid_square(x,y);
@@ -65,8 +70,14 @@ var LevelEditor = function(){
       add_objective();
     }else if(button == 'add_charge'){
       add_charge();
+    }else if(button == 'add_gate_generator'){
+      add_gate_generator();
+    }else if(button == 'add_gate'){
+      add_gate();
     }else if(button.substring(0,5) == 'path_'){
       make_path(direction_map[button.split('_')[1]]);
+    }else if(button.substring(0,6) == 'gpath_'){
+      make_gpath(direction_map[button.split('_')[1]]);
     }else if (button == 'export'){
       dom_manager.export_level(level);
     }else if (button == 'test_level'){
@@ -91,22 +102,35 @@ var LevelEditor = function(){
       if (level.spots[s].x == x && level.spots[s].y == y){
         response.spot = level.spots[s];
         response.spot_name = s;
-        // join_path_to_spot(level.spots[s]);
-        current_path = [];
+        if (path_incomplete){
+          join_path_to_spot(response.spot);
+          current_path = [];
+        }
+        
         for (var o = 0; o < level.objectives.length; o++){
           if (level.objectives[o][0] == s){
             response.objective = level.objectives[o];
             dom_manager.build_objective_config(response.objective, level.paths);
           }
         }
+        for (var gg = 0; gg < level.gate_generators.length; gg++){
+          if (level.gate_generators[gg].s == s){
+            response.gate_generator = level.gate_generators[gg];
+            current_gate_generator = level.gate_generators[gg];
+          }
+        }
       }
     }
-    // console.log(response);
+    for (var g = 0; g < level.gates.length; g++){
+      if (level.gates[g].x == x && level.gates[g].y == y){
+        response.gate = level.gates[g];
+      }
+    }
     return response;
   }
 
   function toggle_buttons(){
-    if (!!space_stats.spot){
+    if (!!space_stats.spot && !gpath_incomplete){
       var path_directions = ['n','e','s','w'];
       for (var i = path_directions.length -1; i >= 0; i--){
         if (typeof space_stats.spot[path_directions[i]] != 'undefined'){
@@ -114,20 +138,41 @@ var LevelEditor = function(){
         }
       }
       dom_manager.enable_paths(path_directions);
-      if (!!space_stats.objective || !!space_stats.spot.charge){
+      if (!!space_stats.objective || !!space_stats.spot.charge || !!space_stats.gate_generator){
         dom_manager.enable_buttons([]);
+        if (!!space_stats.gate_generator){
+          dom_manager.enable_gpaths(['n','ne','e','se','s','sw','w','nw']);
+        }
       }else{
-        dom_manager.enable_buttons(['objective','charge']);
+        dom_manager.enable_buttons(['objective','charge','gate_generator']);
       }
-    }else if (path_incomlete){
+    }else if (path_incomplete){
       var path_directions = ['n','ne','e','se','s','sw','w','nw'];
       var current_direction = current_path[current_path.length - 2] - 1;
       current_direction = (current_direction + 4)%8;
       path_directions.splice(current_direction,1);
       dom_manager.enable_paths(path_directions);
-      dom_manager.enable_buttons(['spot']);
+      if (!space_stats.gate){
+        dom_manager.enable_buttons(['spot']);
+      }else{
+        dom_manager.enable_buttons([]);
+      }
+      dom_manager.enable_gpaths([]);
+    }else if(gpath_incomplete){
+      var path_directions = ['n','ne','e','se','s','sw','w','nw'];
+      var current_direction = current_gpath[current_gpath.length - 2] - 1;
+      current_direction = (current_direction + 4)%8;
+      path_directions.splice(current_direction,1);
+      dom_manager.enable_gpaths(path_directions);
+      dom_manager.enable_paths([]);
+      if (!space_stats.spot){
+        dom_manager.enable_buttons(['gate']);
+      }else{
+        dom_manager.enable_buttons([]);
+      }
     }else{
       dom_manager.enable_paths([]);
+      dom_manager.enable_gpaths([]);
       dom_manager.enable_buttons(['spot']);
     }
   }
@@ -142,7 +187,7 @@ var LevelEditor = function(){
     if(current_path.length){
       join_path_to_spot(spot);
     }
-    path_incomlete = false;
+    path_incomplete = false;
     refresh_level();
     
   }
@@ -156,6 +201,21 @@ var LevelEditor = function(){
 
   function add_charge(){
     space_stats.spot.charge = true;
+    refresh_level();
+  }
+
+  function add_gate_generator(){
+    var gate_generator = {s: space_stats.spot_name, g:[],gp:[]};
+    level.gate_generators.push(gate_generator);
+    refresh_level();
+  }
+
+  function add_gate(){
+    var gate = {x:x,y:y};
+    level.gates.push(gate);
+    current_gate_generator.g.push(level.gates.length-1);
+    current_gpath = [];
+    gpath_incomplete = false;
     refresh_level();
   }
 
@@ -174,7 +234,23 @@ var LevelEditor = function(){
     x += CONFIG.direction_to_grid_difference[direction].x;
     y += CONFIG.direction_to_grid_difference[direction].y;
     dom_manager.select_grid_square(x,y);
-    path_incomlete = true;
+    path_incomplete = true;
+    refresh_level();
+  }
+
+  function make_gpath(direction){
+    if (!current_gpath.length){
+      current_gate_generator.gp.push(current_gpath);
+    }
+    if (current_gpath[current_gpath.length-2] == direction){
+      current_gpath[current_gpath.length-1]++;
+    }else{
+      current_gpath.push(direction, 1);
+    }
+    x += CONFIG.direction_to_grid_difference[direction].x;
+    y += CONFIG.direction_to_grid_difference[direction].y;
+    dom_manager.select_grid_square(x,y);
+    gpath_incomplete = true;
     refresh_level();
   }
 
@@ -183,12 +259,18 @@ var LevelEditor = function(){
     var index = path_direction_numbers.indexOf(current_path[current_path.length-2]);
     var origin_spot = level.spots[current_path[0]];
     var direction = path_directions[current_path[1]-1];
-    origin_spot[direction] = ['s'+spot_id_tracker, level.paths.length -1];
+    for (s in level.spots){
+      if (level.spots[s] == spot){
+        origin_spot[direction] = [s, level.paths.length -1];
+        break;
+      }
+    }
     if (index > -1){
       index = ((index + 2)%4);
       spot[path_directions[path_direction_numbers[index]-1]] = [current_path[0],level.paths.length -1];
     }
-    path_incomlete = false;
+    current_path = [];
+    path_incomplete = false;
   }
 
   function path_checkbox_changed(checkbox){

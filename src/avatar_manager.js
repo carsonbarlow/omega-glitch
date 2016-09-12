@@ -20,7 +20,7 @@ var AvatarManager = function(){
 
     graphic: {
       lineWidth: 0,
-      fillStyle: 'rgba(250,247,91,0.7)',
+      fillStyle: 'rgba(12,20,31,0.7)',
       strokeStyle: '#29c8df',
       shadowColor: '#39b5a6',
       shadowBlur: 5,
@@ -136,7 +136,7 @@ var AvatarManager = function(){
         set_avatar_volocity();
         moving = true;
         gate_hit = false;
-        avatar.collision = 2;
+        avatar.collision = 4;
       }
     }
   }

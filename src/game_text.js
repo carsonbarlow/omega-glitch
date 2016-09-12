@@ -2,7 +2,7 @@
 // This might get a bit texty...
 
 var GAME_TEXT = {
-  lv1a: 'This is you: a malicious little Glitch.  Use "A", "S", "W", and "D" to move.',
+  lv1a: 'This is you: a malicious little Glitch.  Use "A", "S", "W", "D" to move.',
   lv1b: 'This is your objective: A system Processor.  Use "Space Bar" to detonate your malware charge to disable it.',
   lv2a: 'Some paths are one way.  Restart the level if you get stuck.',
   lv2b: 'Sometimes you may happen across a malware package from a fallen comrade.  Carry on his work!',
