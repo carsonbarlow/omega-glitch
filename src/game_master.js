@@ -11,7 +11,7 @@ var GameMaster = function(){
   level_editor,
   current_level,
   testing_level,
-  highest_level = read_in_cookie() || 1,
+  highest_level = read_in_cookie() || Object.keys(CONTENT.levels).length,
   avatar_manager = new AvatarManager();
   level_manager = new LevelManager();
 
