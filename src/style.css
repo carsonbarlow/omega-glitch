@@ -31,7 +31,7 @@ text-align: center;
 position: absolute;
 margin: auto;
 display: inline-block;
-left: 35%;
+left: 30%;
 top: 30%;
 width: 640px;
   height: 480px;
@@ -184,7 +184,7 @@ h1 {
   text-align: center;
   font-weight: 300;
   letter-spacing: 3px;
-  margin:10px;
+  margin:0px;
 }
 
 .blue {
@@ -201,13 +201,14 @@ h1 {
 }
 .controls {
   position: absolute;
-  top: 125px;
-  left: 37%;
+  top: 80px;
+  left: 20px;
 }
 .export {
   position: absolute;
-  top: 810px;
-  left: 47%;
+  top: 15px;
+  left: 67%;
+  width: 300px;
 }
 .direction_button {
   width: 40px;
@@ -231,13 +232,13 @@ h1 {
 }
 #level_editor_context_config {
   position: absolute;
-  top: 0;
-  left: -40%;
+  top: 0px;
+  left: 1060px;
 }
 #level_editor_patrol_config {
    position: absolute;
-  top: -30px;
-  left: -40%; 
+  top: 0px;
+  left: 1200px;
 }
 .editor_button {
   width: 130px;
@@ -261,8 +262,8 @@ h1 {
 }
 .charges {
   position: absolute;
-  top: 20%;
-  left: 37%;
+  top: 16%;
+  left: 32.5%;
   font-family: Arial, Helvetica, sans-serif;
   color: #E6FFFF;
 }
@@ -271,4 +272,7 @@ h1 {
   font-size: 100px;
   color: #DF740C;
   text-shadow: 0 0 1px #FBFBFB, 0 0 4px #B6E5EF, 0 0 8px #268398, 0 0 8px #268398, 0 0 10px #268398;
+}
+.startingCharges {
+  font-family: Helvetica Neue, sans-serif;
 }
