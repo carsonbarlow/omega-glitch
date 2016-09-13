@@ -9,6 +9,9 @@ body {
   background: rgb(10,10,10);
 }
 
+button:focus {outline:0;}
+button:hover {opacity:0.8;}
+
 #background {
   background: rgb(10,10,10);
   position: absolute;
@@ -198,7 +201,7 @@ h1 {
 }
 .controls {
   position: absolute;
-  top: 134px;
+  top: 125px;
   left: 37%;
 }
 .export {
@@ -255,4 +258,17 @@ h1 {
   color: gray;
   opacity: 0.3;
   cursor: not-allowed;
+}
+.charges {
+  position: absolute;
+  top: 20%;
+  left: 37%;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #E6FFFF;
+}
+#charges {
+  font-family: serif;
+  font-size: 100px;
+  color: #DF740C;
+  text-shadow: 0 0 1px #FBFBFB, 0 0 4px #B6E5EF, 0 0 8px #268398, 0 0 8px #268398, 0 0 10px #268398;
 }
