@@ -1,7 +1,8 @@
 // object responsible for constructing paths between spots
 
-var Path = function(config){
+var Path = function(_config_){
 
+  var config = _config_.slice(0);
   var graphics;
   var starting_spot;
   var checkpoints;
@@ -40,7 +41,7 @@ var Path = function(config){
     this.graphic.shadowBlur = 0;
   };
 
-  this.graphic = {
+  var graphic = {
     lineWidth: 2,
     strokeStyle: 'rgba(209, 243, 248, 1)',
     shadowColor: '#6FC3DF',
@@ -49,21 +50,27 @@ var Path = function(config){
     shadowOffsetY: 0
   };
 
+  this.graphic = graphic;
+
   function threaten(){
-    this.graphic.shadowColor = '#cc0000';
+    graphic.shadowColor = '#cc0000';
   }
 
-  function untreaten(){
-    this.graphic.shadowColor = '#6FC3DF';
+  function unthreaten(){
+    graphic.shadowColor = '#6FC3DF';
   }
 
+  if (config[config.length-1] == 'threat'){
+    config.pop();
+    threaten();
+  }
 
   this.set_starting_spot = set_starting_spot;
   this.inject_graphics = inject_graphics;
   this.checkpoints = checkpoints;
   this.blow_up = blow_up;
   this.threaten = threaten;
-  this.untreaten = untreaten;
+  this.unthreaten = unthreaten;
 
 };
 

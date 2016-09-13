@@ -69,7 +69,6 @@ var LevelEditor = function(){
       x = parseInt(button.split('_')[1]);
       y = parseInt(button.split('_')[2]);
       dom_manager.select_grid_square(x,y);
-      refresh_level();
     }else if(button == 'add_spot'){
       add_spot();
     }else if(button == 'add_objective'){
@@ -98,12 +97,14 @@ var LevelEditor = function(){
     }else{
       return;
     }
+    refresh_level();
   }
 
   function refresh_level(){
-    load_level();
     space_stats = survay_space();
     toggle_buttons();
+    load_level();
+    
   }
 
   function survay_space(){
@@ -197,6 +198,18 @@ var LevelEditor = function(){
       dom_manager.enable_gpaths([]);
       dom_manager.enable_buttons([]);
     }
+    for (p = 0; p < level.paths.length; p++){
+      if (level.paths[p].slice(0).pop() == 'threat'){
+        level.paths[p].pop();
+      }
+    }
+    if (!!space_stats.objective){
+      for (var p = 0; p < space_stats.objective[1].length; p++){
+        if (level.paths[space_stats.objective[1][p]].slice(0).pop() != 'threat'){
+          level.paths[space_stats.objective[1][p]].push('threat');
+        }
+      }
+    }
   }
 
   function add_spot(){
@@ -210,7 +223,7 @@ var LevelEditor = function(){
       join_path_to_spot(spot);
     }
     path_incomplete = false;
-    refresh_level();
+    // refresh_level();
     
   }
 
@@ -218,18 +231,18 @@ var LevelEditor = function(){
     var objective = [space_stats.spot_name,[]];
     level.objectives.push(objective);
     // dom_manager.build_objective_config(objective, level.paths);
-    refresh_level();
+    // refresh_level();
   }
 
   function add_charge(){
     space_stats.spot.charge = true;
-    refresh_level();
+    // refresh_level();
   }
 
   function add_gate_generator(){
     var gate_generator = {s: space_stats.spot_name, g:[],gp:[]};
     level.gate_generators.push(gate_generator);
-    refresh_level();
+    // refresh_level();
   }
 
   function add_gate(){
@@ -238,13 +251,13 @@ var LevelEditor = function(){
     current_gate_generator.g.push(level.gates.length-1);
     current_gpath = [];
     gpath_incomplete = false;
-    refresh_level();
+    // refresh_level();
   }
 
   function add_patrol_generator(){
     var patrol_generator = {s:space_stats.spot_name,p:[]};
     level.patrol_generators.push(patrol_generator);
-    refresh_level();
+    // refresh_level();
   }
 
   function add_patrol(){
@@ -253,7 +266,7 @@ var LevelEditor = function(){
     level.patrols.push(patrol);
     current_patrol_generator.p.push(level.patrols.length-1);
     patrol_route_incomplete = true;
-    refresh_level();
+    // refresh_level();
     dom_manager.build_patrol_config(patrol, level.spots);
   }
 
@@ -273,7 +286,7 @@ var LevelEditor = function(){
     y += CONFIG.direction_to_grid_difference[direction].y;
     dom_manager.select_grid_square(x,y);
     path_incomplete = true;
-    refresh_level();
+    // refresh_level();
   }
 
   function make_gpath(direction){
@@ -289,7 +302,7 @@ var LevelEditor = function(){
     y += CONFIG.direction_to_grid_difference[direction].y;
     dom_manager.select_grid_square(x,y);
     gpath_incomplete = true;
-    refresh_level();
+    // refresh_level();
   }
 
   function join_path_to_spot(spot){
@@ -316,9 +329,12 @@ var LevelEditor = function(){
     var list = space_stats.objective[1];
     if (checkbox.checked){
       list.push(path_index);
+      level.paths[path_index].push('threat');
     }else{
       list.splice(list.indexOf(path_index),1);
+      level.paths[path_index].pop();
     }
+    refresh_level();
   }
 
   function move_patrol_to(button){

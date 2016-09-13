@@ -76,12 +76,18 @@ var LevelManager = function(){
   }
 
   function avatar_on_spot(spot){
-    for (var i = 0; i < level.objectives)
+    for (var i = 0; i < objectives.length; i++){
+      if (objectives[i].pos_x == spot.pos_x && objectives[i].pos_y == spot.pos_y){
+        for (var p = 0; p < objectives[i].paths.length; p++){
+          paths[objectives[i].paths[p]].threaten();
+        }
+      }
+    }
   }
 
   function avatar_leaving_spot(){
-    for (var i = 0; i < level.paths.length; i++){
-      level.paths[i].unthreaten();
+    for (var i = 0; i < paths.length; i++){
+      paths[i].unthreaten();
     }
   }
 
