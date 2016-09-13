@@ -12,14 +12,14 @@
   <div id="play_tips"></div>
 
   <div id="play_game" class="hidden">
-    <button id="restart_level">Restart Level</button>
-    <button id="quit_level">Quit Level</button>
+    <button id="restart_level" class="title"><span>Restart Level</span></button>
+    <button id="quit_level" class="title"><span>Quit Level</span></button>
   </div>
   
 
   <div id="select_level" class="hidden">
-    <h1>Select Level</h1>
-    <button id="select_level_back">Back</button>
+    <h1 class="blue">Select Level</h1>
+    <button id="select_level_back" class="level_btn">Back</button>
   </div>
 
   <div id="game_complete" class="hidden">
@@ -28,14 +28,39 @@
   </div>
 
   <div id="start_screen" class="hidden">
-    <h1>Omega Glitch</h1>
-    <button id="campaign">Play Campaign</button>
-    <button id="custom">Play Custom Level</button>
-    <button id="build">Build Cutom Level</button>
+    <div id="intro">
+    <h1 class="blue">Omega Glitch
+    <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+    <defs>
+      <filter id="glitch" x="0" y="0">
+          <feColorMatrix in="SourceGraphic" mode="matrix" values="1 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 1 0" result="r" />
+            
+        <feOffset in="r" result="r" dx="-5">
+          <animate attributeName="dx" attributeType="XML" values="0; -5; 0; -18; -2; -4; 0 ;-3; 0" dur="0.2s" repeatCount="indefinite"/>
+        </feOffset>
+        <feColorMatrix in="SourceGraphic" mode="matrix" values="0 0 0 0 0  0 1 0 0 0  0 0 0 0 0  0 0 0 1 0" result="g"/>
+        <feOffset in="g" result="g" dx="-5" dy="1">
+          <animate attributeName="dx" attributeType="XML" values="0; 0; 0; -3; 0; 8; 0 ;-1; 0" dur="0.15s" repeatCount="indefinite"/>
+        </feOffset>
+        <feColorMatrix in="SourceGraphic" mode="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 1 0 0  0 0 0 1 0" result="b"/>
+        <feOffset in="b" result="b" dx="5" dy="2">
+          <animate attributeName="dx" attributeType="XML" values="0; 3; -1; 4; 0; 2; 0 ;18; 0" dur="0.35s" repeatCount="indefinite"/>
+        </feOffset>
+        <feBlend in="r" in2="g" mode="screen" result="blend" />
+        <feBlend in="blend" in2="b" mode="screen" result="blend" />
+      </filter>
+    </defs>
+</svg></h1>
+    <div class="centered">
+    <button id="campaign" class="title"><span>Play Campaign</span></button> 
+    <button id="custom" class="title"><span>Play Custom Level</span></button> 
+    <button id="build" class="title"><span>Build Custom Level</span></button>
+    </div>
+  </div>
   </div>
 
   <div id="custom_level" class="hidden">
-    <h1>Custom Level</h1>
+    <h1 class="blue">Custom Level</h1>
     <p>Place level code snippet here:</p>
     <textarea id="custom_level_textarea">
     </textarea>
@@ -43,36 +68,56 @@
   </div>
 
   <div id="level_editor">
-    <h1>Level Editor</h1>
+    <h1 class="blue">Level Editor</h1>
     <div id="grid_bg"></div>
     <div id="grid">
     </div>
-    <button  id="level_editor_back">Back</button>
-    <p>Starting charges</p><input id="charge_setter" type="text">
+    <button  id="level_editor_back" class="level_btn">Back</button>
+    <div class="controls">
+    <span>Starting charges:</span><input style="margin-left: 20px;" id="charge_setter" type="text">
     <br>
-    <button id="add_spot">Spot</button>
-    <button id="add_objective">Processor</button>
-    <button id="add_charge">Add Charge</button>
+    <button class="editor_button" id="add_spot">Spot</button>
+    <button class="editor_button" id="add_objective">Processor</button>
+    <button class="editor_button" id="add_charge">Add Charge</button>
+    <button class="editor_button" id="add_gate_generator">Firewall Generator</button><br>
+    <button class="editor_button" id="add_gate">Firewall</button>
+    <button class="editor_button" id="add_patrol_generator">Security Hub</button>
+    <button class="editor_button" id="add_patrol">Security Packet</button>
     <br>
-    <button id="path_n">N</button>
-    <button id="path_ne">NE</button>
-    <button id="path_e">E</button>
-    <button id="path_se">SE</button>
-    <button id="path_s">S</button>
-    <button id="path_sw">SW</button>
-    <button id="path_w">W</button>
-    <button id="path_nw">NW</button>
+    <button class="direction_button" id="path_n">N</button>
+    <button class="direction_button" id="path_ne">NE</button>
+    <button class="direction_button" id="path_e">E</button>
+    <button class="direction_button" id="path_se">SE</button>
+    <button class="direction_button" id="path_s">S</button>
+    <button class="direction_button" id="path_sw">SW</button>
+    <button class="direction_button" id="path_w">W</button>
+    <button class="direction_button" id="path_nw">NW</button>
     <br>
-    <div id="level_editor_context_config">
+    <button class="direction_button" id="gpath_n">N</button>
+    <button class="direction_button" id="gpath_ne">NE</button>
+    <button class="direction_button" id="gpath_e">E</button>
+    <button class="direction_button" id="gpath_se">SE</button>
+    <button class="direction_button" id="gpath_s">S</button>
+    <button class="direction_button" id="gpath_sw">SW</button>
+    <button class="direction_button" id="gpath_w">W</button>
+    <button class="direction_button" id="gpath_nw">NW</button>
+        <div id="level_editor_context_config">
       <p></p>
       <ul></ul>
     </div>
-    <button id="export">Export</button>
+    <div id="level_editor_patrol_config">
+    </div>
+    </div>
+
+            <div class="export">
+
+    <button class="title" id="export"><span>Export</span></button>
     <div id="export_text">
       <!-- <p></p> -->
       <!-- <button id="copy_to_clipboard">Copy to Clipboard</button> -->
     </div>
-    <button id="test_level">Test Level</button>
+    <button class="title" id="test_level"><span>Test Level</span></button>
+    </div>
 
 
 

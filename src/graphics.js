@@ -39,6 +39,7 @@ var Graphics = function () {
     for (var list = 0; list < draw_order.length; list++){
       draw_manifest_list(draw_order[list]);
     }
+    draw_explosion();
 
     ctx.font = "bold 20px sans-serif";
     ctx.fillStyle = 'rgba(210,210,210,0.5)';
@@ -133,6 +134,21 @@ var Graphics = function () {
     // ctx.closePath();
     ctx.fill();
     // ctx.stroke();
+  }
+
+  function draw_explosion(){
+    if (!avatar.charge_active){return;}
+    ctx.save();
+    ctx.lineWidth = 10,
+    ctx.fillStyle = "rgba(212, 17, 27, 0.6)";
+    ctx.shadowColor = '#d0161e';
+    ctx.shadowBlur = 10;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 0;
+    ctx.beginPath();
+    ctx.arc(avatar.pos_x, avatar.pos_y, avatar.charge_explosion.current_radious, 0, Math.PI * 2, true);
+    ctx.stroke();
+    ctx.restore();
   }
 
 

@@ -26,6 +26,13 @@ var AvatarManager = function(){
       shadowBlur: 5,
       shadowOffsetX: 0,
       shadowOffsetY: 0
+    },
+
+    charge_active: false,
+    charge_explosion: {
+      current_radious: 0,
+      speed: 10,
+      max_radious: 25
     }
   };
 
@@ -42,7 +49,7 @@ var AvatarManager = function(){
   function do_charge(){
     if (avatar.charges){
       avatar.charges--;
-      // TODO: graphic explosion
+      avatar.charge_active = true;
       level_manager.detonate_charge(current_spot);
     }
   }

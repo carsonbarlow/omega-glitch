@@ -1,7 +1,7 @@
-* {
+/** {
   margin: 0;
   padding: 0;
-}
+}*/
 
 body {
   color:white;
@@ -16,7 +16,12 @@ body {
   height: 100%;
 }
 
-#game_canvas {
+.centered {
+  text-align: center;
+  margin: 0 auto;
+}
+
+#game_canvas, #grid, #grid_bg, #intro {
 
 background-color: rgba(0,0,0,0);
 text-align: center;
@@ -25,9 +30,45 @@ margin: auto;
 display: inline-block;
 left: 35%;
 top: 30%;
+width: 640px;
+  height: 480px;
 }
 
-#start_screen, #select_level, #game_complete {
+/*#game_canvas{
+  background-color: rgba(3, 6, 3, 0.72);
+}*/
+
+#play_tips {
+  position: absolute;
+  left: 35%;
+  top: 30%;
+  width: 640px;
+  height: 480px;
+  cursor: default;
+}
+
+.play_tip {
+  position: absolute;
+  font-family: Helvetica Neu, sans-serif;
+  color: rgba( 230, 255, 255, 0.8);
+  font-weight: 300;
+  width: 200px;
+  text-align: center;
+  border: 1px solid;
+  box-shadow: 0 0 50px 5px rgba( 0, 150, 254, .4 );
+  border-radius: 5px;
+  padding: 5px;
+  background-color: rgba(0,0,0,0.45);
+  font-size: 13px;
+}
+
+#tip_lv1a {
+  top: 140px;
+  left: 20px;
+
+}
+
+#start_screen, #select_level, #game_complete, #custom_level, #level_editor {
   position: absolute;
   left: 0;
   top: 0;
@@ -36,14 +77,33 @@ top: 30%;
   height: 100%;
 }
 
+#level_editor {
+  background-color: rgba(0,0,0,0);
+}
+
 .hidden {
   display: none;
 }
 
 .level_btn {
   position: absolute;
-  width: 50px;
-  height: 25px;
+  width: 75px;
+  height: 30px;
+  border: 3px solid rgba( 0, 150, 254, .5 );
+  border-radius: 15px;
+  border-color: rgba( 0, 150, 254, 1 );
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  font-size: 16px;
+}
+
+.level_btn:disabled {
+  border: 3px solid gray;
+  border-color: gray;
+  color: gray;
+  opacity: 0.3;
 }
 
 .left_0 {
@@ -76,11 +136,122 @@ top: 30%;
 
 #restart_level, #quit_level {
   position: absolute;
-  top: 150px;
-  left: 50px;
+  top: 80%;
+  left: 43%;
 }
 
 #quit_level {
-  left: 200px;
+  left: 55%;
 }
 
+.grid_square {
+  position: absolute;
+  border: rgba(13, 45, 51,0.5) 1px dotted;
+}
+.grid_button {
+  position: absolute;
+  
+}
+.grid_button.selected {
+  border: #3bbdd6 1px solid;
+}
+.title {
+  border: 3px solid rgba( 0, 150, 254, .5 );
+  border-radius: 15px;
+  border-color: rgba( 0, 150, 254, 1 );
+  box-shadow: 0 0 50px 5px rgba( 0, 150, 254, .4 );
+  height: 40px;
+  width: 150px;
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+}
+
+.title span {
+  line-height: 30px;
+  color: rgba( 230, 255, 255, 0.8);
+  font-family: Helvetice Neue, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+h1 {
+  font-family: Helvetica Neue, sans-serif;
+  font-size: 80px;
+  text-align: center;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.blue {
+  color: transparent;
+  text-shadow: 0 0 1px #FBFBFB, 0 0 4px #B6E5EF, 0 0 8px #268398, 0 0 8px #268398, 0 0 10px #268398;
+  -webkit-filter: url("#glitch");
+  filter: url("#glitch");
+  margin-bottom: 100px;
+}
+#level_editor_back, #select_level_back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+.controls {
+  position: absolute;
+  top: 154px;
+  left: 37%;
+}
+.export {
+  position: absolute;
+  top: 810px;
+  left: 47%;
+}
+.direction_button {
+  width: 40px;
+  height: 25px;
+  border: 3px solid rgba( 0, 150, 254, .5 );
+  border-radius: 15px;
+  border-color: rgba( 0, 150, 254, 1 );
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  font-size: 12px;
+  margin: 5px 8px 0px 0px;
+}
+.direction_button:disabled {
+  border: 3px solid gray;
+  border-color: gray;
+  color: gray;
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+#level_editor_context_config {
+  position: absolute;
+  top: 0;
+  left: -40%;
+}
+#level_editor_patrol_config {
+   position: absolute;
+  top: 0;
+  left: -40%; 
+}
+.editor_button {
+  width: 130px;
+  height: 25px;
+  border: 3px solid rgba( 0, 150, 254, .5 );
+  border-radius: 15px;
+  border-color: rgba( 0, 150, 254, 1 );
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  font-size: 12px;
+  margin: 10px 2px 2px 2px;
+}
+.editor_button:disabled {
+  border: 3px solid gray;
+  border-color: gray;
+  color: gray;
+  opacity: 0.3;
+  cursor: not-allowed;
+}
