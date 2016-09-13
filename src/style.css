@@ -1,7 +1,7 @@
-* {
+/** {
   margin: 0;
   padding: 0;
-}
+}*/
 
 body {
   color:white;
@@ -16,7 +16,12 @@ body {
   height: 100%;
 }
 
-#game_canvas, #grid, #grid_bg {
+.centered {
+  text-align: center;
+  margin: 0 auto;
+}
+
+#game_canvas, #grid, #grid_bg, #intro {
 
 background-color: rgba(0,0,0,0);
 text-align: center;
@@ -25,11 +30,13 @@ margin: auto;
 display: inline-block;
 left: 35%;
 top: 30%;
+width: 640px;
+  height: 480px;
 }
 
-#game_canvas{
+/*#game_canvas{
   background-color: rgba(3, 6, 3, 0.72);
-}
+}*/
 
 #play_tips {
   position: absolute;
@@ -42,15 +49,17 @@ top: 30%;
 
 .play_tip {
   position: absolute;
-  font-family: monospace;
-  color: burlywood;
-  font-weight: bold;
+  font-family: Helvetica Neu, sans-serif;
+  color: rgba( 230, 255, 255, 0.8);
+  font-weight: 300;
   width: 200px;
   text-align: center;
   border: 1px solid;
+  box-shadow: 0 0 50px 5px rgba( 0, 150, 254, .4 );
   border-radius: 5px;
   padding: 5px;
   background-color: rgba(0,0,0,0.45);
+  font-size: 13px;
 }
 
 #tip_lv1a {
@@ -78,8 +87,17 @@ top: 30%;
 
 .level_btn {
   position: absolute;
-  width: 50px;
-  height: 25px;
+  width: 75px;
+  height: 30px;
+  border: 3px solid rgba( 0, 150, 254, .5 );
+  border-radius: 15px;
+  border-color: rgba( 0, 150, 254, 1 );
+  box-shadow: 0 0 50px 5px rgba( 0, 150, 254, .4 );
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  font-size: 16px;
 }
 
 .left_0 {
@@ -112,12 +130,12 @@ top: 30%;
 
 #restart_level, #quit_level {
   position: absolute;
-  top: 150px;
-  left: 50px;
+  top: 80%;
+  left: 43%;
 }
 
 #quit_level {
-  left: 200px;
+  left: 55%;
 }
 
 .grid_square {
@@ -130,4 +148,44 @@ top: 30%;
 }
 .grid_button.selected {
   border: #3bbdd6 1px solid;
+}
+.title {
+  border: 3px solid rgba( 0, 150, 254, .5 );
+  border-radius: 15px;
+  border-color: rgba( 0, 150, 254, 1 );
+  box-shadow: 0 0 50px 5px rgba( 0, 150, 254, .4 );
+  height: 40px;
+  width: 150px;
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+}
+
+.title span {
+  line-height: 30px;
+  color: rgba( 230, 255, 255, 0.8);
+  font-family: Helvetice Neue, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+h1 {
+  font-family: Helvetica Neue, sans-serif;
+  font-size: 80px;
+  text-align: center;
+  font-weight: 300;
+  letter-spacing: 3px;
+}
+
+.blue {
+  color: transparent;
+  text-shadow: 0 0 1px #FBFBFB, 0 0 4px #B6E5EF, 0 0 8px #268398, 0 0 8px #268398, 0 0 10px #268398;
+  -webkit-filter: url("#glitch");
+  filter: url("#glitch");
+  margin-bottom: 100px;
+}
+#level_editor_back, #select_level_back {
+  position: absolute;
+  top: 20px;
+  left: 20px;
 }
