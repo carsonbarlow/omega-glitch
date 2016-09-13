@@ -1,6 +1,7 @@
 // mediates game flow
 var level_ready = false;
 var game_paused = false;
+var level_editor_mode = true;
 
 var GameMaster = function(){
 
@@ -10,7 +11,7 @@ var GameMaster = function(){
   level_editor,
   current_level,
   testing_level,
-  highest_level = read_in_cookie() || 6,
+  highest_level = read_in_cookie() || 1,
   avatar_manager = new AvatarManager();
   level_manager = new LevelManager();
 
@@ -89,6 +90,7 @@ var GameMaster = function(){
       dom_manager.unlock_levels(highest_level);
     }else if (button == 'level_editor_back'){
       dom_manager.close_screen('level_editor');
+      level_editor_mode = false;
       dom_manager.open_screen('start_screen');
     }else if (button == 'select_level_back'){
       dom_manager.close_screen('select_level');
@@ -105,6 +107,7 @@ var GameMaster = function(){
     }else if(button == 'quit_level'){
       if (testing_level){
         dom_manager.open_screen('level_editor');
+        level_editor_mode = true;
       }else{
         dom_manager.open_screen('select_level');
       }
@@ -122,6 +125,7 @@ var GameMaster = function(){
     }else if(button == 'build'){
       dom_manager.close_screen('start_screen');
       dom_manager.open_screen('level_editor');
+      level_editor_mode = true;
     }else{
       // console.log(button);
     }

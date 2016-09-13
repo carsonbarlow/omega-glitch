@@ -41,6 +41,7 @@ var LevelEditor = function(){
     current_patrol,
     path_incomplete = false,
     gpath_incomplete = false,
+    patrol_route_incomplete = false,
     spot_id_tracker = 0;
 
   function inject_game_master(_game_master_){
@@ -61,7 +62,7 @@ var LevelEditor = function(){
 
   function button_pressed(button){
     if (button.substring(0,5) == 'grid_'){
-      if (path_incomplete || gpath_incomplete){return;}
+      if (path_incomplete || gpath_incomplete || patrol_route_incomplete){return;}
       x = parseInt(button.split('_')[1]);
       y = parseInt(button.split('_')[2]);
       dom_manager.select_grid_square(x,y);
@@ -142,7 +143,7 @@ var LevelEditor = function(){
   }
 
   function toggle_buttons(){
-    if (!!space_stats.spot && !gpath_incomplete){
+    if (!!space_stats.spot && !gpath_incomplete && !patrol_route_incomplete){
       var path_directions = ['n','e','s','w'];
       for (var i = path_directions.length -1; i >= 0; i--){
         if (typeof space_stats.spot[path_directions[i]] != 'undefined'){
@@ -184,10 +185,14 @@ var LevelEditor = function(){
       }else{
         dom_manager.enable_buttons([]);
       }
-    }else{
+    }else if(!space_stats.spot){
       dom_manager.enable_paths([]);
       dom_manager.enable_gpaths([]);
       dom_manager.enable_buttons(['spot']);
+    }else{
+      dom_manager.enable_paths([]);
+      dom_manager.enable_gpaths([]);
+      dom_manager.enable_buttons([]);
     }
   }
 
@@ -244,6 +249,7 @@ var LevelEditor = function(){
     current_patrol = patrol;
     level.patrols.push(patrol);
     current_patrol_generator.p.push(level.patrols.length-1);
+    patrol_route_incomplete = true;
     refresh_level();
     dom_manager.build_patrol_config(patrol, level.spots);
   }
@@ -312,6 +318,25 @@ var LevelEditor = function(){
     }
   }
 
+  function move_patrol_to(button){
+    var spot_name = button.id.split('_')[2];
+    current_patrol[0] = spot_name;
+    refresh_level();
+    dom_manager.build_patrol_config(current_patrol, level.spots);
+  }
+
+  function add_route_to(button){
+    var spot_name = button.id.split('_')[2];
+    current_patrol.push(spot_name);
+    refresh_level();
+    dom_manager.build_patrol_config(current_patrol, level.spots);
+  }
+
+  function route_complete(){
+    patrol_route_incomplete = false;
+    refresh_level();
+  }
+
   function load_level(){
     if (!Object.keys(level.spots).length){return;}
     level.charges = parseInt(dom_manager.get_charge_count()) || 0;
@@ -325,6 +350,8 @@ var LevelEditor = function(){
   this.button_pressed = button_pressed;
   this.path_checkbox_changed = path_checkbox_changed;
   this.move_patrol_to = move_patrol_to;
+  this.add_route_to = add_route_to;
+  this.route_complete = route_complete;
 
 
   this.get_level = function(){

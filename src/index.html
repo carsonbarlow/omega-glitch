@@ -63,8 +63,6 @@
     <h1 class="blue">Custom Level</h1>
     <p>Place level code snippet here:</p>
     <textarea id="custom_level_textarea">
-({charges: 2,spots:{s1:{x:9,y:7,s:['s2',0]},s2:{x:10,y:12,n:['s1',0],e:['s3',1]},s3:{x:14,y:12,w:['s2',1],e:['s4',2],n:['s7',5]},s4:{x:22,y:14,w:['s3',2],e:['s5',3],s:['s6',4]},s5:{x: 25,y:11,s:['s4',3]},s6:{x:20,y:17,e:['s4',4]},s7:{x:20,y:8,w:['s3',5]}},paths:[['s1',5,2,4,1,5,2],['s2',3,4],['s3',3,2,4,2,3,4],['s4',3,2,2,1,1,2],['s4',5,2,6,1,7,1],['s3',1,2,2,2,3,4]],start:'s1',objectives: [['s5',[0,1,2,3,4,5]]],patrols:[['s6','s4','s3','s4']],patrol_generators:[{s:'s6',p:[0]}],gates:[{x:20,y:14,p:2}],gate_generators:[{s: 's7',g: [0],gp: [[5,6]]}]});
-
     </textarea>
     <button id="play_custom">Play</button>
   </div>
@@ -77,13 +75,13 @@
     <button  id="level_editor_back" class="level_btn">Back</button>
     <p>Starting charges</p><input id="charge_setter" type="text">
     <br>
-    <button id="add_spot">Spot</button>
-    <button id="add_objective">Processor</button>
-    <button id="add_charge">Add Charge</button>
-    <button id="add_gate_generator">Firewall Generator</button>
-    <button id="add_gate">Firewall</button>
-    <button id="add_patrol_generator">Security Hub</button>
-    <button id="add_patrol">Security Packet</button>
+    <button id="add_spot">Spot</button><br>
+    <button id="add_objective">Processor</button><br>
+    <button id="add_charge">Add Charge</button><br>
+    <button id="add_gate_generator">Firewall Generator</button><br>
+    <button id="add_gate">Firewall</button><br>
+    <button id="add_patrol_generator">Security Hub</button><br>
+    <button id="add_patrol">Security Packet</button><br>
     <br>
     <button id="path_n">N</button>
     <button id="path_ne">NE</button>

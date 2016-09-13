@@ -160,21 +160,36 @@ var DomManager = function(){
     var direction_space;
     for (var i = 0; i < directions.length; i++){
       if (direction_space = current_spot[directions[i]]){
-        // console.log(direction_space[0]);
+        if (patrol.length == 1){
+          var nav_button = document.createElement('button');
+          nav_button.id = 'move_to_'+direction_space[0];
+          nav_button.innerHTML = "Move to "+directions[i];
+          nav_button.addEventListener('click',function(){
+            level_editor.move_patrol_to(this);
+          });
+          level_editor_patrol_config.appendChild(nav_button);
+        }
         var nav_button = document.createElement('button');
-        nav_button.id = 'move_to_'+direction_space[0];
-        nav_button.innerHTML = "Move "+directions[i];
+        nav_button.id = 'route_to_'+direction_space[0];
+        nav_button.innerHTML = "Route to "+directions[i];
         nav_button.addEventListener('click',function(){
-          level_editor.move_patrol_to(this);
+          level_editor.add_route_to(this);
         });
         level_editor_patrol_config.appendChild(nav_button);
       }
     }
-
-
-    // if (!patrol.starting_spot_selected){
-
-    // }
+    if (patrol.length > 1){
+      for (i = 0; i < directions.length; i++){
+        if (spots[patrol[patrol.length-1]][directions[i]] && spots[patrol[patrol.length-1]][directions[i]][0] == patrol[0]){
+          var route_complete = document.createElement('button');
+          route_complete.innerHTML = 'Complete Route';
+          route_complete.addEventListener('click', function(){
+            level_editor.route_complete();
+          });
+          level_editor_patrol_config.appendChild(route_complete);
+        }
+      }
+    }
   }
 
   function export_level(level){

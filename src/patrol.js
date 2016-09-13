@@ -28,7 +28,9 @@ var Patrol = function(config_route){
     path,
     current_path_index,
     patrol_direction,
-    checkpoint
+    checkpoint,
+    starting_x,
+    starting_y;
 
   function inject_graphics(_graphics_){
     graphics = _graphics_;
@@ -42,6 +44,8 @@ var Patrol = function(config_route){
     }
     unit.pos_x = spots[route[0]].pos_x;
     unit.pos_y = spots[route[0]].pos_y;
+    starting_x = unit.pos_x;
+    starting_y = unit.pos_y;
     current_path_index = -1;
     patrol_direction = 1;
     jump_to_next_path();
@@ -74,26 +78,30 @@ var Patrol = function(config_route){
     }else if (unit.vol_y < 0 && unit.pos_y < path[checkpoint].y){
       go_to_checkpoint();
     }
-
-
-    function go_to_checkpoint(){
-      unit.pos_x = path[checkpoint].x;
-      unit.pos_y = path[checkpoint].y;
-      checkpoint++
-      if (checkpoint >= path.length){
-        jump_to_next_path();
-      }else{
-        set_unit_volocity();
-      }
-    }
-
   }
 
+  function go_to_checkpoint(){
+    unit.pos_x = path[checkpoint].x;
+    unit.pos_y = path[checkpoint].y;
+    checkpoint++
+    if (checkpoint >= path.length){
+      jump_to_next_path();
+    }else{
+      set_unit_volocity();
+    }
+  }
 
   function jump_to_next_path(){
     if (route.length < 2){return;}
     current_path_index = (current_path_index + patrol_direction + route.length)% route.length;
     path = path_list[current_path_index];
+    if (!path && level_editor_mode){
+      current_path_index = -1;
+      unit.pos_x = starting_x;
+      unit.pos_y = starting_y;
+      jump_to_next_path();
+      return;
+    }
     if (path.blown_up){
       patrol_direction = -patrol_direction;
       current_path_index = (current_path_index + (patrol_direction * 2) + route.length)% route.length;
