@@ -8,6 +8,7 @@
 </body>
 <div id="background">
   <canvas id="game_background" class="hidden"></canvas>
+  <div class="charges">Charges: <span id="charges">...</span></div>
   <canvas id="game_canvas" width="640" height="480"></canvas>
   <div id="play_tips"></div>
 
@@ -74,14 +75,14 @@
     </div>
     <button  id="level_editor_back" class="level_btn">Back</button>
     <div class="controls">
-    <span>Starting charges:</span><input style="margin-left: 20px;" id="charge_setter" type="text">
+    <span class="startingCharges">Starting charges:</span><input style="margin-left: 20px;" id="charge_setter" type="text">
     <br>
     <button class="editor_button" id="add_spot">Spot</button>
     <button class="editor_button" id="add_objective">Processor</button>
-    <button class="editor_button" id="add_charge">Add Charge</button>
-    <button class="editor_button" id="add_gate_generator">Firewall Generator</button><br>
+    <button class="editor_button" id="add_charge">Add Charge</button><br>
+    <button class="editor_button" id="add_gate_generator">Firewall Generator</button>
     <button class="editor_button" id="add_gate">Firewall</button>
-    <button class="editor_button" id="add_patrol_generator">Security Hub</button>
+    <button class="editor_button" id="add_patrol_generator">Security Hub</button><br>
     <button class="editor_button" id="add_patrol">Security Packet</button>
     <br>
     <button class="direction_button" id="path_n">N</button>
@@ -118,14 +119,6 @@
     </div>
     <button class="title" id="test_level"><span>Test Level</span></button>
     </div>
-
-
-
-
-
-
-
-
   </div>
 
   <script type="text/javascript" src="script.js"></script>

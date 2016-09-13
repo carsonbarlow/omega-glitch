@@ -76,7 +76,7 @@ var LevelManager = function(){
   }
 
   function avatar_on_spot(spot){
-    
+    for (var i = 0; i < level.objectives)
   }
 
   function avatar_leaving_spot(){
