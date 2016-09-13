@@ -201,7 +201,7 @@ h1 {
 }
 .controls {
   position: absolute;
-  top: 80px;
+  top: 26%;
   left: 20px;
 }
 .export {
@@ -232,13 +232,13 @@ h1 {
 }
 #level_editor_context_config {
   position: absolute;
-  top: 0px;
-  left: 1060px;
+  top: 220px;
+  left: 10px;
 }
 #level_editor_patrol_config {
    position: absolute;
-  top: 0px;
-  left: 1200px;
+  top: 205px;
+  left: 10px;
 }
 .editor_button {
   width: 130px;
