@@ -92,12 +92,18 @@ width: 640px;
   border: 3px solid rgba( 0, 150, 254, .5 );
   border-radius: 15px;
   border-color: rgba( 0, 150, 254, 1 );
-  box-shadow: 0 0 50px 5px rgba( 0, 150, 254, .4 );
   text-align: center;
   cursor: pointer;
   background: transparent;
   color: white;
   font-size: 16px;
+}
+
+.level_btn:disabled {
+  border: 3px solid gray;
+  border-color: gray;
+  color: gray;
+  opacity: 0.3;
 }
 
 .left_0 {
@@ -188,4 +194,64 @@ h1 {
   position: absolute;
   top: 20px;
   left: 20px;
+}
+.controls {
+  position: absolute;
+  top: 154px;
+  left: 37%;
+}
+.export {
+  position: absolute;
+  top: 810px;
+  left: 47%;
+}
+.direction_button {
+  width: 40px;
+  height: 25px;
+  border: 3px solid rgba( 0, 150, 254, .5 );
+  border-radius: 15px;
+  border-color: rgba( 0, 150, 254, 1 );
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  font-size: 12px;
+  margin: 5px 8px 0px 0px;
+}
+.direction_button:disabled {
+  border: 3px solid gray;
+  border-color: gray;
+  color: gray;
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+#level_editor_context_config {
+  position: absolute;
+  top: 0;
+  left: -40%;
+}
+#level_editor_patrol_config {
+   position: absolute;
+  top: 0;
+  left: -40%; 
+}
+.editor_button {
+  width: 130px;
+  height: 25px;
+  border: 3px solid rgba( 0, 150, 254, .5 );
+  border-radius: 15px;
+  border-color: rgba( 0, 150, 254, 1 );
+  text-align: center;
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  font-size: 12px;
+  margin: 10px 2px 2px 2px;
+}
+.editor_button:disabled {
+  border: 3px solid gray;
+  border-color: gray;
+  color: gray;
+  opacity: 0.3;
+  cursor: not-allowed;
 }
