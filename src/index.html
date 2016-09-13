@@ -73,45 +73,51 @@
     <div id="grid">
     </div>
     <button  id="level_editor_back" class="level_btn">Back</button>
-    <p>Starting charges</p><input id="charge_setter" type="text">
+    <div class="controls">
+    <span>Starting charges:</span><input style="margin-left: 20px;" id="charge_setter" type="text">
     <br>
-    <button id="add_spot">Spot</button><br>
-    <button id="add_objective">Processor</button><br>
-    <button id="add_charge">Add Charge</button><br>
-    <button id="add_gate_generator">Firewall Generator</button><br>
-    <button id="add_gate">Firewall</button><br>
-    <button id="add_patrol_generator">Security Hub</button><br>
-    <button id="add_patrol">Security Packet</button><br>
+    <button class="editor_button" id="add_spot">Spot</button>
+    <button class="editor_button" id="add_objective">Processor</button>
+    <button class="editor_button" id="add_charge">Add Charge</button>
+    <button class="editor_button" id="add_gate_generator">Firewall Generator</button><br>
+    <button class="editor_button" id="add_gate">Firewall</button>
+    <button class="editor_button" id="add_patrol_generator">Security Hub</button>
+    <button class="editor_button" id="add_patrol">Security Packet</button>
     <br>
-    <button id="path_n">N</button>
-    <button id="path_ne">NE</button>
-    <button id="path_e">E</button>
-    <button id="path_se">SE</button>
-    <button id="path_s">S</button>
-    <button id="path_sw">SW</button>
-    <button id="path_w">W</button>
-    <button id="path_nw">NW</button>
+    <button class="direction_button" id="path_n">N</button>
+    <button class="direction_button" id="path_ne">NE</button>
+    <button class="direction_button" id="path_e">E</button>
+    <button class="direction_button" id="path_se">SE</button>
+    <button class="direction_button" id="path_s">S</button>
+    <button class="direction_button" id="path_sw">SW</button>
+    <button class="direction_button" id="path_w">W</button>
+    <button class="direction_button" id="path_nw">NW</button>
     <br>
-    <button id="gpath_n">N</button>
-    <button id="gpath_ne">NE</button>
-    <button id="gpath_e">E</button>
-    <button id="gpath_se">SE</button>
-    <button id="gpath_s">S</button>
-    <button id="gpath_sw">SW</button>
-    <button id="gpath_w">W</button>
-    <button id="gpath_nw">NW</button>
-    <div id="level_editor_context_config">
+    <button class="direction_button" id="gpath_n">N</button>
+    <button class="direction_button" id="gpath_ne">NE</button>
+    <button class="direction_button" id="gpath_e">E</button>
+    <button class="direction_button" id="gpath_se">SE</button>
+    <button class="direction_button" id="gpath_s">S</button>
+    <button class="direction_button" id="gpath_sw">SW</button>
+    <button class="direction_button" id="gpath_w">W</button>
+    <button class="direction_button" id="gpath_nw">NW</button>
+        <div id="level_editor_context_config">
       <p></p>
       <ul></ul>
     </div>
     <div id="level_editor_patrol_config">
     </div>
-    <button id="export">Export</button>
+    </div>
+
+            <div class="export">
+
+    <button class="title" id="export"><span>Export</span></button>
     <div id="export_text">
       <!-- <p></p> -->
       <!-- <button id="copy_to_clipboard">Copy to Clipboard</button> -->
     </div>
-    <button id="test_level">Test Level</button>
+    <button class="title" id="test_level"><span>Test Level</span></button>
+    </div>
 
 
 
