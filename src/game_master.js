@@ -1,5 +1,6 @@
 // mediates game flow
 var level_ready = false;
+var game_paused = false;
 
 var GameMaster = function(){
 
@@ -19,6 +20,7 @@ var GameMaster = function(){
   level_manager.inject_game_master(this);
 
   function update(delta){
+    if (game_paused){return;}
     avatar_manager.update(delta);
     level_manager.update(delta);
   }

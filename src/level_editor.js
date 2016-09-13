@@ -38,6 +38,7 @@ var LevelEditor = function(){
     current_gpath = [],
     current_gate_generator,
     current_patrol_generator,
+    current_patrol,
     path_incomplete = false,
     gpath_incomplete = false,
     spot_id_tracker = 0;
@@ -77,6 +78,8 @@ var LevelEditor = function(){
       add_gate();
     }else if(button == 'add_patrol_generator'){
       add_patrol_generator();
+    }else if(button == 'add_patrol'){
+      add_patrol();
     }else if(button.substring(0,5) == 'path_'){
       make_path(direction_map[button.split('_')[1]]);
     }else if(button.substring(0,6) == 'gpath_'){
@@ -151,6 +154,8 @@ var LevelEditor = function(){
         dom_manager.enable_buttons([]);
         if (!!space_stats.gate_generator){
           dom_manager.enable_gpaths(['n','ne','e','se','s','sw','w','nw']);
+        }else if(!!space_stats.patrol_generator){
+          dom_manager.enable_buttons('patrol');
         }
       }else{
         dom_manager.enable_buttons(['objective','charge','gate_generator', 'patrol_generator']);
@@ -234,6 +239,15 @@ var LevelEditor = function(){
     refresh_level();
   }
 
+  function add_patrol(){
+    var patrol = [current_patrol_generator.s];
+    current_patrol = patrol;
+    level.patrols.push(patrol);
+    current_patrol_generator.p.push(level.patrols.length-1);
+    refresh_level();
+    dom_manager.build_patrol_config(patrol, level.spots);
+  }
+
   function make_path(direction){
     if (!current_path.length){
       current_path.push(space_stats.spot_name, direction, 1);
@@ -310,6 +324,7 @@ var LevelEditor = function(){
   this.key_pressed = function(){};
   this.button_pressed = button_pressed;
   this.path_checkbox_changed = path_checkbox_changed;
+  this.move_patrol_to = move_patrol_to;
 
 
   this.get_level = function(){

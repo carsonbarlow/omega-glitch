@@ -151,10 +151,11 @@ var AvatarManager = function(){
 
   function hit_gate(){
     gate_hit = true;
-    avatar.vol_x = avatar.vol_x * -1;
-    avatar.vol_y = avatar.vol_y * -1;
+    // avatar.vol_x = avatar.vol_x * -1;
+    // avatar.vol_y = avatar.vol_y * -1;
     path.reverse();
-    checkpoint = path.length - 1 - checkpoint;
+    checkpoint = (path.length - 1) - checkpoint;
+    set_avatar_volocity();
     next_spot = current_spot;
   }
 

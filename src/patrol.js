@@ -91,6 +91,7 @@ var Patrol = function(config_route){
 
 
   function jump_to_next_path(){
+    if (route.length < 2){return;}
     current_path_index = (current_path_index + patrol_direction + route.length)% route.length;
     path = path_list[current_path_index];
     if (path.blown_up){

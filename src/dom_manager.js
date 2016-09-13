@@ -17,9 +17,9 @@ var DomManager = function(){
   var grid = document.getElementById('grid');
   var current_grid;
   var path_directions = ['n','ne','e','se','s','sw','w','nw'];
-  var level_editor_buttons = ['spot', 'objective','charge','gate_generator','gate','patrol_generator'];
-  // var add_spot = document.getElementById('add_spot');
-  // var add_objective = document.getElementById('add_objective');
+  var level_editor_buttons = ['spot', 'objective','charge','gate_generator','gate','patrol_generator','patrol'];
+
+  var level_editor_patrol_config = document.getElementById('level_editor_patrol_config');
 
   var button_array_width = 0;
   var button_array_height = 0;
@@ -153,6 +153,30 @@ var DomManager = function(){
     }
   }
 
+  function build_patrol_config(patrol, spots){
+    level_editor_patrol_config.innerHTML = '';
+    var current_spot = spots[patrol[patrol.length-1]];
+    var directions = ['n','e','s','w'];
+    var direction_space;
+    for (var i = 0; i < directions.length; i++){
+      if (direction_space = current_spot[directions[i]]){
+        // console.log(direction_space[0]);
+        var nav_button = document.createElement('button');
+        nav_button.id = 'move_to_'+direction_space[0];
+        nav_button.innerHTML = "Move "+directions[i];
+        nav_button.addEventListener('click',function(){
+          level_editor.move_patrol_to(this);
+        });
+        level_editor_patrol_config.appendChild(nav_button);
+      }
+    }
+
+
+    // if (!patrol.starting_spot_selected){
+
+    // }
+  }
+
   function export_level(level){
     export_text.innerHTML = utils.stringify_level(level);
   }
@@ -168,6 +192,7 @@ var DomManager = function(){
   this.enable_gpaths = enable_gpaths;
   this.enable_buttons = enable_buttons;
   this.build_objective_config = build_objective_config;
+  this.build_patrol_config = build_patrol_config;
   this.export_level = export_level;
 
 

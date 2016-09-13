@@ -18,6 +18,7 @@ var Input = function(){
   'add_gate_generator',
   'add_gate',
   'add_patrol_generator',
+  'add_patrol',
   'export',
   'test_level',
   'path_n',
