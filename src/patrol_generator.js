@@ -9,7 +9,6 @@ var PatrolGenerator = function(config,spots){
 
 
   function blow_up(){
-    // console.log('patrol generator: boom mother FUCKA!!');
   };
 
   this.blow_up = blow_up;

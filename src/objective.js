@@ -19,7 +19,6 @@ var Objective = function(config, spots){
   }
 
   function blow_up(){
-    // console.log('boom mother FUCKA!!');
   };
 
   this.blow_up = blow_up;

@@ -75,6 +75,16 @@ var LevelManager = function(){
     game_master = _game_master_;
   }
 
+  function avatar_on_spot(spot){
+    
+  }
+
+  function avatar_leaving_spot(){
+    for (var i = 0; i < level.paths.length; i++){
+      level.paths[i].unthreaten();
+    }
+  }
+
   function detonate_charge(spot){
     for (var i = 0; i < objectives.length; i++){
       if (objectives[i].spot == spot){
@@ -103,7 +113,7 @@ var LevelManager = function(){
         patrol_generators[i].blow_up();
         for (var patrol = patrol_generators[i].patrols.length -1; patrol > -1 ; patrol--){
           patrols[patrol_generators[i].patrols[patrol]].blow_up();
-          graphics.remove_from_manifest(patrols[patrol_generators[i].patrols[patrol]].get_unit(), 'patrols');
+          // graphics.remove_from_manifest(patrols[patrol_generators[i].patrols[patrol]].get_unit(), 'patrols');
         }
         graphics.remove_from_manifest(patrol_generators[i], 'patrol_generators');
       }
@@ -157,6 +167,8 @@ var LevelManager = function(){
   this.inject_game_master = inject_game_master;
   this.get_play_tips = get_play_tips;
   this.move_leads_to = move_leads_to;
+  this.avatar_on_spot = avatar_on_spot;
+  this.avatar_leaving_spot = avatar_leaving_spot;
   this.detonate_charge = detonate_charge;
   this.clear_level = clear_level;
   this.update = update;

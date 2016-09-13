@@ -25,7 +25,6 @@ var GateGenerator = function(config,spots){
   }
 
   function blow_up(){
-    // console.log('gate generator: boom mother FUCKA!!');
     for (var i = 0; i < gate_paths.length; i++){
       gate_paths[i].blow_up();
     }

@@ -32,7 +32,6 @@ var Path = function(config){
   }
 
   function blow_up(){
-    // console.log('path '+starting_spot+': boom mother FUCKA!!');
     // graphics.remove_path(checkpoints);
     // graphics.remove_from_manifest(this, 'paths');
     this.blocked = true;
@@ -50,11 +49,21 @@ var Path = function(config){
     shadowOffsetY: 0
   };
 
+  function threaten(){
+    this.graphic.shadowColor = '#cc0000';
+  }
+
+  function untreaten(){
+    this.graphic.shadowColor = '#6FC3DF';
+  }
+
 
   this.set_starting_spot = set_starting_spot;
   this.inject_graphics = inject_graphics;
   this.checkpoints = checkpoints;
   this.blow_up = blow_up;
+  this.threaten = threaten;
+  this.untreaten = untreaten;
 
 };
 

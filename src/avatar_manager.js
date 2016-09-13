@@ -31,8 +31,8 @@ var AvatarManager = function(){
     charge_active: false,
     charge_explosion: {
       current_radious: 0,
-      speed: 10,
-      max_radious: 25
+      speed: 250,
+      max_radious: 80
     }
   };
 
@@ -92,6 +92,25 @@ var AvatarManager = function(){
 
   }
 
+  function update_explosion(delta){
+    if (!avatar.charge_active){return;}
+    avatar.charge_explosion.current_radious += avatar.charge_explosion.speed * delta;
+    if (avatar.charge_explosion.current_radious > avatar.charge_explosion.max_radious){
+      avatar.charge_explosion.current_radious = 0;
+      avatar.charge_active = false;
+    }
+  }
+
+
+
+  // charge_explosion: {
+  //     current_radious: 0,
+  //     speed: 10,
+  //     max_radious: 25
+  //   }
+
+
+
   function jump_to_spot(spot){
     current_spot = spot;
     moving = false;
@@ -103,6 +122,7 @@ var AvatarManager = function(){
     }
     avatar.collision = 8;
     gate_hit = false;
+    level_manager.avatar_on_spot(spot);
   }
 
   function start_level(){
@@ -111,6 +131,7 @@ var AvatarManager = function(){
 
   function update(delta){
     move_avatar(delta);
+    update_explosion(delta);
   }
 
   function get_avatar(){
@@ -144,6 +165,7 @@ var AvatarManager = function(){
         moving = true;
         gate_hit = false;
         avatar.collision = 4;
+        level_manager.avatar_leaving_spot();
       }
     }
   }
@@ -158,8 +180,6 @@ var AvatarManager = function(){
 
   function hit_gate(){
     gate_hit = true;
-    // avatar.vol_x = avatar.vol_x * -1;
-    // avatar.vol_y = avatar.vol_y * -1;
     path.reverse();
     checkpoint = (path.length - 1) - checkpoint;
     set_avatar_volocity();

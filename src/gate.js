@@ -4,12 +4,11 @@ var Gate = function(config){
   this.pos_x = config.x * CONFIG.grid_size;
   this.pos_y = config.y * CONFIG.grid_size;
   // this.path = config.p;
-  this.size = 10;
-  this.collision = 8;
+  this.size = 8;
+  this.collision = 6;
   active = true;
 
   function blow_up(){
-    // console.log('gate: boom mother FUCKA!!');
     active = false;
   };
 

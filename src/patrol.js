@@ -132,7 +132,8 @@ var Patrol = function(config_route){
 
   function blow_up(){
     active = false;
-    // console.log('patrol: boom mother FUCKA!!');
+    unit.graphic.fillStyle = 'rgba(28, 19 207, 0.8)';
+    unit.collision = 8;
   };
 
   function get_current_path(){

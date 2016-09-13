@@ -34,7 +34,6 @@ var GateGeneratorPath = function(_config_){
   }
 
   function blow_up(){
-    // console.log('path '+starting_spot+': boom mother FUCKA!!');
     // graphics.remove_path(checkpoints);
     graphics.remove_from_manifest(this, 'gate_generator_paths');
     this.blown_up = true;
