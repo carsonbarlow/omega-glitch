@@ -28,11 +28,9 @@ var LevelEditor = function(){
     start: false,
     objectives: [],
     gates: [],
-    gate_generators: []
+    gate_generators: [],
+    end_of_game:true
   };
-
-  // var level = ({charges:0,spots:{s1:{x:10,y:14,e:['s2',0]},s2:{x:15,y:14,e:['s3',1],w:['s1',0]},s3:{x:20,y:14,e:['s4',2],w:['s2',1]},s4:{x:25,y:14,e:['s5',3],w:['s3',2]},s5:{x:30,y:14,w:['s4',3]}},paths:[['s1',3,5],['s2',3,5],['s3',3,5],['s4',3,5]],patrols:[],patrol_generators:[{s:'s5',p:[]}],start:'s1',objectives:[],gates:[],gate_generators:[]});
-
 
   var x = 0,
     y = 0,
@@ -108,6 +106,7 @@ var LevelEditor = function(){
   }
 
   function survay_space(){
+    dom_manager.hide_context();
     response = {}
     for (var s in level.spots){
       if (level.spots[s].x == x && level.spots[s].y == y){

@@ -6,6 +6,7 @@ var Input = function(){
   'campaign',
   'select_level_back',
   'level_editor_back',
+  'custom_level_back',
   'custom',
   'build',
   'restart_level',

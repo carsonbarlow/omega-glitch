@@ -11,7 +11,7 @@ var GameMaster = function(){
   level_editor,
   current_level,
   testing_level,
-  highest_level = read_in_cookie() || Object.keys(CONTENT.levels).length,
+  highest_level = read_in_cookie() || 1,
   avatar_manager = new AvatarManager();
   level_manager = new LevelManager();
 
@@ -24,6 +24,7 @@ var GameMaster = function(){
     if (game_paused){return;}
     avatar_manager.update(delta);
     level_manager.update(delta);
+    dom_manager.display_charges(avatar_manager.get_avatar().charges);
   }
 
   function inject_graphics(_graphics_){
@@ -94,6 +95,9 @@ var GameMaster = function(){
       dom_manager.open_screen('start_screen');
     }else if (button == 'select_level_back'){
       dom_manager.close_screen('select_level');
+      dom_manager.open_screen('start_screen');
+    }else if (button == 'custom_level_back'){
+      dom_manager.close_screen('custom_level');
       dom_manager.open_screen('start_screen');
     }else if (button.substring(0,6) == 'level_'){
       current_level = parseInt(button.substring(6));

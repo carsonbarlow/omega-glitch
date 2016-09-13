@@ -129,6 +129,5 @@ CONTENT.levels['6'] = {
       y: 300,
       t: 'lv6b'
     }
-  ],
-  end_of_game: true
+  ]
 };

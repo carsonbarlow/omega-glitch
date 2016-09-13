@@ -98,7 +98,7 @@ var Utils = function(){
     if (response[response.length-1] == ','){
       response = response.substr(0,response.length-1);
     }
-    response += ']});'
+    response += '],end_of_game:true});'
     return response;
   }
 

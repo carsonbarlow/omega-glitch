@@ -8,7 +8,7 @@
 </body>
 <div id="background">
   <canvas id="game_background" class="hidden"></canvas>
-  <div class="charges">Charges: <span id="charges">...</span></div>
+  <div class="charges"><span style="bottom:0px;">Charges:</span> <span id="charges"></span></div>
   <canvas id="game_canvas" width="640" height="480"></canvas>
   <div id="play_tips"></div>
 
@@ -28,7 +28,7 @@
     <button id="back_to_start">I'm Awesome!</button>
   </div>
 
-  <div id="start_screen" class="hidden">
+  <div id="start_screen">
     <div id="intro">
     <h1 class="blue">Omega Glitch
     <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
@@ -62,13 +62,14 @@
 
   <div id="custom_level" class="hidden">
     <h1 class="blue">Custom Level</h1>
+    <button  id="custom_level_back" class="level_btn">Back</button>
     <p>Place level code snippet here:</p>
     <textarea id="custom_level_textarea">
     </textarea>
     <button id="play_custom">Play</button>
   </div>
 
-  <div id="level_editor">
+  <div id="level_editor" class="hidden">
     <h1 class="blue">Level Editor</h1>
     <div id="grid_bg"></div>
     <div id="grid">
@@ -102,7 +103,7 @@
     <button class="direction_button" id="gpath_sw">SW</button>
     <button class="direction_button" id="gpath_w">W</button>
     <button class="direction_button" id="gpath_nw">NW</button>
-        <div id="level_editor_context_config">
+    <div id="level_editor_context_config">
       <p></p>
       <ul></ul>
     </div>
@@ -114,18 +115,9 @@
 
     <button class="title" id="export"><span>Export</span></button>
     <div id="export_text">
-      <!-- <p></p> -->
-      <!-- <button id="copy_to_clipboard">Copy to Clipboard</button> -->
     </div>
     <button class="title" id="test_level"><span>Test Level</span></button>
     </div>
-
-
-
-
-
-
-
 
   </div>
 

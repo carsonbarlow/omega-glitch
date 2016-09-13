@@ -41,9 +41,9 @@ var Graphics = function () {
     }
     draw_explosion();
 
-    ctx.font = "bold 20px sans-serif";
-    ctx.fillStyle = 'rgba(210,210,210,0.5)';
-    ctx.fillText('Charges:' + avatar.charges, 33, 27);
+    // ctx.font = "bold 20px sans-serif";
+    // ctx.fillStyle = 'rgba(210,210,210,0.5)';
+    // ctx.fillText('Charges:' + avatar.charges, 33, 27);
 
   }
 

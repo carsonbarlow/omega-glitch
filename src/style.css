@@ -1,12 +1,12 @@
-/** {
-  margin: 0;
-  padding: 0;
-}*/
 
 body {
   color:white;
   overflow: hidden;
   background: rgb(10,10,10);
+}
+
+ul {
+  list-style-type: none;
 }
 
 button:focus {outline:0;}
@@ -37,9 +37,6 @@ width: 640px;
   height: 480px;
 }
 
-/*#game_canvas{
-  background-color: rgba(3, 6, 3, 0.72);
-}*/
 
 #play_tips {
   position: absolute;
@@ -194,7 +191,7 @@ h1 {
   filter: url("#glitch");
   margin-bottom: 100px;
 }
-#level_editor_back, #select_level_back {
+#level_editor_back, #select_level_back, #custom_level_back {
   position: absolute;
   top: 20px;
   left: 20px;
@@ -268,6 +265,7 @@ h1 {
   left: 32.5%;
   font-family: Arial, Helvetica, sans-serif;
   color: #E6FFFF;
+  height: 111px;
 }
 #charges {
   font-family: serif;

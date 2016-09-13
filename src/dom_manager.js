@@ -135,6 +135,7 @@ var DomManager = function(){
 
   function build_objective_config(objective, paths){
     var editor_context = document.getElementById('level_editor_context_config');
+    editor_context.classList.remove('hidden');
     editor_context.getElementsByTagName('p')[0].innerHTML = "Processor";
     list = editor_context.getElementsByTagName('ul')[0];
     list.innerHTML = '';
@@ -155,6 +156,7 @@ var DomManager = function(){
 
   function build_patrol_config(patrol, spots){
     level_editor_patrol_config.innerHTML = '';
+    level_editor_patrol_config.classList.remove('hidden');
     var current_spot = spots[patrol[patrol.length-1]];
     var directions = ['n','e','s','w'];
     var direction_space;
@@ -162,6 +164,7 @@ var DomManager = function(){
       if (direction_space = current_spot[directions[i]]){
         if (patrol.length == 1){
           var nav_button = document.createElement('button');
+          nav_button.classList.add('editor_button');
           nav_button.id = 'move_to_'+direction_space[0];
           nav_button.innerHTML = "Move to "+directions[i];
           nav_button.addEventListener('click',function(){
@@ -170,6 +173,7 @@ var DomManager = function(){
           level_editor_patrol_config.appendChild(nav_button);
         }
         var nav_button = document.createElement('button');
+        nav_button.classList.add('editor_button');
         nav_button.id = 'route_to_'+direction_space[0];
         nav_button.innerHTML = "Route to "+directions[i];
         nav_button.addEventListener('click',function(){
@@ -182,8 +186,10 @@ var DomManager = function(){
       for (i = 0; i < directions.length; i++){
         if (spots[patrol[patrol.length-1]][directions[i]] && spots[patrol[patrol.length-1]][directions[i]][0] == patrol[0]){
           var route_complete = document.createElement('button');
+          route_complete.classList.add('editor_button');
           route_complete.innerHTML = 'Complete Route';
           route_complete.addEventListener('click', function(){
+            document.getElementById('level_editor_patrol_config').classList.add('hidden');
             level_editor.route_complete();
           });
           level_editor_patrol_config.appendChild(route_complete);
@@ -192,8 +198,21 @@ var DomManager = function(){
     }
   }
 
+  function hide_context(){
+    document.getElementById('level_editor_context_config').classList.add('hidden');
+  }
+
   function export_level(level){
     export_text.innerHTML = utils.stringify_level(level);
+  }
+
+  function display_charges(num){
+    var charges_dom = document.getElementById('charges');
+    var append_string = ' ';
+    for (var i = 0; i < num; i++){
+      append_string += '.';
+    }
+    charges.innerHTML = append_string;
   }
 
   this.close_screen = close_screen;
@@ -209,6 +228,8 @@ var DomManager = function(){
   this.build_objective_config = build_objective_config;
   this.build_patrol_config = build_patrol_config;
   this.export_level = export_level;
+  this.hide_context = hide_context;
+  this.display_charges = display_charges;
 
 
 };
