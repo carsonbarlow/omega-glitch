@@ -5,20 +5,17 @@ var level_editor_mode = true;
 
 var GameMaster = function(){
 
-  var graphics,
-  input,
-  dom_manager,
-  level_editor,
+  var graphics = injector.get_singleton('graphics'),
+  input = injector.get_singleton('input'),
+  dom_manager = injector.get_singleton('dom_manager'),
+  level_editor = injector.get_singleton('level_editor'),
+  level_manager = injector.get_singleton('level_manager'),
+  avatar_manager = injector.get_singleton('avatar_manager'),
   current_level,
   testing_level,
-  highest_level = read_in_cookie() || 1,
-  avatar_manager = new AvatarManager();
-  level_manager = new LevelManager();
+  highest_level = read_in_cookie() || 1;
 
-
-  avatar_manager.inject_level_manager(level_manager);
-  level_manager.inject_avatar_manager(avatar_manager);
-  level_manager.inject_game_master(this);
+  input.add_subscriber(this);
 
   function update(delta){
     if (game_paused){return;}
@@ -27,28 +24,8 @@ var GameMaster = function(){
     dom_manager.display_charges(avatar_manager.get_avatar().charges);
   }
 
-  function inject_graphics(_graphics_){
-    graphics = _graphics_;
-    graphics.inject_avatar(avatar_manager.get_avatar());
-    level_manager.inject_graphics(_graphics_);
-  }
-
-  function inject_input(_input_){
-    input = _input_;
-    avatar_manager.inject_input(_input_);
-    input.add_subscriber(this);
-  }
-
-  function inject_dom_manager(_dom_manager_){
-    dom_manager = _dom_manager_;
-  }
-
-  function inject_level_editor(_level_editor_){
-    level_editor = _level_editor_;
-  }
-
   function start_game(){
-    current_level = 6;
+    current_level = 1;
     start_level();
   };
 
@@ -153,10 +130,6 @@ var GameMaster = function(){
   }
 
   this.update = update;
-  this.inject_graphics = inject_graphics;
-  this.inject_input = inject_input;
-  this.inject_dom_manager = inject_dom_manager;
-  this.inject_level_editor = inject_level_editor;
   this.key_pressed = function(){};
   this.button_pressed = button_pressed;
   this.start_game = start_game;

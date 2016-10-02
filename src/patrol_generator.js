@@ -1,6 +1,11 @@
 // manages patrol_generators
 
-var PatrolGenerator = function(config,spots){
+var PatrolGenerator = function(params){
+
+  var graphics = injector.get_singleton('graphics');
+  var config = params.config,
+    spots = params.spots;
+
   this.spot = spots[config.s];
   this.patrols = config.p;
   this.pos_x = this.spot.pos_x;
@@ -21,4 +26,6 @@ var PatrolGenerator = function(config,spots){
     shadowOffsetX: 0,
     shadowOffsetY: 0
   };
+
+  graphics.add_to_manifest(this, 'patrol_generators');
 }

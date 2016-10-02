@@ -2,9 +2,13 @@
 
 var LevelEditor = function(){
 
-  var game_master,
-    input,
-    dom_manager;
+  var game_master = injector.get_singleton('game_master'),
+    input = injector.get_singleton('input'),
+    dom_manager = injector.get_singleton('dom_manager');
+
+  dom_manager.enable_paths([]);
+  dom_manager.enable_gpaths([]);
+  dom_manager.enable_buttons(['spot']);
 
   var direction_map = {
     n: 1,
@@ -45,21 +49,7 @@ var LevelEditor = function(){
     patrol_route_incomplete = false,
     spot_id_tracker = 0;
 
-  function inject_game_master(_game_master_){
-    game_master = _game_master_;
-  }
-
-  function inject_input(_input_){
-    input = _input_;
-    input.add_subscriber(this);
-  }
-
-  function inject_dom_manager(_dom_manager_){
-    dom_manager = _dom_manager_;
-    dom_manager.enable_paths([]);
-    dom_manager.enable_gpaths([]);
-    dom_manager.enable_buttons(['spot']);
-  }
+  input.add_subscriber(this);
 
   function button_pressed(button){
     if (button.substring(0,5) == 'grid_'){
@@ -360,12 +350,10 @@ var LevelEditor = function(){
   function load_level(){
     if (!Object.keys(level.spots).length){return;}
     level.charges = parseInt(dom_manager.get_charge_count()) || 0;
+    game_master = injector.get_singleton('game_master');
     game_master.set_up_custom_level(level);
   }
 
-  this.inject_game_master = inject_game_master;
-  this.inject_input = inject_input;
-  this.inject_dom_manager = inject_dom_manager;
   this.key_pressed = function(){};
   this.button_pressed = button_pressed;
   this.path_checkbox_changed = path_checkbox_changed;

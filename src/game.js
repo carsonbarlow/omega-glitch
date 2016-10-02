@@ -3,27 +3,16 @@ var game;
 
 
 window.onload = function(e){
+  injector = new Injector();
   game = new Game();
 };
 
 
 var Game = function(){
 
-  var game_master = new GameMaster();
-  level_editor = new LevelEditor();
-  graphics = new Graphics(),
-  input = new Input(),
-  dom_manager = new DomManager();
-  input.set_up_button_events();
-
-  game_master.inject_graphics(graphics);
-  game_master.inject_input(input);
-  game_master.inject_dom_manager(dom_manager);
-  game_master.inject_level_editor(level_editor);
-  level_editor.inject_game_master(game_master);
-  level_editor.inject_input(input);
-  level_editor.inject_dom_manager(dom_manager);
-
+  var game_master = injector.get_singleton('game_master');
+  injector.get_singleton('level_editor');
+  var graphics = injector.get_singleton('graphics');
 
   function update(delta){
     if (!level_ready){return;} // level_ready is found in game_master.js

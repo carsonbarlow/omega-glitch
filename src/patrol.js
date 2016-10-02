@@ -20,9 +20,7 @@ var Patrol = function(config_route){
     }
   };
 
-
-
-  var graphics,
+  var graphics = injector.get_singleton('graphics'),
     active = true,
     path_list,
     path,
@@ -32,10 +30,7 @@ var Patrol = function(config_route){
     starting_x,
     starting_y;
 
-  function inject_graphics(_graphics_){
-    graphics = _graphics_;
-    graphics.add_to_manifest(unit, 'patrols')
-  }
+    graphics.add_to_manifest(unit, 'patrols');
 
   function make_path_list(paths, spots){
     path_list = [];
@@ -142,7 +137,6 @@ var Patrol = function(config_route){
 
   this.make_path_list = make_path_list;
   this.update = update;
-  this.inject_graphics = inject_graphics;
   this.get_unit = get_unit;
   this.get_current_path = get_current_path;
   this.blow_up = blow_up;

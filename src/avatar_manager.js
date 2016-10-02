@@ -36,14 +36,16 @@ var AvatarManager = function(){
     }
   };
 
-  var input,
-  level_manager,
+  var input = injector.get_singleton('input'),
+  level_manager = injector.get_singleton('level_manager'),
+  graphics = injector.get_singleton('graphics'),
   path,
   checkpoint;
   var moving = false,
     gate_hit = false,
-  current_spot;
-
+    current_spot;
+  graphics.inject_avatar(avatar);
+  input.add_subscriber(this);
 
 
   function do_charge(){
@@ -126,6 +128,7 @@ var AvatarManager = function(){
   }
 
   function start_level(){
+    level_manager = injector.get_singleton('level_manager'); // I do so hate this.
     jump_to_spot(level_manager.starting_spot);
   }
 
@@ -140,11 +143,6 @@ var AvatarManager = function(){
 
   function get_gate_hit(){
     return gate_hit;
-  }
-
-  function inject_input(_input_){
-    input = _input_;
-    input.add_subscriber(this)
   }
 
   function key_pressed(key){
@@ -170,10 +168,6 @@ var AvatarManager = function(){
     }
   }
 
-  function inject_level_manager(_level_manager_){
-    level_manager = _level_manager_;
-  }
-
   function set_avatar_charges(num){
     avatar.charges = num;
   }
@@ -189,10 +183,8 @@ var AvatarManager = function(){
   this.update = update;
   this.get_avatar = get_avatar;
   this.start_level = start_level;
-  this.inject_input = inject_input;
   this.key_pressed = key_pressed;
   this.button_pressed = function(){};
-  this.inject_level_manager = inject_level_manager;
   this.set_avatar_charges = set_avatar_charges;
   this.get_gate_hit = get_gate_hit;
   this.hit_gate = hit_gate;

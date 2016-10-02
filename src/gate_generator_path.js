@@ -2,6 +2,7 @@
 var GateGeneratorPath = function(_config_){
 
   var config = _config_,
+    graphics = injector.get_singleton('graphics'),
     starting_spot,
     checkpoints;
   this.checkpoints = [];
@@ -12,11 +13,6 @@ var GateGeneratorPath = function(_config_){
     this.checkpoints = construct_checkpoints();
     graphics.add_to_manifest(this, 'gate_generator_paths');
   }
-
-  function inject_graphics(_graphics_){
-    graphics = _graphics_;
-  }
-
 
   function construct_checkpoints(){
     checkpoints = [];
@@ -50,9 +46,7 @@ var GateGeneratorPath = function(_config_){
     shadowOffsetY: 0
   };
 
-
   this.set_starting_spot = set_starting_spot;
-  this.inject_graphics = inject_graphics;
   this.checkpoints = checkpoints;
   this.blow_up = blow_up;
 };

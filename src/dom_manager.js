@@ -1,6 +1,7 @@
 // interfaces with the dom
 
 var DomManager = function(){
+  var input = injector.get_singleton('input');
   var screens = {
     start_screen: document.getElementById('start_screen'),
     select_level: document.getElementById('select_level'),
@@ -41,9 +42,9 @@ var DomManager = function(){
   }
 
   setup_grid();
-
+  input.set_up_button_events();
+  
   function close_screen(screen){
-    // console.log(screen);
     screens[screen].classList.add('hidden');
   }
 
@@ -126,15 +127,14 @@ var DomManager = function(){
     }
   }
 
-  function enable_buttons(buttons){
-    // console.log(buttons);
-    for (var i = 0; i < level_editor_buttons.length; i++){
+  function enable_buttons(buttons){    for (var i = 0; i < level_editor_buttons.length; i++){
       document.getElementById('add_'+level_editor_buttons[i]).disabled = (buttons.indexOf(level_editor_buttons[i])== -1);
     }
   }
 
   function build_objective_config(objective, paths){
     var editor_context = document.getElementById('level_editor_context_config');
+    var level_editor = injector.get_singleton('level_editor');
     editor_context.classList.remove('hidden');
     editor_context.getElementsByTagName('p')[0].innerHTML = "Processor";
     list = editor_context.getElementsByTagName('ul')[0];
@@ -145,6 +145,7 @@ var DomManager = function(){
       checkbox.checked = (objective[1].indexOf(i) != -1);
       checkbox.value = i;
       checkbox.addEventListener('change', function(){
+        console.log(level_editor);
         level_editor.path_checkbox_changed(this);
       });
       var li = document.createElement('li');

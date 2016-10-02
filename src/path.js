@@ -3,7 +3,7 @@
 var Path = function(_config_){
 
   var config = _config_.slice(0);
-  var graphics;
+  var graphics = injector.get_singleton('graphics');;
   var starting_spot;
   var checkpoints;
 
@@ -11,10 +11,6 @@ var Path = function(_config_){
     starting_spot = spot;
     this.checkpoints = construct_checkpoints();
     graphics.add_to_manifest(this, 'paths');
-  }
-
-  function inject_graphics(_graphics_){
-    graphics = _graphics_;
   }
 
   function construct_checkpoints(){
@@ -33,8 +29,6 @@ var Path = function(_config_){
   }
 
   function blow_up(){
-    // graphics.remove_path(checkpoints);
-    // graphics.remove_from_manifest(this, 'paths');
     this.blocked = true;
     this.blown_up = true;
     this.graphic.strokeStyle = 'rgba(209, 243, 248, 0.25)';
@@ -66,7 +60,6 @@ var Path = function(_config_){
   }
 
   this.set_starting_spot = set_starting_spot;
-  this.inject_graphics = inject_graphics;
   this.checkpoints = checkpoints;
   this.blow_up = blow_up;
   this.threaten = threaten;

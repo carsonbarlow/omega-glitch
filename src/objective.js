@@ -1,7 +1,9 @@
 // object responsible for objective logic
 
-var Objective = function(config, spots){
-
+var Objective = function(params){
+  var config = params.config,
+    spots = params.spots,
+    graphics = injector.get_singleton('graphics');
 
   this.spot = spots[config[0]];
   this.paths = config[1]
@@ -22,5 +24,7 @@ var Objective = function(config, spots){
   };
 
   this.blow_up = blow_up;
+
+  graphics.add_to_manifest(this, 'objectives');
 
 };

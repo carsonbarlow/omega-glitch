@@ -1,6 +1,9 @@
 // Spot Model
 
 var Spot = function(config){
+
+  var graphics = injector.get_singleton('graphics');
+
   this.pos_x = config.x * CONFIG.grid_size;
   this.pos_y = config.y * CONFIG.grid_size;
   this.north = config.n;
@@ -20,5 +23,7 @@ var Spot = function(config){
     shadowOffsetX: 0,
     shadowOffsetY: 0
   }
+
+  graphics.add_to_manifest(this, 'spots');
 
 };

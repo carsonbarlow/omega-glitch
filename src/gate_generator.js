@@ -1,8 +1,10 @@
 // like objective, but for gates
 
-var GateGenerator = function(config,spots){
+var GateGenerator = function(params){
 
-  var graphics;
+  var config = params.config,
+    spots = params.spots;
+  var graphics = injector.get_singleton('graphics');
 
   this.spot = spots[config.s];
   this.gates = config.g;
@@ -11,18 +13,22 @@ var GateGenerator = function(config,spots){
   this.pos_y = this.spot.pos_y;
   this.size = 10;
 
+  graphics.add_to_manifest(this, 'gate_generators');
+
   for (var i = 0; i < gate_paths.length; i++){
-    gate_paths[i] = new GateGeneratorPath(gate_paths[i]);
+    gate_paths[i] = injector.get_object('gate_generator_path', gate_paths[i]);
+    gate_paths[i].set_starting_spot(this.spot);
+    // gate_paths[i] = new GateGeneratorPath(gate_paths[i]);
   }
 
-  function inject_graphics(_graphics_){
-    graphics = _graphics_;
-    graphics.add_to_manifest(this, 'gate_generators');
-    for (var i = 0; i < gate_paths.length; i++){
-      gate_paths[i].inject_graphics(graphics);
-      gate_paths[i].set_starting_spot(this.spot);
-    }
-  }
+  // function inject_graphics(_graphics_){
+  //   graphics = _graphics_;
+  //   graphics.add_to_manifest(this, 'gate_generators');
+  //   for (var i = 0; i < gate_paths.length; i++){
+  //     gate_paths[i].inject_graphics(graphics);
+  //     gate_paths[i].set_starting_spot(this.spot);
+  //   }
+  // }
 
   function blow_up(){
     for (var i = 0; i < gate_paths.length; i++){
@@ -31,7 +37,7 @@ var GateGenerator = function(config,spots){
   };
 
   this.blow_up = blow_up;
-  this.inject_graphics = inject_graphics;
+  // this.inject_graphics = inject_graphics;
 
   this.graphic = {
     lineWidth: 1,

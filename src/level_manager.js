@@ -2,55 +2,51 @@
 
 var LevelManager = function(){
 
-  var level, graphics, avatar_manager, game_master;
+  var level,
+    graphics = injector.get_singleton('graphics'),
+    avatar_manager = injector.get_singleton('avatar_manager'),
+    game_master;
   var spots, paths, objectives, patrols, patrol_generators, gates, gate_generators, play_tips;
   this.starting_spot;
 
   function setup_level(num){
+    game_master = injector.get_singleton('game_master');
     level = CONTENT.levels[String(num)];
     avatar_manager.set_avatar_charges(level.charges);
     for (var spot in level.spots){
-      var new_spot = new Spot(level.spots[spot]);
+      var new_spot = injector.get_object('spot', level.spots[spot]);
       spots[spot] = new_spot;
-      graphics.add_to_manifest(new_spot, 'spots')
     }
     this.starting_spot = spots[level.start];
     for (i = 0; i < level.paths.length; i++){
-      var path = new Path(level.paths[i]);
-      path.inject_graphics(graphics);
+      var path = injector.get_object('path', level.paths[i]);
       path.set_starting_spot(spots[level.paths[i][0]]); // value at index 0 matches the index of the starting path.
       paths.push(path);
     }
     for (i = 0; i < level.objectives.length; i++){
-      var objective = new Objective(level.objectives[i],spots);
-      graphics.add_to_manifest(objective, 'objectives');
+      var objective = injector.get_object('objective', {config: level.objectives[i], spots:spots})
       objectives.push(objective);
     }
     for (i = 0; i < level.patrols.length; i++){
-      var patrol = new Patrol(level.patrols[i]);
+      var patrol = injector.get_object('patrol', level.patrols[i]);
       patrol.make_path_list(paths, spots);
-      patrol.inject_graphics(graphics);
       patrols.push(patrol);
     }
     for (i = 0; i < level.patrol_generators.length; i++){
-      var patrol_generator = new PatrolGenerator(level.patrol_generators[i],spots);
-      graphics.add_to_manifest(patrol_generator, 'patrol_generators');
+      var patrol_generator = injector.get_object('patrol_generator', {config: level.patrol_generators[i], spots: spots});
       patrol_generators.push(patrol_generator);
     }
     for (i = 0; i < level.gates.length; i++){
-      var gate = new Gate(level.gates[i]);
-      // paths[gate.path].blocked = true;
-      graphics.add_to_manifest(gate, 'gates');
+      var gate = injector.get_object('gate', level.gates[i]);
       gates.push(gate);
     }
     for (i = 0; i < level.gate_generators.length; i++){
-      var gate_generator = new GateGenerator(level.gate_generators[i],spots);
-      gate_generator.inject_graphics(graphics);
+      var gate_generator = injector.get_object('gate_generator', {config: level.gate_generators[i], spots: spots});
       gate_generators.push(gate_generator);
     }
     if (level.tips){
       for (i = 0; i < level.tips.length; i++){
-        play_tips.push(new PlayTip(level.tips[i]));
+        play_tips.push(injector.get_object('play_tip', level.tips[i]));
       }
     }
   };
@@ -61,18 +57,6 @@ var LevelManager = function(){
     }
     var response = {spot: spots[spot[direction][0]], path: paths[spot[direction][1]]}; // spot[direction][0] gets the index of the spot it is connected to.
     return (response.path.blocked)? false : response;
-  }
-
-  function inject_graphics(_graphics_){
-    graphics = _graphics_;
-  }
-
-  function inject_avatar_manager(_avatar_manager_){
-    avatar_manager = _avatar_manager_;
-  }
-
-  function inject_game_master(_game_master_){
-    game_master = _game_master_;
   }
 
   function avatar_on_spot(spot){
@@ -119,7 +103,6 @@ var LevelManager = function(){
         patrol_generators[i].blow_up();
         for (var patrol = patrol_generators[i].patrols.length -1; patrol > -1 ; patrol--){
           patrols[patrol_generators[i].patrols[patrol]].blow_up();
-          // graphics.remove_from_manifest(patrols[patrol_generators[i].patrols[patrol]].get_unit(), 'patrols');
         }
         graphics.remove_from_manifest(patrol_generators[i], 'patrol_generators');
       }
@@ -168,9 +151,6 @@ var LevelManager = function(){
 
 
   this.setup_level = setup_level;
-  this.inject_graphics = inject_graphics;
-  this.inject_avatar_manager = inject_avatar_manager;
-  this.inject_game_master = inject_game_master;
   this.get_play_tips = get_play_tips;
   this.move_leads_to = move_leads_to;
   this.avatar_on_spot = avatar_on_spot;
